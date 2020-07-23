@@ -46,9 +46,24 @@ def get_basic_vehicle_stats(url):
 
     soup = BeautifulSoup(html_content, "lxml")
 
-    for link in soup.find_all("span", {"class": "ttx-value"}):
-        print(link.text)
+    # for link in soup.find("div", {"class": "ttx-title"}):
+    #     print(link.text, end = print('=' * 10))
+
+    # for link in soup.find("span", {"class": "ttx-rank"}):
+    #     print(link.text, end = print('=' * 10))
+
+    # for link in soup.find_all("span", {"class": "ttx-name"}):
+    #     print(link.text, end = print('=' * 10))
+
+    # for link in soup.find_all("span", {"class": "ttx-value"}):
+    #     print(link.text, end = print('=' * 10))
+
+    for link in soup.select('span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], span[class^="ttx-name"]'):
+        print(link.text, end = print('=' * 10))
+
+    # for link in soup.find_all("div", {"class": "ttx-table-line"}):
+    #     print(link.text, end = print('=' * 10 + '\n'))
 
 if __name__ == "__main__":
     # get_vehicles_links()
-    get_basic_vehicle_stats('https://wiki.warthunder.com/He_51_B-1')
+    get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
