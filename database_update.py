@@ -1,8 +1,9 @@
 # libraries
 from bs4 import BeautifulSoup
 import requests
+import re
 
-#TODO make dict with every type of vehicle and write it to a file
+#TODO make dict with every type of vehicle and write it to a database
 
 scrape_links = [
     'https://wiki.warthunder.com/Category:First_rank_aircraft', 
@@ -45,24 +46,12 @@ def get_basic_vehicle_stats(url):
     html_content = requests.get(url).text
 
     soup = BeautifulSoup(html_content, "lxml")
+    tags = soup.select('span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"]')
 
-    # for link in soup.find("div", {"class": "ttx-title"}):
-    #     print(link.text, end = print('=' * 10))
+    for tag in tags:
+        items = [item.text for item in tags if item.text.strip() != '']
 
-    # for link in soup.find("span", {"class": "ttx-rank"}):
-    #     print(link.text, end = print('=' * 10))
-
-    # for link in soup.find_all("span", {"class": "ttx-name"}):
-    #     print(link.text, end = print('=' * 10))
-
-    # for link in soup.find_all("span", {"class": "ttx-value"}):
-    #     print(link.text, end = print('=' * 10))
-
-    for link in soup.select('span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], span[class^="ttx-name"]'):
-        print(link.text, end = print('=' * 10))
-
-    # for link in soup.find_all("div", {"class": "ttx-table-line"}):
-    #     print(link.text, end = print('=' * 10 + '\n'))
+    print(items)
 
 if __name__ == "__main__":
     # get_vehicles_links()
