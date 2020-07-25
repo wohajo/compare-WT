@@ -1,9 +1,5 @@
-# libraries
 from bs4 import BeautifulSoup
 import requests
-import re
-
-#TODO make dict with every type of vehicle and write it to a database
 
 scrape_links = [
     'https://wiki.warthunder.com/Category:First_rank_aircraft', 
@@ -46,13 +42,28 @@ def get_basic_vehicle_stats(url):
     html_content = requests.get(url).text
 
     soup = BeautifulSoup(html_content, "lxml")
-    tags = soup.select('span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"]')
+    tags = soup.select('div[class="ttx-title"], span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], div[class="ttx-table-line ttx-table-head"]')
 
     for tag in tags:
         items = [item.text for item in tags if item.text.strip() != '']
 
-    print(items)
+    print('\n'.join(items))
+
+def get_planes_tables(url):
+
+    html_content = requests.get(url).text
+
+    soup = BeautifulSoup(html_content, "lxml")
+    tables = soup.find_all("table", {"class": "wikitable"})
+
+    # tables[0] is for characteristics
+    # tables[1] is for features
+    # tables[3] is for optimal velocities
+    # tables[-1] is for modules
+
+    print(tables[1].text)
 
 if __name__ == "__main__":
-    # get_vehicles_links()
-    get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
+    # get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
+    get_modules_info('https://wiki.warthunder.com/J35D')
+    get_modules_info('https://wiki.warthunder.com/Ju_87_B-2')

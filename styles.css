@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* menu */
+
+.sidebar-wrapper {
+    display: inline-block;
+}
+
+/* main content */
+
+main {
+    display: inline-block;
+}
