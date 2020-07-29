@@ -6,6 +6,10 @@
     font-family: 'Roboto', sans-serif;
 }
 
+a {
+    cursor: pointer;
+}
+
 /* menu */
 
 .sidebar {
@@ -78,9 +82,9 @@ main {
 
 .sidebar--open {
     width: 200px !important;
-    box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
-    -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
-    -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
+    box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
+    -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
+    -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
 }
 
 /* small screens */
@@ -89,7 +93,7 @@ main {
     .sidebar {
         width: 0px;
         font-size: x-large;
-        box-shadow: none !important;
+        box-shadow: none;
     }
 
     .sidebar__toggle {
