@@ -1,35 +1,14 @@
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
+from constants import SCRAPE_LINKS
 import requests
 
+def get_vehicles_links(index):
+    '''
+    Downloads and prints links to vehicles from SCRAPE_LINKS const by index.
+    '''
 
-scrape_links = [
-    'https://wiki.warthunder.com/Category:First_rank_aircraft', 
-    'https://wiki.warthunder.com/Category:Second_rank_aircraft', 
-    'https://wiki.warthunder.com/Category:Third_rank_aircraft', 
-    'https://wiki.warthunder.com/Category:Fourth_rank_aircraft', 
-    'https://wiki.warthunder.com/Category:Fifth_rank_aircraft', 
-    'https://wiki.warthunder.com/Category:Sixth_rank_aircraft',
-    'https://wiki.warthunder.com/Category:First_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Second_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Third_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Fourth_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Fifth_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Sixth_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:Seventh_rank_ground_vehicles',
-    'https://wiki.warthunder.com/Category:First_rank_ships',
-    'https://wiki.warthunder.com/Category:Second_rank_ships',
-    'https://wiki.warthunder.com/Category:Third_rank_ships',
-    'https://wiki.warthunder.com/Category:Fourth_rank_ships',
-    'https://wiki.warthunder.com/Category:Fifth_rank_ships',
-    'https://wiki.warthunder.com/Category:Fifth_rank_helicopters',
-    'https://wiki.warthunder.com/Category:Sixth_rank_helicopters',
-    'https://wiki.warthunder.com/Category:Seventh_rank_helicopters'
-    ]
-
-def get_vehicles_links():
-
-    url = scrape_links[0]
+    url = SCRAPE_LINKS[index]
 
     html_content = requests.get(url).text
 
@@ -76,7 +55,7 @@ def get_planes_tables(url):
 
 def basic_stats_to_list(items):
     '''
-    [IN PROGRESS] Returns basic plane info in better form (object?).
+    [IN PROGRESS] Casts basic stats to database.
     '''
 
 if __name__ == "__main__":
