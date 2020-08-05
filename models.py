@@ -17,6 +17,10 @@ class PlaneClass(db.Model):
 
 
 class Engine(db.Model):
+    '''
+    Engine class.
+    (name)
+    '''
     __tablename__ = "engines"
 
     engine_id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +37,10 @@ class CoolingSystem(db.Model):
 
 
 class Plane(db.Model):
+    '''
+    Plane class.
+    (name, country, rank, BR, plane class [...])
+    '''
     __tablename__ = "planes"
 
     plane_id = db.Column(db.Integer, primary_key=True)
