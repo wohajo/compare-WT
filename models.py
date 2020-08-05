@@ -1,37 +1,59 @@
 from website_startup import db
+from sqlalchemy.sql.schema import ForeignKey
 
-class Countries(db.Model):
+class Country(db.Model):
+    __tablename__ = "countries"
+
     country_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
 
-class PlaneClasses(db.Model):
+
+class PlaneClass(db.Model):
+    __tablename__ = "plane_classes"
+
     plane_class_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
+    
 
-class Engines(db.Model):
+
+class Engine(db.Model):
+    __tablename__ = "engines"
+
     engine_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
 
-class CoolingSystems(db.Model):
-    plane_class_id = db.Column(db.Integer, primary_key=True)
+
+
+class CoolingSystem(db.Model):
+    __tablename__ = "cooling_systems" 
+
+    cooling_sys_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
 
-class Planes(db.Model):
+
+
+class Plane(db.Model):
+    __tablename__ = "planes"
+
     plane_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
-    country_id = db.Column(db.relationship('Countries', backref='plane'))
+    country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
+    country = db.relationship('Country', backref='plane')
     rank = db.Column(db.Integer, nullable=False)
     battle_rating = db.Column(db.Integer, nullable=False)
     # TODO download all modes BR?
-    # plane_class = db.relationship('PlaneClasses', backref='plane', lazy=True)
+    plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
+    plane_class = db.relationship('PlaneClass', backref='plane', lazy=True)
     crew = db.Column(db.Integer, nullable=False)
     take_off_weight = db.Column(db.Integer, nullable=False)
     burst_mass = db.Column(db.Float)
     ceiling = db.Column(db.Integer, nullable=False)
     engine = db.Column(db.String(60), nullable=False)
     no_engines = db.Column(db.Integer)
-    # engine_type = db.Column(db.relationship('Engines'), backref='plane', lazy=True)
-    # cooling = db.Column(db.relationship('CoolingSystems', backref='plane', lazy=True))
+    engine_type_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
+    engine_type = db.relationship('Engine', backref='plane', lazy=True)
+    cooling_id = db.Column(db.Integer, ForeignKey('cooling_systems.cooling_sys_id'))
+    cooling = db.relationship('CoolingSystem', backref='plane', lazy=True)
     sod_structural = db.Column(db.Integer, nullable=False)
     sod_gear = db.Column(db.Integer, nullable=False)
     # TODO next 3 fields are ought to be many to many

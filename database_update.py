@@ -30,8 +30,11 @@ def get_basic_vehicle_stats(url):
 
     for tag in tags:
         items = [item.text for item in tags if item.text.strip() != '']
+    
+    for item in items:
+        item.rstrip()
+        item.replace(u'\xa0', u' ')
 
-    # print('\n'.join(items))
     print(items)
 
     return items

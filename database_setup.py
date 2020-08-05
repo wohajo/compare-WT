@@ -1,5 +1,5 @@
 from website_startup import db
-from models import Planes, PlaneClasses, Engines, Countries, CoolingSystems
+from models import Plane, PlaneClass, Engine, Country, CoolingSystem
 
 def create_database():
     db.create_all()
