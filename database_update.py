@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from constants import SCRAPE_LINKS
+from helpers import crop_list
 import requests
 
 def get_vehicles_links(index):
@@ -23,6 +24,7 @@ def get_basic_vehicle_stats(url):
     Returns basic vehicle statistics included in table
     on the right of the webpage in form of a raw list.  
     '''
+    
     html_content = requests.get(url).text
 
     soup = BeautifulSoup(html_content, "lxml")
@@ -34,8 +36,6 @@ def get_basic_vehicle_stats(url):
     for item in items:
         item.rstrip()
         item.replace(u'\xa0', u' ')
-
-    print(items)
 
     return items
 
@@ -60,6 +60,25 @@ def basic_stats_to_list(items):
     '''
     [IN PROGRESS] Casts basic stats to database.
     '''
+#     burst mass isn't listed in plnaes without offensive armament
+    general = items[0:items.index('Flight characteristics')] #TODO: 8th place is here only if the plane have offensive armament
+    flight = crop_list(items, 'Flight characteristics', 'Offensive armament')
+    if 'Defensive armament' in items:
+        def_arm = crop_list(items, 'Defensive armament', 'Offensive armament')
+    if 'Offensive armament' in items:
+        off_arm = crop_list(items, 'Offensive armament', 'Suspended armament')
+    if 'Suspended armament' in items:
+        sus_arm = crop_list(items, 'Suspended armament', 'Economy')
+        
+    economy_start = items.index('Economy')
+    economy_end = len(items)
+
+    economy = items[economy_start:economy_end]
+
+    return 1 #TODO cast to db 
 
 if __name__ == "__main__":
-    get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
+    items = get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
+    basic_stats_to_list(items)
+    # get_basic_vehicle_stats('https://wiki.warthunder.com/IL-2_(1942)')
+    #g et_basic_vehicle_stats('https://wiki.warthunder.com/Pe-8')
