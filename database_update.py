@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from constants import SCRAPE_LINKS
-from helpers import crop_list
+from helpers import crop_list, remove_weird_chars
 import requests
 
 def get_vehicles_links(index):
@@ -19,7 +19,7 @@ def get_vehicles_links(index):
         for li in link.findAll("li"):
             print(li.a.get("href"))
 
-def get_basic_vehicle_stats(url):
+def get_basic_stats(url):
     '''
     Returns basic vehicle statistics included in table
     on the right of the webpage in form of a raw list.  
@@ -32,10 +32,6 @@ def get_basic_vehicle_stats(url):
 
     for tag in tags:
         items = [item.text for item in tags if item.text.strip() != '']
-    
-    for item in items:
-        item.rstrip()
-        item.replace(u'\xa0', u' ')
 
     return items
 
@@ -60,6 +56,7 @@ def basic_stats_to_list(items):
     '''
     [IN PROGRESS] Casts basic stats to database.
     '''
+
 #     burst mass isn't listed in plnaes without offensive armament
     general = items[0:items.index('Flight characteristics')] #TODO: 8th place is here only if the plane have offensive armament
     flight = crop_list(items, 'Flight characteristics', 'Offensive armament')
@@ -69,16 +66,20 @@ def basic_stats_to_list(items):
         off_arm = crop_list(items, 'Offensive armament', 'Suspended armament')
     if 'Suspended armament' in items:
         sus_arm = crop_list(items, 'Suspended armament', 'Economy')
-        
-    economy_start = items.index('Economy')
-    economy_end = len(items)
 
-    economy = items[economy_start:economy_end]
+    economy_old = items[items.index('Economy') + 1:len(items)]
+
+    general.remove('General characteristics')
+    print(general)
+    print(flight)
+    print(off_arm)
+    print(sus_arm)
+    print(remove_weird_chars(economy_old))
 
     return 1 #TODO cast to db 
 
 if __name__ == "__main__":
-    items = get_basic_vehicle_stats('https://wiki.warthunder.com/J35D')
+    items = get_basic_stats('https://wiki.warthunder.com/J35D')
     basic_stats_to_list(items)
     # get_basic_vehicle_stats('https://wiki.warthunder.com/IL-2_(1942)')
     #g et_basic_vehicle_stats('https://wiki.warthunder.com/Pe-8')
