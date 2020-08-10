@@ -10,7 +10,7 @@ def crop_list(list, start, end):
 
 def remove_weird_chars(list):
     '''
-    Returns list without trailing spaces and unnecesary characters.
+    Returns list without trailing spaces and unnecessary characters.
     '''
 
     new_list = []
