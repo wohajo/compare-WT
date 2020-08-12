@@ -14,10 +14,11 @@ def create_database():
         Country(name=COUNTRIES[5]),
         Country(name=COUNTRIES[6]),
         Country(name=COUNTRIES[7]),
+        Country(name=COUNTRIES[8]),
     ]
 
     db.session.bulk_save_objects(countries)
     db.session.commit()
 
 if __name__ == "__main__":
-    # create_database()
+    create_database()

@@ -24,5 +24,5 @@ SCRAPE_LINKS = [
     'https://wiki.warthunder.com/Category:Seventh_rank_helicopters'
     ]
 
-COUNTRIES = ['Great Britain', 'China', 'France', 'Germany', 'Italy'
+COUNTRIES = ['Great Britain', 'China', 'France', 'Germany', 'Italy',
             'Japan', 'Sweden', 'USA', 'USSR']

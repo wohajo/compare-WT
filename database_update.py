@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from flask_sqlalchemy import SQLAlchemy
 from constants import SCRAPE_LINKS
 from helpers import crop_list, remove_weird_chars
 import requests
@@ -8,6 +7,8 @@ def get_vehicles_links(index):
     '''
     Downloads and prints links to vehicles from SCRAPE_LINKS const by index.
     '''
+
+    #TODO: FIX collapsed items are not listed
 
     url = SCRAPE_LINKS[index]
 
@@ -40,6 +41,8 @@ def get_planes_tables(url):
     [IN PROGRESS] Prints all tables from the webpage.
     '''
 
+    #TODO: cleanup tables
+
     html_content = requests.get(url).text
 
     soup = BeautifulSoup(html_content, "lxml")
@@ -50,7 +53,40 @@ def get_planes_tables(url):
     # tables[3] is for optimal velocities
     # tables[-1] is for modules
 
-    print(tables[1].text)
+    # module tables have 2 cols for weaponry if plane has offensive/suspended armament  
+    # additionaly premium planes have one row more, which should be dumped
+
+    list_table = table_to_list(tables[0])
+    print(list_table)
+    list_table = table_to_list(tables[1])
+    print(list_table)
+    list_table = table_to_list(tables[3])
+    print(list_table)
+    list_table = table_to_list(tables[-1])
+    print(list_table)
+
+    for s in list_table:
+        print(*s)
+
+def table_to_list(table):
+    '''
+    Converts given table with header and sub-header to a list of lists and returns it.
+    '''       
+    
+    rows = []
+    trs = table.find_all('tr')
+    header_row = [td.get_text(strip = True) for td in trs[0].find_all('th')]
+    sub_header_row = ([td.get_text(strip = True) for td in trs[1].find_all('th')])
+    
+    if header_row:
+        rows.append(header_row)
+        rows.append(sub_header_row)
+        trs = trs[0:]
+
+    for tr in trs:
+        rows.append([td.get_text(strip = True) for td in tr.find_all('td')])
+
+    return rows
 
 def basic_stats_to_list(items):
     '''
@@ -69,21 +105,26 @@ def basic_stats_to_list(items):
     flight = items[items.index('Flight characteristics') + 1:items.index('Flight characteristics') + 7]
     basic_stats_list.append(flight)
 
+    def_arm = []
     if 'Defensive armament' in items:
         if 'Offensive armament' in items:
             def_arm = crop_list(items, 'Defensive armament', 'Offensive armament')
         else:
             def_arm = crop_list(items, 'Defensive armament', 'Suspended armament')
-        basic_stats_list.append(def_arm)
+    basic_stats_list.append(def_arm)
+    
+    off_arm = []
     if 'Offensive armament' in items:
         if 'Suspended armament' in items:
             off_arm = crop_list(items, 'Offensive armament', 'Suspended armament')
         else:
             off_arm = crop_list(items, 'Offensive armament', 'Economy')
-        basic_stats_list.append(off_arm)
+    basic_stats_list.append(off_arm)
+    
+    sus_arm = []
     if 'Suspended armament' in items:
         sus_arm = crop_list(items, 'Suspended armament', 'Economy')
-        basic_stats_list.append(sus_arm)
+    basic_stats_list.append(sus_arm)
 
     economy_old = items[items.index('Economy') + 1:len(items)]
     economy_new = remove_weird_chars(economy_old)
@@ -92,7 +133,9 @@ def basic_stats_to_list(items):
     return basic_stats_list #TODO cast to db 
 
 if __name__ == "__main__":
-    items = get_basic_stats('https://wiki.warthunder.com/IL-2M_(1943)')
-    print(basic_stats_to_list(items))
-    # get_basic_vehicle_stats('https://wiki.warthunder.com/IL-2_(1942)')
-    #g et_basic_vehicle_stats('https://wiki.warthunder.com/Pe-8')
+    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/IL-2M_(1943)')), '\n')
+    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/Pe-8')), '\n')
+    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/J35D')), '\n')
+    get_planes_tables('https://wiki.warthunder.com/J35D')
+    # get_planes_tables('https://wiki.warthunder.com/XP-50')
+    # get_vehicles_links(1)
