@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from constants import SCRAPE_LINKS
-from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words
+from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words, flatten_list
+import re
 import requests
 
 def get_vehicles_links(index):
@@ -55,24 +56,66 @@ def get_planes_tables(url):
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # tables[0] is for characteristics
+    # these are inconsistent so there is a need for few cases
+
     # tables[1] is for features
+    # features are in following order: ['Combat flaps', 'Take-off flaps', 'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute']
+    
     # tables[3] is for optimal velocities
+    # velocities are in following order: ['Ailerons', 'Rudder', 'Elevators', 'Radiator']
+    # TODO: Flatten features and optimal velocities
+    
     # tables[-1] is for modules
+    # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[2?]']
+    # module tables have 2 cols for weaponry if plane has offensive/suspended armament
 
-    # module tables have 2 cols for weaponry if plane has offensive/suspended armament  
-    # additionaly premium planes have one row more, which should be dumped
+    tables_lists = []
 
-    characteristics = html_table_to_list(tables[0])
-    remove_empty_lists(remove_unwanted_words(characteristics))
+    characteristics_with_max_speed = html_table_to_list(tables[0])
+    if(characteristics_with_max_speed[0][0] == 'Characteristics'):
+        print('Found table \'characteristics\'')
+        new_characteristics = remove_empty_lists(remove_unwanted_words(characteristics_with_max_speed))
+        
+        if re.match('(Max Speed.*)', new_characteristics[0][0]):
+            del new_characteristics[0]
+    else:
+        print('Table \'characteristics\' not found! It propably has to be inserted manually')
+        new_characteristics = []
+
+    tables_lists.append(new_characteristics)
     
-    # features = html_table_to_list(tables[1])
-    # remove_empty_lists(remove_unwanted_words(features))
-    
-    # characteristics = html_table_to_list(tables[0])
-    # remove_empty_lists(remove_unwanted_words(characteristics))
+    features = html_table_to_list(tables[1])
+    if(features[0][0] == 'Features'):
+        print('Found table \'features\'')
+        new_features = remove_empty_lists(remove_unwanted_words(features))
+    else:
+        print('Table \'features\' not found! It propably has to be inserted manually')
+        new_features = []
 
-    # characteristics = html_table_to_list(tables[0])
-    # remove_empty_lists(remove_unwanted_words(characteristics))
+    tables_lists.append(flatten_list(new_features))
+    
+    velocities = html_table_to_list(tables[3])
+    if(velocities[0][0] == 'Optimal velocities (km/h)'):
+        print('Found table \'optimal velocities\'')
+        new_velocities = remove_empty_lists(remove_unwanted_words(velocities))
+    else:
+        print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
+        new_velocities = []
+
+    tables_lists.append(flatten_list(new_velocities))
+
+    modules = html_table_to_list(tables[-1])
+    if(modules[0][0] == 'Tier'):
+        print('Found table \'modules\'')
+        new_modules = remove_empty_lists(remove_unwanted_words(modules))
+    else:
+        print('Table \'modules\' not found! It propably has to be inserted manually')
+        new_modules = []
+
+    tables_lists.append(new_modules)
+
+    print(tables_lists)
+    return tables_lists
 
 def basic_stats_to_list(items):
     '''
@@ -122,6 +165,7 @@ if __name__ == "__main__":
     # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/IL-2M_(1943)')), '\n')
     # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/Pe-8')), '\n')
     # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/J35D')), '\n')
-    get_planes_tables('https://wiki.warthunder.com/J35D')
+    # get_planes_tables('https://wiki.warthunder.com/J35D')
+    get_planes_tables('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # get_planes_tables('https://wiki.warthunder.com/XP-50')
     # get_vehicles_links(0)

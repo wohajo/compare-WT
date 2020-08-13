@@ -8,14 +8,14 @@ def crop_list(list, start, end):
 
     return list[start:end]
 
-def remove_weird_chars(list):
+def remove_weird_chars(lst):
     '''
     Returns list without trailing spaces and unnecessary characters.
     '''
 
     new_list = []
 
-    for item in list:
+    for item in lst:
         new_list.append(item.strip().replace(u'\xa0', ' '))
 
     return new_list
@@ -46,8 +46,7 @@ def remove_empty_lists(lst):
     '''
     
     new_list = list(filter(lambda x: x, lst))
-    print(new_list)
-    
+
     return new_list
 
 def remove_unwanted_words(lst):
@@ -55,16 +54,25 @@ def remove_unwanted_words(lst):
     Removes unwanted words from list and returns a new copy.
     '''
 
-    #TODO: add more words
-
     words = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea level)', 
     'Max altitude(metres)', 'Turn time(seconds)', 'Rate of climb(metres/second)', 
-    'Take-off run(metres)', 'AB', 'RB']
+    'Take-off run(metres)', 'AB', 'RB', 'Features', 'Combat flaps', 'Take-off flaps', 
+    'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute', 'Optimal velocities (km/h)',
+    'Ailerons', 'Rudder', 'Elevators', 'Radiator', 'Tier', 'Flight performance', 'Survivability', 
+    'Weaponry']
 
     new_list = []
 
     for sublist in lst:
-            new_sublist = list(filter(lambda w: w not in words, sublist))
-            new_list.append(new_sublist)
+        new_list.append(list(filter(lambda w: w not in words, sublist)))
 
     return new_list
+
+def flatten_list(lst):
+    '''
+    Flattens 2D list to 1D and returns it.
+    '''
+
+    flattened_list = [y for x in lst for y in x]
+
+    return flattened_list
