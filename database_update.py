@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from constants import SCRAPE_LINKS
-from helpers import crop_list, remove_weird_chars
+from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words
 import requests
 
 def get_vehicles_links(index):
@@ -8,7 +8,7 @@ def get_vehicles_links(index):
     Downloads and prints links to vehicles from SCRAPE_LINKS const by index.
     '''
 
-    #TODO: FIX collapsed items are not listed
+    # TODO: fix link not having "'"
 
     url = SCRAPE_LINKS[index]
 
@@ -16,9 +16,15 @@ def get_vehicles_links(index):
 
     soup = BeautifulSoup(html_content, "lxml")
 
+    counter = 0
+
     for link in soup.findAll("div", {"class": "mw-category-group"}):
-        for li in link.findAll("li"):
-            print(li.a.get("href"))
+        for ul in link.findAll("ul"):
+            for li in ul.findAll("li"):
+                print((li.a.get("href").replace('&27s', '\'')))
+                counter = counter + 1
+    
+    print(counter)
 
 def get_basic_stats(url):
     '''
@@ -56,37 +62,17 @@ def get_planes_tables(url):
     # module tables have 2 cols for weaponry if plane has offensive/suspended armament  
     # additionaly premium planes have one row more, which should be dumped
 
-    list_table = table_to_list(tables[0])
-    print(list_table)
-    list_table = table_to_list(tables[1])
-    print(list_table)
-    list_table = table_to_list(tables[3])
-    print(list_table)
-    list_table = table_to_list(tables[-1])
-    print(list_table)
-
-    for s in list_table:
-        print(*s)
-
-def table_to_list(table):
-    '''
-    Converts given table with header and sub-header to a list of lists and returns it.
-    '''       
+    characteristics = html_table_to_list(tables[0])
+    remove_empty_lists(remove_unwanted_words(characteristics))
     
-    rows = []
-    trs = table.find_all('tr')
-    header_row = [td.get_text(strip = True) for td in trs[0].find_all('th')]
-    sub_header_row = ([td.get_text(strip = True) for td in trs[1].find_all('th')])
+    # features = html_table_to_list(tables[1])
+    # remove_empty_lists(remove_unwanted_words(features))
     
-    if header_row:
-        rows.append(header_row)
-        rows.append(sub_header_row)
-        trs = trs[0:]
+    # characteristics = html_table_to_list(tables[0])
+    # remove_empty_lists(remove_unwanted_words(characteristics))
 
-    for tr in trs:
-        rows.append([td.get_text(strip = True) for td in tr.find_all('td')])
-
-    return rows
+    # characteristics = html_table_to_list(tables[0])
+    # remove_empty_lists(remove_unwanted_words(characteristics))
 
 def basic_stats_to_list(items):
     '''
@@ -138,4 +124,4 @@ if __name__ == "__main__":
     # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/J35D')), '\n')
     get_planes_tables('https://wiki.warthunder.com/J35D')
     # get_planes_tables('https://wiki.warthunder.com/XP-50')
-    # get_vehicles_links(1)
+    # get_vehicles_links(0)
