@@ -3,13 +3,15 @@ from constants import SCRAPE_LINKS
 from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words, flatten_list
 import re
 import requests
+from random import randint
+from time import sleep
 
 def get_vehicles_links(index):
     '''
-    Downloads and prints links to vehicles from SCRAPE_LINKS const by index.
+    Downloads and returns links to vehicles from SCRAPE_LINKS const by index.
     '''
 
-    # TODO: fix link not having "'"
+    link_to_remove = 'https://wiki.warthunder.com/User:U16170503'
 
     url = SCRAPE_LINKS[index]
 
@@ -17,15 +19,18 @@ def get_vehicles_links(index):
 
     soup = BeautifulSoup(html_content, "lxml")
 
-    counter = 0
+    links_list = []
 
     for link in soup.findAll("div", {"class": "mw-category-group"}):
         for ul in link.findAll("ul"):
             for li in ul.findAll("li"):
-                print((li.a.get("href").replace('&27s', '\'')))
-                counter = counter + 1
+                link_to_plane = (li.a.get("href").replace('%27', '\''))
+                links_list.append('https://wiki.warthunder.com' + link_to_plane)
+
+    if link_to_remove in links_list: links_list.remove(link_to_remove)
     
-    print(counter)
+    print(('Found {} vehicles!').format(len(links_list)))
+    return(links_list)
 
 def get_basic_stats(url):
     '''
@@ -45,10 +50,8 @@ def get_basic_stats(url):
 
 def get_planes_tables(url):
     '''
-    [IN PROGRESS] Prints all tables from the webpage.
+    Returns informations from plane's tables in form of a list of lists.
     '''
-
-    #TODO: cleanup tables
 
     html_content = requests.get(url).text
 
@@ -63,7 +66,6 @@ def get_planes_tables(url):
     
     # tables[3] is for optimal velocities
     # velocities are in following order: ['Ailerons', 'Rudder', 'Elevators', 'Radiator']
-    # TODO: Flatten features and optimal velocities
     
     # tables[-1] is for modules
     # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[2?]']
@@ -114,7 +116,6 @@ def get_planes_tables(url):
 
     tables_lists.append(new_modules)
 
-    print(tables_lists)
     return tables_lists
 
 def basic_stats_to_list(items):
@@ -161,11 +162,39 @@ def basic_stats_to_list(items):
 
     return basic_stats_list #TODO cast to db 
 
+def get_plane_full_info(url):
+    '''
+    Gets plane's info including tables and returns it in a list. \n
+    CONTENTS: \n
+    1. General charachteristics. \n
+    2. Flight characteristics. \n
+    3. Defensive armament. \n
+    4. Offensive armament. \n
+    5. Suspended armament. \n
+    6. Economy. \n
+    7. Characteristics table. \n
+    8. Features table. \n
+    9. Optimal velocities table. \n
+    10. Modules table. \n
+    '''
+    
+    basic_stats_list = basic_stats_to_list(get_basic_stats(url))
+    sleep_time = randint(1,5)
+    print(('Sleeping for {}s').format(sleep_time))
+    sleep(sleep_time)
+    table_stats_list = get_planes_tables(url)
+
+    new_list = basic_stats_list + table_stats_list
+
+    return new_list
+
+def process_plane_full_info(lst):
+    '''
+    Processes plane's full informations to a list ready to be insterted into database.
+    '''
+
+    # general info proccesing
+
 if __name__ == "__main__":
-    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/IL-2M_(1943)')), '\n')
-    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/Pe-8')), '\n')
-    # print(basic_stats_to_list(get_basic_stats('https://wiki.warthunder.com/J35D')), '\n')
-    # get_planes_tables('https://wiki.warthunder.com/J35D')
-    get_planes_tables('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    # get_planes_tables('https://wiki.warthunder.com/XP-50')
-    # get_vehicles_links(0)
+    # process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II'))
+    # process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/IL-4'))

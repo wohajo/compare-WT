@@ -61,10 +61,7 @@ def remove_unwanted_words(lst):
     'Ailerons', 'Rudder', 'Elevators', 'Radiator', 'Tier', 'Flight performance', 'Survivability', 
     'Weaponry']
 
-    new_list = []
-
-    for sublist in lst:
-        new_list.append(list(filter(lambda w: w not in words, sublist)))
+    new_list = [list(filter(lambda w: w not in words, sublist)) for sublist in lst]
 
     return new_list
 
