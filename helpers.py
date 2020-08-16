@@ -68,3 +68,7 @@ def flatten_list(lst):
     flattened_list = [y for x in lst for y in x]
 
     return flattened_list
+
+def write_scrape_log(table, url):
+    with open("scrape_data.log", 'a') as file:
+            file.write(('Table: {}, vehicle: {} \n').format(table, url))

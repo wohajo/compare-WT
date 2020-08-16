@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from constants import SCRAPE_LINKS
-from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words, flatten_list
+from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words, flatten_list, write_scrape_log
 import re
 import requests
 from random import randint
@@ -44,7 +44,7 @@ def get_basic_stats(soup):
 
     return items
 
-def get_planes_tables(soup):
+def get_planes_tables(soup, url):
     '''
     Returns informations from plane's tables in form of a list of lists.
     '''
@@ -68,43 +68,43 @@ def get_planes_tables(soup):
 
     characteristics_with_max_speed = html_table_to_list(tables[0])
     if(characteristics_with_max_speed[0][0] == 'Characteristics'):
-        print('Found table \'characteristics\'')
         new_characteristics = remove_empty_lists(remove_unwanted_words(characteristics_with_max_speed))
         
         if re.match('(Max Speed.*)', new_characteristics[0][0]):
             del new_characteristics[0]
     else:
         print('Table \'characteristics\' not found! It propably has to be inserted manually')
+        write_scrape_log('characteristics', url)
         new_characteristics = []
 
     tables_lists.append(new_characteristics)
     
     features = html_table_to_list(tables[1])
     if(features[0][0] == 'Features'):
-        print('Found table \'features\'')
         new_features = remove_empty_lists(remove_unwanted_words(features))
     else:
         print('Table \'features\' not found! It propably has to be inserted manually')
+        write_scrape_log('features', url)
         new_features = []
 
     tables_lists.append(flatten_list(new_features))
     
     velocities = html_table_to_list(tables[3])
     if(velocities[0][0] == 'Optimal velocities (km/h)'):
-        print('Found table \'optimal velocities\'')
         new_velocities = remove_empty_lists(remove_unwanted_words(velocities))
     else:
         print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
+        write_scrape_log('velocities', url)
         new_velocities = []
 
     tables_lists.append(flatten_list(new_velocities))
 
     modules = html_table_to_list(tables[-1])
     if(modules[0][0] == 'Tier'):
-        print('Found table \'modules\'')
         new_modules = remove_empty_lists(remove_unwanted_words(modules))
     else:
         print('Table \'modules\' not found! It propably has to be inserted manually')
+        write_scrape_log('modules', url)
         new_modules = []
 
     tables_lists.append(new_modules)
@@ -178,8 +178,8 @@ def get_plane_full_info(url):
     # sleep_time = randint(1,5)
     # print(('Sleeping for {}s').format(sleep_time))
     # sleep(sleep_time)
-    table_stats_list = get_planes_tables(soup)
     basic_stats_list = basic_stats_to_list(get_basic_stats(soup))
+    table_stats_list = get_planes_tables(soup, url)
     new_list = basic_stats_list + table_stats_list
 
     return new_list

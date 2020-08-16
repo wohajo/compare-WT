@@ -4,3 +4,4 @@ __pycache__/
 temp_db.db
 user-agent.txt
 tempCodeRunnerFile.py
+scrape_data.log
