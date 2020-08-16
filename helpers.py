@@ -1,3 +1,5 @@
+from constants import WORDS_TO_REMOVE
+
 def crop_list(list, start, end):
     '''
     Returns list containing items cropped from starting string to ending string. 
@@ -54,14 +56,7 @@ def remove_unwanted_words(lst):
     Removes unwanted words from list and returns a new copy.
     '''
 
-    words = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea level)', 
-    'Max altitude(metres)', 'Turn time(seconds)', 'Rate of climb(metres/second)', 
-    'Take-off run(metres)', 'AB', 'RB', 'Features', 'Combat flaps', 'Take-off flaps', 
-    'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute', 'Optimal velocities (km/h)',
-    'Ailerons', 'Rudder', 'Elevators', 'Radiator', 'Tier', 'Flight performance', 'Survivability', 
-    'Weaponry']
-
-    new_list = [list(filter(lambda w: w not in words, sublist)) for sublist in lst]
+    new_list = [list(filter(lambda w: w not in WORDS_TO_REMOVE, sublist)) for sublist in lst]
 
     return new_list
 

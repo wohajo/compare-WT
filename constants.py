@@ -26,3 +26,10 @@ SCRAPE_LINKS = [
 
 COUNTRIES = ['Great Britain', 'China', 'France', 'Germany', 'Italy',
             'Japan', 'Sweden', 'USA', 'USSR']
+
+WORDS_TO_REMOVE = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea level)', 
+    'Max altitude(metres)', 'Turn time(seconds)', 'Rate of climb(metres/second)', 
+    'Take-off run(metres)', 'AB', 'RB', 'Features', 'Combat flaps', 'Take-off flaps', 
+    'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute', 'Optimal velocities (km/h)',
+    'Ailerons', 'Rudder', 'Elevators', 'Radiator', 'Tier', 'Flight performance', 'Survivability', 
+    'Weaponry']

@@ -32,15 +32,11 @@ def get_vehicles_links(index):
     print(('Found {} vehicles!').format(len(links_list)))
     return(links_list)
 
-def get_basic_stats(url):
+def get_basic_stats(soup):
     '''
     Returns basic vehicle statistics included in table
     on the right of the webpage in form of a raw list.  
     '''
-    
-    html_content = requests.get(url).text
-
-    soup = BeautifulSoup(html_content, "lxml")
     tags = soup.select('span[class="ttx-country"], span[class="ttx-rank"], div[class="ttx-title"], span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], div[class="ttx-table-line ttx-table-head"]')
 
     for tag in tags:
@@ -48,14 +44,11 @@ def get_basic_stats(url):
 
     return items
 
-def get_planes_tables(url):
+def get_planes_tables(soup):
     '''
     Returns informations from plane's tables in form of a list of lists.
     '''
 
-    html_content = requests.get(url).text
-
-    soup = BeautifulSoup(html_content, "lxml")
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # tables[0] is for characteristics
@@ -178,12 +171,15 @@ def get_plane_full_info(url):
     10. Modules table. \n
     '''
     
-    basic_stats_list = basic_stats_to_list(get_basic_stats(url))
-    sleep_time = randint(1,5)
-    print(('Sleeping for {}s').format(sleep_time))
-    sleep(sleep_time)
-    table_stats_list = get_planes_tables(url)
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "lxml")
 
+    
+    # sleep_time = randint(1,5)
+    # print(('Sleeping for {}s').format(sleep_time))
+    # sleep(sleep_time)
+    table_stats_list = get_planes_tables(soup)
+    basic_stats_list = basic_stats_to_list(get_basic_stats(soup))
     new_list = basic_stats_list + table_stats_list
 
     return new_list
@@ -196,5 +192,5 @@ def process_plane_full_info(lst):
     # general info proccesing
 
 if __name__ == "__main__":
-    # process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II'))
-    # process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/IL-4'))
+    process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II'))
+    process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/IL-4'))
