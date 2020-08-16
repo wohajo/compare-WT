@@ -1,10 +1,11 @@
-from bs4 import BeautifulSoup
-from constants import SCRAPE_LINKS
-from helpers import crop_list, remove_weird_chars, html_table_to_list, remove_empty_lists, remove_unwanted_words, flatten_list, write_scrape_log
 import re
 import requests
-from random import randint
+from helpers import *
 from time import sleep
+from random import randint
+from helpers_planes import *
+from bs4 import BeautifulSoup
+from constants import SCRAPE_LINKS
 
 def get_vehicles_links(index):
     '''
@@ -189,7 +190,20 @@ def process_plane_full_info(lst):
     Processes plane's full informations to a list ready to be insterted into database.
     '''
 
-    # general info proccesing
+    new_list = []
+
+    new_list.append(process_general_characteristics(lst[0]))
+    new_list.append(process_flight_characteristics(lst[1]))
+    new_list.append(process_defensive_armament(lst[2]))
+    new_list.append(process_offensive_armament(lst[3]))
+    new_list.append(process_suspended_armament(lst[4]))
+    new_list.append(process_economy(lst[5]))
+    new_list.append(process_characteristics_table(lst[6]))
+    new_list.append(process_features_table(lst[7]))
+    new_list.append(process_optimal_velocities_table(lst[8]))
+    new_list.append(process_modules(lst[9]))
+
+    return new_list
 
 if __name__ == "__main__":
     process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II'))

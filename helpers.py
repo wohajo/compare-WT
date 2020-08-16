@@ -71,4 +71,4 @@ def flatten_list(lst):
 
 def write_scrape_log(table, url):
     with open("scrape_data.log", 'a') as file:
-            file.write(('Table: {}, vehicle: {} \n').format(table, url))
+            file.write(('Table_error:{}, vehicle:{} \n').format(table, url))
