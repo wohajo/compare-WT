@@ -1,3 +1,4 @@
+import os
 from constants import WORDS_TO_REMOVE
 
 def crop_list(list, start, end):
@@ -69,6 +70,30 @@ def flatten_list(lst):
 
     return flattened_list
 
-def write_scrape_log(table, url):
-    with open("scrape_data.log", 'a') as file:
-            file.write(('Table_error:{}, vehicle:{} \n').format(table, url))
+def write_log(code, filename, url):
+
+    '''
+    Error codes: \n
+    0: General characteristics \n
+    1: Flight characteristics \n
+    2: Defensive armament \n
+    3: Offensive armament \n
+    4: Suspended armament \n
+    5: Economy \n
+    6: Characteristics table \n
+    7: Features table \n
+    8: Optimal velocities table \n
+    9: Modules table \n
+    '''
+
+    if code == 6:
+        code = 'characteristics_table'
+    elif code == 7:
+        code = 'features_table'
+    elif code == 8:
+        code = 'optimal_velocities_table'
+    elif code == 9:
+        code = 'modules_table'
+
+    with open(filename, 'a') as file:
+            file.write(('Error_codename:{}, vehicle:{} \n').format(code, url))

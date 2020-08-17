@@ -75,7 +75,7 @@ def get_planes_tables(soup, url):
             del new_characteristics[0]
     else:
         print('Table \'characteristics\' not found! It propably has to be inserted manually')
-        write_scrape_log('characteristics', url)
+        write_log(6, 'scrape_data.log', url)
         new_characteristics = []
 
     tables_lists.append(new_characteristics)
@@ -85,7 +85,7 @@ def get_planes_tables(soup, url):
         new_features = remove_empty_lists(remove_unwanted_words(features))
     else:
         print('Table \'features\' not found! It propably has to be inserted manually')
-        write_scrape_log('features', url)
+        write_log(7, 'scrape_data.log', url)
         new_features = []
 
     tables_lists.append(flatten_list(new_features))
@@ -95,7 +95,7 @@ def get_planes_tables(soup, url):
         new_velocities = remove_empty_lists(remove_unwanted_words(velocities))
     else:
         print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
-        write_scrape_log('velocities', url)
+        write_log(8, 'scrape_data.log', url)
         new_velocities = []
 
     tables_lists.append(flatten_list(new_velocities))
@@ -105,7 +105,7 @@ def get_planes_tables(soup, url):
         new_modules = remove_empty_lists(remove_unwanted_words(modules))
     else:
         print('Table \'modules\' not found! It propably has to be inserted manually')
-        write_scrape_log('modules', url)
+        write_log(9, 'scrape_data.log', url)
         new_modules = []
 
     tables_lists.append(new_modules)
@@ -160,7 +160,7 @@ def get_plane_full_info(url):
     '''
     Gets plane's info including tables and returns it in a list. \n
     CONTENTS: \n
-    1. General charachteristics. \n
+    1. General characteristics. \n
     2. Flight characteristics. \n
     3. Defensive armament. \n
     4. Offensive armament. \n
@@ -185,26 +185,29 @@ def get_plane_full_info(url):
 
     return new_list
 
-def process_plane_full_info(lst):
+def process_plane_full_info(url):
     '''
     Processes plane's full informations to a list ready to be insterted into database.
     '''
 
+    lst = get_plane_full_info(url)
+
     new_list = []
 
-    new_list.append(process_general_characteristics(lst[0]))
-    new_list.append(process_flight_characteristics(lst[1]))
-    new_list.append(process_defensive_armament(lst[2]))
-    new_list.append(process_offensive_armament(lst[3]))
-    new_list.append(process_suspended_armament(lst[4]))
-    new_list.append(process_economy(lst[5]))
-    new_list.append(process_characteristics_table(lst[6]))
-    new_list.append(process_features_table(lst[7]))
-    new_list.append(process_optimal_velocities_table(lst[8]))
-    new_list.append(process_modules(lst[9]))
+    new_list.append(process_general_characteristics(lst[0], url))
+    new_list.append(process_flight_characteristics(lst[1], url))
+    new_list.append(process_defensive_armament(lst[2], url))
+    new_list.append(process_offensive_armament(lst[3], url))
+    new_list.append(process_suspended_armament(lst[4], url))
+    new_list.append(process_economy(lst[5], url))
+    new_list.append(process_characteristics_table(lst[6], url))
+    new_list.append(process_features_table(lst[7], url))
+    new_list.append(process_optimal_velocities_table(lst[8], url))
+    new_list.append(process_modules(lst[9], url))
 
     return new_list
 
 if __name__ == "__main__":
-    process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II'))
-    process_plane_full_info(get_plane_full_info('https://wiki.warthunder.com/IL-4'))
+    process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
+    process_plane_full_info('https://wiki.warthunder.com/IL-4')
+    process_plane_full_info('https://wiki.warthunder.com/J35D')
