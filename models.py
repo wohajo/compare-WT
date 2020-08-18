@@ -78,3 +78,4 @@ class Plane(db.Model):
     aces = db.Column(db.Integer, nullable=False)
     reward_rp = db.Column(db.Integer, nullable=False)
     reward_sl = db.Column(db.Integer, nullable=False)
+    #TODO: add advanced tables 

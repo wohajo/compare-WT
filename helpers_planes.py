@@ -6,18 +6,19 @@ def process_general_characteristics(lst, url):
         write_log(0, 'processing.log', url)
         lst = []
         return lst
+    
+    lst[2] = lst[2].replace(' Rank', '')
+    if 'Fighter' in lst[6] or 'fighter' in lst[6]:
+        lst[6] = 'fighter'
+    if 'Bomber' in lst[6] or 'bomber' in lst[6]:
+        lst[6] = 'bomber'
+    if 'Attacker' in lst[6] or 'attacker' in lst[6]:
+        lst[6] = 'attacker'
+    lst[7] = lst[7].replace('people', '').replace('person', '')
+    lst[8] = lst[8].replace(' t', '')
 
     if len(lst) == 10:
-        lst[2] = lst[2].replace(' Rank', '')
-        lst[6] = lst[6].replace('FighterJet fighter', 'jet_fighter')
-        lst[7] = lst[7].replace(' people', '').replace(' person', '')
-        lst[8] = lst[8].replace(' t', '')
         lst[9] = lst[9].replace(' kg/s', '')
-    else:
-        lst[2] = lst[2].replace(' Rank', '')
-        lst[6] = lst[6].replace('FighterJet fighter', 'jet_fighter') #TODO: this needs to be more specific, there will propably be 3 categories
-        lst[7] = lst[7].replace('people', '').replace('person', '')
-        lst[8] = lst[8].replace(' t', '')
 
     return lst
 
@@ -39,10 +40,7 @@ def process_defensive_armament(lst, url):
         lst = []
         return lst
     else:
-        new_list = []
-
-        for word in lst:
-            new_list.append(word.replace(' rounds', '').replace(' shots/min', ''))
+        new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
 
         return new_list
 
@@ -52,10 +50,7 @@ def process_offensive_armament(lst, url):
         lst = []
         return lst
     else:
-        new_list = []
-
-        for word in lst:
-            new_list.append(word.replace(' rounds', '').replace(' shots/min', ''))
+        new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
 
         return new_list
 
@@ -80,8 +75,16 @@ def process_economy(lst, url):
         return new_list
 
 def process_characteristics_table(lst, url):
-    #TODO: need for few cases
-    pass
+    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
+        write_log(5, 'processing.log', url)
+        lst = []
+        return lst
+    
+    elif len(lst[1]) == 6:
+        lst[1].insert(2, lst[0][2])
+        lst[1].insert(7, lst[0][7])
+
+    return lst
 
 def process_features_table(lst, url):
     if len(lst) == 0:
@@ -104,7 +107,7 @@ def process_optimal_velocities_table(lst, url):
         new_list = []
 
         for word in lst:
-            new_list.append(word.replace('< ', '').replace('N/A', ''))
+            new_list.append(word.replace('< ', '').replace('N/A', '').replace('> ', ''))
 
         return new_list
 
