@@ -122,39 +122,43 @@ def basic_stats_to_list(items):
     basic_stats_list = []
 
     # burst mass isn't listed in plnaes without offensive armament
-    general = items[0:items.index('Flight characteristics')] #TODO: 8th place is here only if the plane have offensive armament
+    general = items[0:items.index('Flight characteristics')]
     general.remove('General characteristics')
     basic_stats_list.append(general)
     
     flight = items[items.index('Flight characteristics') + 1:items.index('Flight characteristics') + 7]
     basic_stats_list.append(flight)
 
-    def_arm = []
-    if 'Defensive armament' in items:
-        if 'Offensive armament' in items:
-            def_arm = crop_list(items, 'Defensive armament', 'Offensive armament')
-        else:
-            def_arm = crop_list(items, 'Defensive armament', 'Suspended armament')
-    basic_stats_list.append(def_arm)
-    
     off_arm = []
+    def_arm = []
+    sus_arm = []
+
     if 'Offensive armament' in items:
-        if 'Suspended armament' in items:
+        if 'Defensive armament' in items:
+            off_arm = crop_list(items, 'Offensive armament', 'Defensive armament')
+        elif 'Suspended armament' in items:
             off_arm = crop_list(items, 'Offensive armament', 'Suspended armament')
         else:
             off_arm = crop_list(items, 'Offensive armament', 'Economy')
-    basic_stats_list.append(off_arm)
+
+    if 'Defensive armament' in items:
+        if 'Suspended armament' in items:
+            def_arm = crop_list(items, 'Defensive armament', 'Suspended armament')
+        else:
+            def_arm = crop_list(items, 'Defensive armament', 'Economy')
     
-    sus_arm = []
     if 'Suspended armament' in items:
         sus_arm = crop_list(items, 'Suspended armament', 'Economy')
-    basic_stats_list.append(sus_arm)
 
     economy_old = items[items.index('Economy') + 1:len(items)]
     economy_new = remove_weird_chars(economy_old)
+    
+    basic_stats_list.append(off_arm)
+    basic_stats_list.append(def_arm)
+    basic_stats_list.append(sus_arm)
     basic_stats_list.append(economy_new)
 
-    return basic_stats_list #TODO cast to db 
+    return basic_stats_list 
 
 def get_plane_full_info(url):
     '''
@@ -209,6 +213,8 @@ def process_plane_full_info(url):
 
 if __name__ == "__main__":
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    # plane_full_info('https://wiki.warthunder.com/IL-4')
+    # process_plane_full_info('https://wiki.warthunder.com/IL-4')
     # process_plane_full_info('https://wiki.warthunder.com/J35D')
-    process_plane_full_info('https://wiki.warthunder.com/A6M3')
+    process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
+    process_plane_full_info('https://wiki.warthunder.com/B18A')
+    # process_plane_full_info('https://wiki.warthunder.com/A6M3')
