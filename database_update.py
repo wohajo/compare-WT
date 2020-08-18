@@ -38,7 +38,7 @@ def get_basic_stats(soup):
     Returns basic vehicle statistics included in table
     on the right of the webpage in form of a raw list.  
     '''
-    tags = soup.select('span[class="ttx-country"], span[class="ttx-rank"], div[class="ttx-title"], span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], div[class="ttx-table-line ttx-table-head"]')
+    tags = soup.select('span[class="ttx-country"], span[class="ttx-rank"], div[class="ttx-title"], span[class="ttx-value"], span[class="ttx-rb ttx-value"], span[class="ttx-value ttx-rb"], span[class="ttx-ab ttx-value"], span[class="ttx-value ttx-ab"], span[class="ttx-sb ttx-value"], span[class="ttx-value ttx-sb"], div[class="ttx-table-line ttx-table-head"]')
 
     for tag in tags:
         items = [item.text for item in tags if item.text.strip() != '']

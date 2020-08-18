@@ -15,7 +15,7 @@ def process_general_characteristics(lst, url):
         lst[7] = lst[7].replace(' kg/s', '')
     else:
         lst[2] = lst[2].replace(' Rank', '')
-        lst[4] = lst[4].replace('FighterJet fighter', 'jet_fighter') #TODO: this needs to be more specific
+        lst[4] = lst[4].replace('FighterJet fighter', 'jet_fighter') #TODO: this needs to be more specific, there will propably be 3 categories
         lst[5] = lst[5].replace('people', '').replace('person', '')
         lst[6] = lst[6].replace(' t', '')
 
