@@ -7,17 +7,17 @@ def process_general_characteristics(lst, url):
         lst = []
         return lst
 
-    if len(lst) == 8:
+    if len(lst) == 10:
         lst[2] = lst[2].replace(' Rank', '')
-        lst[4] = lst[4].replace('FighterJet fighter', 'jet_fighter')
-        lst[5] = lst[5].replace(' people', '').replace(' person', '')
-        lst[6] = lst[6].replace(' t', '')
-        lst[7] = lst[7].replace(' kg/s', '')
+        lst[6] = lst[6].replace('FighterJet fighter', 'jet_fighter')
+        lst[7] = lst[7].replace(' people', '').replace(' person', '')
+        lst[8] = lst[8].replace(' t', '')
+        lst[9] = lst[9].replace(' kg/s', '')
     else:
         lst[2] = lst[2].replace(' Rank', '')
-        lst[4] = lst[4].replace('FighterJet fighter', 'jet_fighter') #TODO: this needs to be more specific, there will propably be 3 categories
-        lst[5] = lst[5].replace('people', '').replace('person', '')
-        lst[6] = lst[6].replace(' t', '')
+        lst[6] = lst[6].replace('FighterJet fighter', 'jet_fighter') #TODO: this needs to be more specific, there will propably be 3 categories
+        lst[7] = lst[7].replace('people', '').replace('person', '')
+        lst[8] = lst[8].replace(' t', '')
 
     return lst
 
@@ -73,7 +73,7 @@ def process_economy(lst, url):
         return lst
     else:
         new_list = []
-        #TODO: Divide min-max repair
+        #TODO: Divide min-max repair for SB/RB/AB
         for word in lst:
             new_list.append(word.replace(' %', ''))
 
