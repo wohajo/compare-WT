@@ -48,8 +48,9 @@ class Plane(db.Model):
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
     country = db.relationship('Country', backref='plane')
     rank = db.Column(db.Integer, nullable=False)
-    battle_rating = db.Column(db.Integer, nullable=False)
-    # TODO download all modes BR?
+    battle_rating_ab = db.Column(db.Float, nullable=False)
+    battle_rating_rb = db.Column(db.Float, nullable=False)
+    battle_rating_sb = db.Column(db.Float, nullable=False)
     plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
     plane_class = db.relationship('PlaneClass', backref='plane', lazy=True)
     crew = db.Column(db.Integer, nullable=False)
