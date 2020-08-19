@@ -1,6 +1,17 @@
 from helpers import write_log
 from constants import WORD_TO_REMOVE_PROCESSING, ROMAN_TO_INTEGER
 
+def filter_characteristics(n):
+    if '.' in n:
+        try:
+            return float(n)
+        except ValueError:
+            return None
+    try:
+        return int(n)
+    except ValueError:
+        return None
+
 def process_general_characteristics(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
         write_log(0, 'processing.log', url)
@@ -9,17 +20,20 @@ def process_general_characteristics(lst, url):
     
     lst[2] = lst[2].replace(' Rank', '')
     lst[2] = ROMAN_TO_INTEGER[lst[2]]
+    lst[3] = float(lst[3])
+    lst[4] = float(lst[4])
+    lst[5] = float(lst[5])
     if 'Fighter' in lst[6] or 'fighter' in lst[6]:
         lst[6] = 'fighter'
     if 'Bomber' in lst[6] or 'bomber' in lst[6]:
         lst[6] = 'bomber'
     if 'Attacker' in lst[6] or 'attacker' in lst[6]:
         lst[6] = 'attacker'
-    lst[7] = lst[7].replace(' people', '').replace(' person', '')
-    lst[8] = lst[8].replace(' t', '')
+    lst[7] = int(lst[7].replace(' people', '').replace(' person', ''))
+    lst[8] = float(lst[8].replace(' t', ''))
 
     if len(lst) == 10:
-        lst[9] = lst[9].replace(' kg/s', '')
+        lst[9] = float(lst[9].replace(' kg/s', ''))
 
     return lst
 
@@ -30,9 +44,9 @@ def process_flight_characteristics(lst, url):
         lst = []
         return lst
     else:
-        lst[0] = lst[0].replace(' m', '')
-        lst[4] = lst[4].replace(' km/h', '') 
-        lst[5] = lst[4].replace(' km/h', '') 
+        lst[0] = int(lst[0].replace(' m', '').replace(' ', ''))
+        lst[4] = int(lst[4].replace(' km/h', '').replace(' ', '')) 
+        lst[5] = int(lst[5].replace(' km/h', '').replace(' ', '')) 
         return lst
 
 def process_defensive_armament(lst, url):
@@ -81,7 +95,7 @@ def process_economy(lst, url):
         new_list.insert(5, repair_rb[2])
         new_list.insert(7, repair_ab[2])
 
-        new_list = [word.replace(' ', '') for word in new_list]
+        new_list = [int(word.replace(' ', '')) for word in new_list]
 
         return new_list
 
@@ -95,20 +109,18 @@ def process_characteristics_table(lst, url):
         lst[1].insert(2, lst[0][2])
         lst[1].insert(7, lst[0][7])
 
+    for i in range(0, 2):
+        lst[i] = [filter_characteristics(n) for n in lst[i]]
+
     return lst
 
 def process_features_table(lst, url):
     if len(lst) == 0:
         return lst
     else:
-        new_list = []
-
-        for word in lst:
-            if word == 'X':
-                new_list.append('false')
-            else:
-                new_list.append('true')
-
+        new_list = [False if word == 'X' else True for word in lst]
+        if len(new_list) == 5:
+            new_list.append(False)
         return new_list
 
 def process_optimal_velocities_table(lst, url):
@@ -119,6 +131,8 @@ def process_optimal_velocities_table(lst, url):
 
         for word in lst:
             new_list.append(word.replace('< ', '').replace('N/A', '').replace('> ', ''))
+            if word == '':
+                word = None
 
         return new_list
 

@@ -214,7 +214,7 @@ def process_plane_full_info(url):
 if __name__ == "__main__":
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
-    # process_plane_full_info('https://wiki.warthunder.com/J35D')
-    process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
+    process_plane_full_info('https://wiki.warthunder.com/J35D')
+    # process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
     # process_plane_full_info('https://wiki.warthunder.com/B18A')
     # process_plane_full_info('https://wiki.warthunder.com/A6M3')
