@@ -1,5 +1,5 @@
 from helpers import write_log
-from constants import WORD_TO_REMOVE_PROCESSING
+from constants import WORD_TO_REMOVE_PROCESSING, ROMAN_TO_INTEGER
 
 def process_general_characteristics(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
@@ -8,13 +8,14 @@ def process_general_characteristics(lst, url):
         return lst
     
     lst[2] = lst[2].replace(' Rank', '')
+    lst[2] = ROMAN_TO_INTEGER[lst[2]]
     if 'Fighter' in lst[6] or 'fighter' in lst[6]:
         lst[6] = 'fighter'
     if 'Bomber' in lst[6] or 'bomber' in lst[6]:
         lst[6] = 'bomber'
     if 'Attacker' in lst[6] or 'attacker' in lst[6]:
         lst[6] = 'attacker'
-    lst[7] = lst[7].replace('people', '').replace('person', '')
+    lst[7] = lst[7].replace(' people', '').replace(' person', '')
     lst[8] = lst[8].replace(' t', '')
 
     if len(lst) == 10:
@@ -67,10 +68,20 @@ def process_economy(lst, url):
         lst = []
         return lst
     else:
-        new_list = []
-        #TODO: Divide min-max repair for SB/RB/AB
-        for word in lst:
-            new_list.append(word.replace(' %', ''))
+        new_list = [word.replace(' %', '') for word in lst]
+
+        repair_sb = new_list[2].partition('/')
+        repair_rb = new_list[3].partition('/')
+        repair_ab = new_list[4].partition('/')
+
+        new_list[2] = repair_sb[0] 
+        new_list[3] = repair_rb[0]
+        new_list[4] = repair_ab[0]
+        new_list.insert(3, repair_sb[2])
+        new_list.insert(5, repair_rb[2])
+        new_list.insert(7, repair_ab[2])
+
+        new_list = [word.replace(' ', '') for word in new_list]
 
         return new_list
 
