@@ -82,22 +82,23 @@ def process_economy(lst, url):
         lst = []
         return lst
     else:
-        new_list = [word.replace(' %', '') for word in lst]
-
-        repair_sb = new_list[2].partition('/')
-        repair_rb = new_list[3].partition('/')
-        repair_ab = new_list[4].partition('/')
-
-        new_list[2] = repair_sb[0] 
-        new_list[3] = repair_rb[0]
-        new_list[4] = repair_ab[0]
-        new_list.insert(3, repair_sb[2])
-        new_list.insert(5, repair_rb[2])
-        new_list.insert(7, repair_ab[2])
-
-        new_list = [int(word.replace(' ', '')) for word in new_list]
-
-        return new_list
+        return None
+        
+    new_list = [word.replace(' %', '').replace('free', '0') for word in lst]
+    #TODO: FIX if there is a free repair 
+    # there is no max repair sb/rb/ab and no crew training
+    
+    repair_sb = new_list[2].partition('/')
+    repair_rb = new_list[3].partition('/')
+    repair_ab = new_list[4].partition('/')
+    new_list[2] = repair_sb[0] 
+    new_list[3] = repair_rb[0]
+    new_list[4] = repair_ab[0]
+    new_list.insert(3, repair_sb[2])
+    new_list.insert(5, repair_rb[2])
+    new_list.insert(7, repair_ab[2])
+    new_list = [int(word.replace(' ', '')) for word in new_list]
+    return new_list
 
 def process_characteristics_table(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
@@ -137,4 +138,5 @@ def process_optimal_velocities_table(lst, url):
         return new_list
 
 def process_modules(lst, url):
-    pass
+
+    return lst
