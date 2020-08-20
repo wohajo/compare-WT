@@ -200,8 +200,8 @@ def process_plane_full_info(url):
 
     new_list.append(process_general_characteristics(lst[0], url))
     new_list.append(process_flight_characteristics(lst[1], url))
-    new_list.append(process_defensive_armament(lst[2], url))
-    new_list.append(process_offensive_armament(lst[3], url))
+    new_list.append(process_offensive_armament(lst[2], url))
+    new_list.append(process_defensive_armament(lst[3], url))
     new_list.append(process_suspended_armament(lst[4], url))
     new_list.append(process_economy(lst[5], url))
     new_list.append(process_characteristics_table(lst[6], url))
@@ -214,8 +214,8 @@ def process_plane_full_info(url):
 if __name__ == "__main__":
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
-    # process_plane_full_info('https://wiki.warthunder.com/J35D')
+    process_plane_full_info('https://wiki.warthunder.com/J35D')
     # process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
     # process_plane_full_info('https://wiki.warthunder.com/B18A')
     # process_plane_full_info('https://wiki.warthunder.com/A6M3')
-    process_plane_full_info('https://wiki.warthunder.com/Fury_Mk_II')
+    # process_plane_full_info('https://wiki.warthunder.com/Fury_Mk_II')

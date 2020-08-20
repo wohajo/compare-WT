@@ -1,4 +1,5 @@
-from helpers import write_log
+import re
+from helpers import write_log, remove_weird_chars
 from constants import WORD_TO_REMOVE_PROCESSING, ROMAN_TO_INTEGER
 
 def filter_characteristics(n):
@@ -17,7 +18,7 @@ def process_general_characteristics(lst, url):
         write_log(0, 'processing.log', url)
         lst = []
         return lst
-    
+    lst[0] = lst[0].replace('\xa0', ' ')
     lst[2] = lst[2].replace(' Rank', '')
     lst[2] = ROMAN_TO_INTEGER[lst[2]]
     lst[3] = float(lst[3])
@@ -56,6 +57,7 @@ def process_defensive_armament(lst, url):
         return lst
     else:
         new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
+        new_list = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in new_list]
 
         return new_list
 
@@ -66,6 +68,7 @@ def process_offensive_armament(lst, url):
         return lst
     else:
         new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
+        new_list = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in new_list]
 
         return new_list
 
@@ -132,12 +135,23 @@ def process_optimal_velocities_table(lst, url):
         new_list = []
 
         for word in lst:
-            new_list.append(word.replace('< ', '').replace('N/A', '').replace('> ', ''))
-            if word == '':
-                word = None
+            new_list.append(word.replace('< ', '').replace('N/A', '0').replace('> ', ''))
+
+        new_list = [None if word == '0' else int(word) for word in new_list]
 
         return new_list
 
 def process_modules(lst, url):
+    if len(lst[0]) == 5:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 20:
+            print('short')
+    if len(lst[0]) == 6:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
+            print('medium')
+    if len(lst[0]) == 7:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 28:
+            print('long')
+
+    new_list = [_list[1::] for _list in lst]
 
     return lst
