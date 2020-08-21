@@ -112,6 +112,13 @@ def get_planes_tables(soup, url):
 
     return tables_lists
 
+def get_vehicle_img_link(soup):
+    img_tag = soup.find('div', {'class': 'ttx-image'})
+    text = []
+    text.append(img_tag.img['src'])
+
+    return text
+
 def basic_stats_to_list(items):
     '''
     Downloads basic informations and checks what basic 
@@ -174,6 +181,7 @@ def get_plane_full_info(url):
     8. Features table. \n
     9. Optimal velocities table. \n
     10. Modules table. \n
+    11. Title image.
     '''
     
     html_content = requests.get(url).text
@@ -185,7 +193,8 @@ def get_plane_full_info(url):
     # sleep(sleep_time)
     basic_stats_list = basic_stats_to_list(get_basic_stats(soup))
     table_stats_list = get_planes_tables(soup, url)
-    new_list = basic_stats_list + table_stats_list
+    title_image = get_vehicle_img_link(soup)
+    new_list = basic_stats_list + table_stats_list + title_image
 
     return new_list
 
@@ -208,6 +217,7 @@ def process_plane_full_info(url):
     new_list.append(process_features_table(lst[7], url))
     new_list.append(process_optimal_velocities_table(lst[8], url))
     new_list.append(process_modules(lst[9], url))
+    new_list.append(lst[10])
 
     return new_list
 
