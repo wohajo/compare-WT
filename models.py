@@ -14,7 +14,12 @@ class PlaneClass(db.Model):
     plane_class_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
     
+class PlaneModule(db.Model):
+    __tablename__ = "plane_modules"
 
+    plane_module_id = db.Column(db.Integer, primary_key=True)
+    tier = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(30), nullable=False)
 
 class Engine(db.Model):
     '''
@@ -43,6 +48,7 @@ class Plane(db.Model):
     '''
     __tablename__ = "planes"
 
+    # general
     plane_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
@@ -54,6 +60,8 @@ class Plane(db.Model):
     plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
     plane_class = db.relationship('PlaneClass', backref='plane', lazy=True)
     crew = db.Column(db.Integer, nullable=False)
+    
+    # flight
     take_off_weight = db.Column(db.Integer, nullable=False)
     burst_mass = db.Column(db.Float)
     ceiling = db.Column(db.Integer, nullable=False)
@@ -69,6 +77,8 @@ class Plane(db.Model):
     # offensive_armt = db.Column()
     # defensive_arm = db.Column()
     # suspended_arm = db.Column()
+    
+    # economy
     research = db.Column(db.Integer, nullable=False)
     purchase = db.Column(db.Integer, nullable=False)
     repair_min = db.Column(db.Integer, nullable=False)
@@ -78,4 +88,35 @@ class Plane(db.Model):
     aces = db.Column(db.Integer, nullable=False)
     reward_rp = db.Column(db.Integer, nullable=False)
     reward_sl = db.Column(db.Integer, nullable=False)
-    #TODO: add advanced tables 
+    # TODO: add advanced tables
+    # modules = db.Column() many to many
+    
+    # characteristics 
+    chr_stock_ab = db.Column(db.Integer, nullable=True)
+    chr_upgraded_ab = db.Column(db.Integer, nullable=True)
+    chr_stock_rb = db.Column(db.Integer, nullable=True)
+    chr_upgraded_rb = db.Column(db.Integer, nullable=True)
+    max_alt = db.Column(db.Integer, nullable=True)
+    turn_stock_ab = db.Column(db.Integer, nullable=True)
+    turn_upgraded_ab = db.Column(db.Integer, nullable=True)
+    turn_stock_rb = db.Column(db.Integer, nullable=True)
+    turn_upgraded_rb = db.Column(db.Integer, nullable=True)
+    roc_stock_ab = db.Column(db.Integer, nullable=True)
+    roc_upgraded_ab = db.Column(db.Integer, nullable=True)
+    roc_stock_rb = db.Column(db.Integer, nullable=True)
+    roc_upgraded_rb = db.Column(db.Integer, nullable=True)
+    take_off_run = db.Column(db.Integer, nullable=True)
+    
+    # features
+    combat_flaps = db.Column(db.Boolean, nullable=True)
+    take_off_flaps = db.Column(db.Boolean, nullable=True)
+    landing_flaps = db.Column(db.Boolean, nullable=True)
+    air_brakes = db.Column(db.Boolean, nullable=True)
+    arrestor_gear = db.Column(db.Boolean, nullable=True)
+    drogue_chute = db.Column(db.Boolean, nullable=True)
+
+    # optimal velocities
+    ailerons = db.Column(db.Integer, nullable=True)
+    rudder = db.Column(db.Integer, nullable=True)
+    elevators = db.Column(db.Integer, nullable=True)
+    radiator = db.Column(db.Integer, nullable=True)
