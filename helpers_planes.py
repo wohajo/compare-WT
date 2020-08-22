@@ -145,12 +145,27 @@ def process_modules(lst, url):
     if len(lst[0]) == 5:
         if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 20:
             print('short')
-    if len(lst[0]) == 6:
+            # TODO for every module check if there is one already in the db
+        else:
+            write_log(9, url)
+            return []
+    elif len(lst[0]) == 6:
         if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
             print('medium')
-    if len(lst[0]) == 7:
+            # for every module check if there is one already in the db
+        else:
+            write_log(9, url)
+            return []
+    elif len(lst[0]) == 7:
         if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 28:
             print('long')
+            # for every module check if there is one already in the db
+        else:
+            write_log(9, url)
+            return []
+    else:
+        write_log(9, url)
+        return []
 
     new_list = [_list[1::] for _list in lst]
 

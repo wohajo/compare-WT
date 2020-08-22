@@ -10,6 +10,10 @@ a {
     cursor: pointer;
 }
 
+body {
+    background-color: rgb(85, 83, 83) !important;
+}
+
 /* menu */
 
 .sidebar {
@@ -77,7 +81,7 @@ a {
 main {
     padding: 50px 10px 10px 10px;
     font-size: 40px;
-    background-color: rgb(85, 83, 83);
+    background-color: rgb(83, 83, 83);
 }
 
 .sidebar--open {

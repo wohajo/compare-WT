@@ -1,6 +1,6 @@
 from website_startup import db
 from constants import COUNTRIES
-from models import Plane, PlaneClass, Engine, Country, CoolingSystem
+from models import *
 
 def create_database():
     db.create_all()

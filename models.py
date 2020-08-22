@@ -51,6 +51,7 @@ class Plane(db.Model):
     # general
     plane_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    img_link = db.Column(db.string(300), nullable=False)
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
     country = db.relationship('Country', backref='plane')
     rank = db.Column(db.Integer, nullable=False)

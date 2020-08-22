@@ -1,7 +1,8 @@
 import re
+import time
+import random
 import requests
 from helpers import *
-from time import sleep
 from random import randint
 from helpers_planes import *
 from bs4 import BeautifulSoup
@@ -16,22 +17,40 @@ def get_vehicles_links(index):
 
     url = SCRAPE_LINKS[index]
 
-    html_content = requests.get(url).text
+    try:
+        html_content = requests.get(url).text
 
-    soup = BeautifulSoup(html_content, "lxml")
+        soup = BeautifulSoup(html_content, "lxml")
 
-    links_list = []
+        links_list = []
 
-    for link in soup.findAll("div", {"class": "mw-category-group"}):
-        for ul in link.findAll("ul"):
-            for li in ul.findAll("li"):
-                link_to_plane = (li.a.get("href").replace('%27', '\''))
-                links_list.append('https://wiki.warthunder.com' + link_to_plane)
+        for link in soup.findAll("div", {"class": "mw-category-group"}):
+            for ul in link.findAll("ul"):
+                for li in ul.findAll("li"):
+                    link_to_plane = (li.a.get("href").replace('%27', '\''))
+                    links_list.append('https://wiki.warthunder.com' + link_to_plane)
 
-    if link_to_remove in links_list: links_list.remove(link_to_remove)
-    
-    print(('Found {} vehicles!').format(len(links_list)))
-    return(links_list)
+        if link_to_remove in links_list: links_list.remove(link_to_remove)
+
+        print(('Found {} vehicles!').format(len(links_list)))
+        return(links_list)
+    except ConnectionError:
+        print('Connection error!')
+        return []
+
+def get_all_vehicles_links_interval(start, stop):
+    '''
+    Downloads and returns in form of a list of lists
+    links to vehicles from start to stop, based on list SCRAPE_LINKS.
+    '''
+
+    vehicles_links_list_tier = []
+
+    for i in range (start, stop):
+        time.sleep(random.randint(1, 3))
+        vehicles_links_list_tier.append(get_vehicles_links(i))
+
+    return vehicles_links_list_tier
 
 def get_basic_stats(soup):
     '''
@@ -198,6 +217,13 @@ def get_plane_full_info(url):
 
     return new_list
 
+def update_database():
+    vehicles_links = get_all_vehicles_links_interval(0, 6)
+    return vehicles_links
+
+def add_plane_to_db(plane_list):
+    pass
+
 def process_plane_full_info(url):
     '''
     Processes plane's full informations to a list ready to be insterted into database.
@@ -222,9 +248,10 @@ def process_plane_full_info(url):
     return new_list
 
 if __name__ == "__main__":
+    update_database()
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
-    process_plane_full_info('https://wiki.warthunder.com/J35D')
+    # process_plane_full_info('https://wiki.warthunder.com/J35D')
     # process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
     # process_plane_full_info('https://wiki.warthunder.com/B18A')
     # process_plane_full_info('https://wiki.warthunder.com/A6M3')
