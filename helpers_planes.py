@@ -13,6 +13,20 @@ def filter_characteristics(n):
     except ValueError:
         return None
 
+def separate_quantity_weapon(lst):
+    new_list = []
+    for word in lst:
+        if isinstance(word, int):
+            new_list.append(int(word))
+        elif 'x' in word:
+            words = word.split(' x ')
+            new_list.append(int(words[0]))
+            new_list.append(words[1])
+        else:
+            new_list.append(1)
+            new_list.append(word)
+    return new_list
+
 def process_general_characteristics(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
         write_log(0, 'processing.log', url)
@@ -64,10 +78,10 @@ def process_defensive_armament(lst, url):
         lst = []
         return lst
     else:
-        new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
-        new_list = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in new_list]
-
-        return new_list
+        lst = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
+        lst = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in lst]
+        
+        return separate_quantity_weapon(lst)
 
 def process_offensive_armament(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
@@ -77,18 +91,8 @@ def process_offensive_armament(lst, url):
     else:
         lst = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
         lst = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in lst]
-        new_list = []
-        for word in lst:
-            if isinstance(word, int):
-                new_list.append(int(word))
-            elif 'x' in word:
-                words = word.split(' x ')
-                new_list.append(int(words[0]))
-                new_list.append(words[1])
-            else:
-                new_list.append(1)
-                new_list.append(word)
-        return new_list
+        
+        return separate_quantity_weapon(lst)
 
 def process_suspended_armament(lst, url):
     #TODO process suspended armament as in defensive armament and modules?
@@ -161,22 +165,26 @@ def process_optimal_velocities_table(lst, url):
         return new_list
 
 def process_modules(lst, url):
-    if len(lst[0]) == 5:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 20:
+    # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[1-3]']
+    new_list = [_list[1::] for _list in lst]
+    
+    if len(lst[0]) == 4:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 16:
             print('short')
             # TODO for every module check if there is one already in the db
         else:
             write_log(9, 'processing.log', url)
             return []
-    elif len(lst[0]) == 6:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
+    elif len(lst[0]) == 5:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 20:
             print('medium')
             # for every module check if there is one already in the db
+            
         else:
             write_log(9, 'processing.log', url)
             return []
-    elif len(lst[0]) == 7:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 28:
+    elif len(lst[0]) == 6:
+        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
             print('long')
             # for every module check if there is one already in the db
         else:
@@ -186,6 +194,4 @@ def process_modules(lst, url):
         write_log(9, 'processing.log', url)
         return []
 
-    new_list = [_list[1::] for _list in lst]
-
-    return lst
+    return new_list

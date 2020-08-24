@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from constants import WORDS_TO_REMOVE
 
 def crop_list(list, start, end):
@@ -96,4 +97,4 @@ def write_log(code, filename, url):
         code = 'modules_table'
 
     with open(filename, 'a') as file:
-            file.write(('Error_codename:{}, vehicle:{} \n').format(code, url))
+            file.write(('{}, Error_codename:{}, vehicle:{} \n').format(datetime.now(), code, url))
