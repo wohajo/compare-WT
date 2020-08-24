@@ -45,12 +45,20 @@ def process_flight_characteristics(lst, url):
         lst = []
         return lst
     else:
+        engines = lst[1].split(' х ')
         lst[0] = int(lst[0].replace(' m', '').replace(' ', ''))
         lst[4] = int(lst[4].replace(' km/h', '').replace(' ', '')) 
-        lst[5] = int(lst[5].replace(' km/h', '').replace(' ', '')) 
+        lst[5] = int(lst[5].replace(' km/h', '').replace(' ', ''))
+        if len(engines) == 1:
+            lst[1] = 1
+            lst.insert(2, engines[0])
+        else:
+            lst[1] = int(engines[0])
+            lst.insert(2, engines[1])
         return lst
 
 def process_defensive_armament(lst, url):
+    #TODO process in the same way as in the offensive armament
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
         write_log(2, 'processing.log', url)
         lst = []
@@ -67,12 +75,23 @@ def process_offensive_armament(lst, url):
         lst = []
         return lst
     else:
-        new_list = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
-        new_list = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in new_list]
-
+        lst = [word.replace(' rounds', '').replace(' shots/min', '') for word in lst]
+        lst = [int(word.replace(' ', '')) if re.match('[0-9 ]+$', word) else word for word in lst]
+        new_list = []
+        for word in lst:
+            if isinstance(word, int):
+                new_list.append(int(word))
+            elif 'x' in word:
+                words = word.split(' x ')
+                new_list.append(int(words[0]))
+                new_list.append(words[1])
+            else:
+                new_list.append(1)
+                new_list.append(word)
         return new_list
 
 def process_suspended_armament(lst, url):
+    #TODO process suspended armament as in defensive armament and modules?
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
         write_log(4, 'processing.log', url)
         lst = []
@@ -147,24 +166,24 @@ def process_modules(lst, url):
             print('short')
             # TODO for every module check if there is one already in the db
         else:
-            write_log(9, url)
+            write_log(9, 'processing.log', url)
             return []
     elif len(lst[0]) == 6:
         if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
             print('medium')
             # for every module check if there is one already in the db
         else:
-            write_log(9, url)
+            write_log(9, 'processing.log', url)
             return []
     elif len(lst[0]) == 7:
         if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 28:
             print('long')
             # for every module check if there is one already in the db
         else:
-            write_log(9, url)
+            write_log(9, 'processing.log', url)
             return []
     else:
-        write_log(9, url)
+        write_log(9, 'processing.log', url)
         return []
 
     new_list = [_list[1::] for _list in lst]
