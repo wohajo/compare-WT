@@ -3,6 +3,23 @@ from website_startup import db
 from sqlalchemy.orm import backref
 from sqlalchemy.sql.schema import ForeignKey
 
+_offensive_arm = db.Table('_offensive_arm',
+    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
+    db.Column('weapon_id', db.Integer, db.ForeignKey('weapons.weapon_id')),
+    )
+
+_defensive_arm = db.Table('_defensive_arm',
+    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
+    db.Column('weapon_id', db.Integer, db.ForeignKey('weapons.weapon_id')),
+    )
+
+_planes_modules = db.Table('_planes_modules',
+    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
+    db.Column('module_id', db.Integer, db.ForeignKey('planes_modules.plane_module_id'))
+    )
+
+# suspended_arm = db.Table('suspended_armament')
+
 class Country(db.Model):
     __tablename__ = "countries"
 
@@ -18,7 +35,7 @@ class PlaneClass(db.Model):
     planes = db.relationship('Plane', backref='plane_class') 
     
 class PlaneModule(db.Model):
-    __tablename__ = "plane_modules"
+    __tablename__ = "planes_modules"
 
     plane_module_id = db.Column(db.Integer, primary_key=True)
     tier = db.Column(db.Integer, nullable=False)
@@ -62,6 +79,12 @@ class CoolingSystem(db.Model):
     name = db.Column(db.String(30), nullable=False)
     engines = db.relationship('Engine', backref='cooling_system')
 
+class Weapon(db.Model):
+    __tablename__ = "weapons" 
+
+    weapon_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+
 class Plane(db.Model):
     '''
     Plane class.
@@ -91,9 +114,9 @@ class Plane(db.Model):
     engine = db.Column(db.String(60))
     sod_structural = db.Column(db.Integer)
     sod_gear = db.Column(db.Integer)
-    # TODO next 3 fields are ought to be many to many
-    # offensive_armt = db.Column()
-    # defensive_arm = db.Column()
+    # TODO suspended armament
+    offensive_arm = db.relationship('Weapon', secondary=_offensive_arm, backref=backref('planes_offensive_arm', lazy='dynamic'))
+    defensive_arm = db.relationship('Weapon', secondary=_defensive_arm, backref=backref('planes_defensive_arm', lazy='dynamic'))
     # suspended_arm = db.Column()
     
     # economy
@@ -106,8 +129,7 @@ class Plane(db.Model):
     aces = db.Column(db.Integer)
     reward_rp = db.Column(db.Integer)
     reward_sl = db.Column(db.Integer)
-    # TODO: add advanced tables
-    # modules = db.Column() many to many
+    plane_modules = db.relationship('PlaneModule', secondary=_planes_modules, backref=backref('planes_modules', lazy='dynamic'))
     
     # characteristics 
     chr_stock_ab = db.Column(db.Integer)

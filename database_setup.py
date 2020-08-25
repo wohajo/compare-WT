@@ -5,7 +5,7 @@ from constants import COUNTRIES
 
 def create_database():
     if os.path.exists('temp_db.db'):
-        print('removing old db')
+        print('Removing old database...')
         os.remove('temp_db.db')
     
     db.create_all()
@@ -51,7 +51,6 @@ def create_database():
     db.session.bulk_save_objects(plane_classes)
     db.session.bulk_save_objects(cooling_systems)
     db.session.bulk_save_objects(engine_type)
-    db.session.add(PlaneModule(tier='1', name='G-suit', module_type_id=2))
     db.session.commit()
 
 if __name__ == "__main__":
