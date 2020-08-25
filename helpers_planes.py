@@ -72,7 +72,6 @@ def process_flight_characteristics(lst, url):
         return lst
 
 def process_defensive_armament(lst, url):
-    #TODO process in the same way as in the offensive armament
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
         write_log(2, 'processing.log', url)
         lst = []

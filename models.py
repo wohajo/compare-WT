@@ -1,5 +1,6 @@
 import sqlalchemy
 from website_startup import db
+from sqlalchemy.orm import backref
 from sqlalchemy.sql.schema import ForeignKey
 
 class Country(db.Model):
@@ -7,12 +8,14 @@ class Country(db.Model):
 
     country_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
+    planes = db.relationship('Plane', backref='country') 
 
 class PlaneClass(db.Model):
     __tablename__ = "plane_classes"
 
     plane_class_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
+    planes = db.relationship('Plane', backref='plane_class') 
     
 class PlaneModule(db.Model):
     __tablename__ = "plane_modules"
@@ -21,13 +24,13 @@ class PlaneModule(db.Model):
     tier = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(30), nullable=False)
     module_type_id = db.Column(db.Integer, ForeignKey('modules_types.module_type_id'))
-    module_type = db.relationship('ModuleType', backref='module')
 
 class ModuleType(db.Model):
     __tablename__ = "modules_types"
 
     module_type_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45), nullable=False)
+    plane_modules = db.relationship('PlaneModule', backref='module_type')
 
 class Engine(db.Model):
     '''
@@ -38,12 +41,26 @@ class Engine(db.Model):
 
     engine_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
+    engine_type_id = db.Column(db.Integer, ForeignKey('engine_types.engine_type_id'))
+    cooling_id = db.Column(db.Integer, ForeignKey('cooling_systems.cooling_sys_id'))
+
+class EngineType(db.Model):
+    '''
+    Engine class.
+    (name)
+    '''
+    __tablename__ = "engine_types"
+
+    engine_type_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), nullable=False)
+    engines = db.relationship('Engine', backref='engine_type')
 
 class CoolingSystem(db.Model):
     __tablename__ = "cooling_systems" 
 
     cooling_sys_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
+    engines = db.relationship('Engine', backref='cooling_system')
 
 class Plane(db.Model):
     '''
@@ -57,13 +74,12 @@ class Plane(db.Model):
     name = db.Column(db.String(60), unique=True)
     img_link = db.Column(db.String(300))
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
-    country = db.relationship('Country', backref='plane')
     rank = db.Column(db.Integer)
     battle_rating_ab = db.Column(db.Float)
     battle_rating_rb = db.Column(db.Float)
     battle_rating_sb = db.Column(db.Float)
+    engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
-    plane_class = db.relationship('PlaneClass', backref='plane', lazy=True)
     crew = db.Column(db.Integer)
     
     # flight
@@ -71,11 +87,8 @@ class Plane(db.Model):
     burst_mass = db.Column(db.Float)
     ceiling = db.Column(db.Integer)
     no_engines = db.Column(db.Integer)
+    engine_id = db.Column(db.String(60))
     engine = db.Column(db.String(60))
-    engine_type_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
-    engine_type = db.relationship('Engine', backref='plane', lazy=True)
-    cooling_id = db.Column(db.Integer, ForeignKey('cooling_systems.cooling_sys_id'))
-    cooling = db.relationship('CoolingSystem', backref='plane', lazy=True)
     sod_structural = db.Column(db.Integer)
     sod_gear = db.Column(db.Integer)
     # TODO next 3 fields are ought to be many to many
