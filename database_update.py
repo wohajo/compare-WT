@@ -206,10 +206,6 @@ def get_plane_full_info(url):
     html_content = requests.get(url).text
     soup = BeautifulSoup(html_content, "lxml")
 
-    
-    # sleep_time = randint(1,5)
-    # print(('Sleeping for {}s').format(sleep_time))
-    # sleep(sleep_time)
     basic_stats_list = basic_stats_to_list(get_basic_stats(soup))
     table_stats_list = get_planes_tables(soup, url)
     title_image = get_vehicle_img_link(soup)
@@ -251,10 +247,10 @@ if __name__ == "__main__":
     # update_database()
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
-    # process_plane_full_info('https://wiki.warthunder.com/J35D')
+    process_plane_full_info('https://wiki.warthunder.com/J35D')
     # process_plane_full_info('https://wiki.warthunder.com/Pe-8')
     # process_plane_full_info('https://wiki.warthunder.com/F-104G')
-    process_plane_full_info('https://wiki.warthunder.com/Tu-14T')
+    # process_plane_full_info('https://wiki.warthunder.com/Tu-14T')
     # process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
     # process_plane_full_info('https://wiki.warthunder.com/B18A')
     # process_plane_full_info('https://wiki.warthunder.com/A6M3')

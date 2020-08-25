@@ -101,7 +101,6 @@ class Plane(db.Model):
     battle_rating_ab = db.Column(db.Float)
     battle_rating_rb = db.Column(db.Float)
     battle_rating_sb = db.Column(db.Float)
-    engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
     crew = db.Column(db.Integer)
     
@@ -110,8 +109,7 @@ class Plane(db.Model):
     burst_mass = db.Column(db.Float)
     ceiling = db.Column(db.Integer)
     no_engines = db.Column(db.Integer)
-    engine_id = db.Column(db.String(60))
-    engine = db.Column(db.String(60))
+    engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     sod_structural = db.Column(db.Integer)
     sod_gear = db.Column(db.Integer)
     # TODO suspended armament

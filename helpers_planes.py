@@ -1,5 +1,5 @@
 import re
-from helpers import write_log, remove_weird_chars
+from helpers import write_log, remove_weird_chars, flatten_list
 from constants import WORD_TO_REMOVE_PROCESSING, ROMAN_TO_INTEGER
 
 def filter_characteristics(n):
@@ -94,12 +94,19 @@ def process_offensive_armament(lst, url):
         return separate_quantity_weapon(lst)
 
 def process_suspended_armament(lst, url):
-    #TODO process suspended armament as in defensive armament and modules?
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
         write_log(4, 'processing.log', url)
         lst = []
         return lst
-    return lst
+    else:
+        new_list = []
+        for word in lst:
+            setup = list(filter(None, (re.split('(\d{1,3} x )', word))))
+            for i in range(len(setup)):
+                if i % 2 == 0:
+                    setup[i] = int(setup[i].replace(' x ', ''))
+            new_list.append(setup)
+    return new_list
 
 def process_economy(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
@@ -164,42 +171,11 @@ def process_optimal_velocities_table(lst, url):
         return new_list
 
 def process_modules(lst, url):
-    # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[1-4]']
-    new_list = [_list[1::] for _list in lst]
-    
-    if len(new_list[0]) == 4:
-        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 16:
-            print('short')
-            # TODO for every module check if there is one already in the db
-        else:
-            write_log(9, 'processing.log', url)
-            return []
-
-    elif len(new_list[0]) == 5:
-        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 20:
-            print('medium')
-            # for every module check if there is one already in the db
-        else:
-            write_log(9, 'processing.log', url)
-            return []
-
-    elif len(new_list[0]) == 6:
-        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 24:
-            print('long')
-            # for every module check if there is one already in the db
-        else:
-            write_log(9, 'processing.log', url)
-            return []
-
-    elif len(new_list[0]) == 7:
-        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 28:
-            print('longest')
-            # for every module check if there is one already in the db
-        else:
-            write_log(9, 'processing.log', url)
-            return []
-    else:
+    if len(lst) == 0:
         write_log(9, 'processing.log', url)
         return []
+    else:
+        new_list = flatten_list([_list[1::] for _list in lst])
+        new_list = list(filter(None, new_list))
 
     return new_list
