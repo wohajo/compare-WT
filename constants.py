@@ -38,3 +38,8 @@ WORD_TO_REMOVE_PROCESSING =['General characteristics' , 'Offensive armament', 'F
 'Defensive armament', 'Suspended armament', 'Economy']
 
 ROMAN_TO_INTEGER = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7}
+
+FLIGHT_PERFOMANCE_MODULES = ['Fuselage repair', 'Radiator', 'Compressor', 'Wings repair', 'Engine'
+    'Engine injection', 'G-suit', 'New boosters', '95 octane fuel usage']
+
+SURVIVABILITY_MODULES = ['Airframe', 'Cover', 'Protective vest', 'Rear armor plate']

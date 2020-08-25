@@ -165,27 +165,36 @@ def process_optimal_velocities_table(lst, url):
         return new_list
 
 def process_modules(lst, url):
-    # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[1-3]']
+    # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[1-4]']
     new_list = [_list[1::] for _list in lst]
     
-    if len(lst[0]) == 4:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 16:
+    if len(new_list[0]) == 4:
+        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 16:
             print('short')
             # TODO for every module check if there is one already in the db
         else:
             write_log(9, 'processing.log', url)
             return []
-    elif len(lst[0]) == 5:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 20:
+
+    elif len(new_list[0]) == 5:
+        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 20:
             print('medium')
             # for every module check if there is one already in the db
-            
         else:
             write_log(9, 'processing.log', url)
             return []
-    elif len(lst[0]) == 6:
-        if len(lst[0]) + len(lst[1]) + len(lst[2]) + len(lst[3]) == 24:
+
+    elif len(new_list[0]) == 6:
+        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 24:
             print('long')
+            # for every module check if there is one already in the db
+        else:
+            write_log(9, 'processing.log', url)
+            return []
+
+    elif len(new_list[0]) == 7:
+        if len(new_list[0]) + len(new_list[1]) + len(new_list[2]) + len(new_list[3]) == 28:
+            print('longest')
             # for every module check if there is one already in the db
         else:
             write_log(9, 'processing.log', url)
