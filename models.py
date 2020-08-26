@@ -97,8 +97,6 @@ class Plane(db.Model):
     ceiling = db.Column(db.Integer)
     no_engines = db.Column(db.Integer)
     engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
-    sod_structural = db.Column(db.Integer)
-    sod_gear = db.Column(db.Integer)
     offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane')
     offensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
     plane_sus_arm_setups = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
@@ -138,6 +136,14 @@ class Plane(db.Model):
     air_brakes = db.Column(db.Boolean)
     arrestor_gear = db.Column(db.Boolean)
     drogue_chute = db.Column(db.Boolean)
+
+    # limits
+    sod_structural = db.Column(db.Integer)
+    sod_gear = db.Column(db.Integer)
+    sod_combat_flaps = db.Column(db.Integer)
+    sod_takeoff_flaps = db.Column(db.Integer)
+    sod_landing_flaps = db.Column(db.Integer)
+    turn_stock_ab = db.Column(db.Integer)
 
     # optimal velocities
     ailerons = db.Column(db.Integer)

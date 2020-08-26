@@ -161,7 +161,12 @@ def process_features_table(lst, url):
         return new_list
 
 def process_limits_table(lst, url):
-    return lst
+    if len(lst) == 0:
+        return []
+    else:
+        lst = lst[2:5]
+        lst = [int(word) if isinstance(word, int) else None for word in lst]
+        return lst
 
 def process_optimal_velocities_table(lst, url):
     if len(lst) == 0:
