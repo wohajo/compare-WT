@@ -52,6 +52,12 @@ def get_all_vehicles_links_interval(start, stop):
 
     return vehicles_links_list_tier
 
+def update_database():
+    vehicles_links = get_all_vehicles_links_interval(0, 6)
+    return vehicles_links
+
+# planes
+
 def get_basic_stats(soup):
     '''
     Returns basic vehicle statistics included in table
@@ -213,13 +219,6 @@ def get_plane_full_info(url):
 
     return new_list
 
-def update_database():
-    vehicles_links = get_all_vehicles_links_interval(0, 6)
-    return vehicles_links
-
-def add_plane_to_db(plane_list):
-    pass
-
 def process_plane_full_info(url):
     '''
     Processes plane's full informations to a list ready to be insterted into database.
@@ -243,11 +242,15 @@ def process_plane_full_info(url):
 
     return new_list
 
+def add_plane_to_db(plane_list):
+    pass
+
 if __name__ == "__main__":
     # update_database()
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
-    process_plane_full_info('https://wiki.warthunder.com/J35D')
+    # process_plane_full_info('https://wiki.warthunder.com/J35D')
+    process_plane_full_info('https://wiki.warthunder.com/Lancaster_B_Mk_III')
     # process_plane_full_info('https://wiki.warthunder.com/Pe-8')
     # process_plane_full_info('https://wiki.warthunder.com/F-104G')
     # process_plane_full_info('https://wiki.warthunder.com/Tu-14T')

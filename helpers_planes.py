@@ -28,10 +28,12 @@ def separate_quantity_weapon(lst):
     return new_list
 
 def process_general_characteristics(lst, url):
+    #TODO remember about hydroplanes
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
         write_log(0, 'processing.log', url)
         lst = []
         return lst
+
     lst[0] = lst[0].replace('\xa0', ' ')
     lst[2] = lst[2].replace(' Rank', '')
     lst[2] = ROMAN_TO_INTEGER[lst[2]]
@@ -105,6 +107,7 @@ def process_suspended_armament(lst, url):
             for i in range(len(setup)):
                 if i % 2 == 0:
                     setup[i] = int(setup[i].replace(' x ', ''))
+            setup = [x for x in setup if not isinstance(x, int)]
             new_list.append(setup)
     return new_list
 

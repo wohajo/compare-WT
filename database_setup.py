@@ -46,11 +46,18 @@ def create_database():
         EngineType(name='jet'),
     ]
 
+    sus_arm_type = [
+        SusArmType(name='radial'),
+        SusArmType(name='inline'),
+        SusArmType(name='jet'),
+    ]
+
     db.session.bulk_save_objects(countries)
     db.session.bulk_save_objects(module_types)
     db.session.bulk_save_objects(plane_classes)
     db.session.bulk_save_objects(cooling_systems)
     db.session.bulk_save_objects(engine_type)
+    db.session.bulk_save_objects(sus_arm_type)
     db.session.commit()
 
 if __name__ == "__main__":

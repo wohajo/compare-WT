@@ -3,22 +3,15 @@ from website_startup import db
 from sqlalchemy.orm import backref
 from sqlalchemy.sql.schema import ForeignKey
 
-_offensive_arm = db.Table('_offensive_arm',
-    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
-    db.Column('weapon_id', db.Integer, db.ForeignKey('weapons.weapon_id')),
-    )
-
-_defensive_arm = db.Table('_defensive_arm',
-    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
-    db.Column('weapon_id', db.Integer, db.ForeignKey('weapons.weapon_id')),
-    )
-
 _planes_modules = db.Table('_planes_modules',
     db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
     db.Column('module_id', db.Integer, db.ForeignKey('planes_modules.plane_module_id'))
     )
 
-# suspended_arm = db.Table('suspended_armament')
+_planes_sus_arm = db.Table('_planes_sus_arm',
+    db.Column('plane_id', db.Integer, db.ForeignKey('planes.plane_id')),
+    db.Column('sus_arm_id', db.Integer, db.ForeignKey('suspended_armaments.sus_arm_id')),
+)
 
 class Country(db.Model):
     __tablename__ = "countries"
@@ -79,12 +72,6 @@ class CoolingSystem(db.Model):
     name = db.Column(db.String(30), nullable=False)
     engines = db.relationship('Engine', backref='cooling_system')
 
-class Weapon(db.Model):
-    __tablename__ = "weapons" 
-
-    weapon_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-
 class Plane(db.Model):
     '''
     Plane class.
@@ -112,10 +99,9 @@ class Plane(db.Model):
     engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     sod_structural = db.Column(db.Integer)
     sod_gear = db.Column(db.Integer)
-    # TODO suspended armament
-    offensive_arm = db.relationship('Weapon', secondary=_offensive_arm, backref=backref('planes_offensive_arm', lazy='dynamic'))
-    defensive_arm = db.relationship('Weapon', secondary=_defensive_arm, backref=backref('planes_defensive_arm', lazy='dynamic'))
-    # suspended_arm = db.Column()
+    offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane')
+    offensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
+    plane_sus_arm_setups = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
     
     # economy
     research = db.Column(db.Integer)
@@ -158,3 +144,44 @@ class Plane(db.Model):
     rudder = db.Column(db.Integer)
     elevators = db.Column(db.Integer)
     radiator = db.Column(db.Integer)
+
+class Weapon(db.Model):
+    __tablename__ = "weapons" 
+
+    weapon_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    rounds_min = db.Column(db.Integer)
+    planes_offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane_off_weapon')
+    planes_offensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane_def_weapon')
+
+class PlaneOffensiveWeapon(db.Model):
+    __tablename__ = "plane_offensive_weapons"
+
+    id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer)
+    rounds = db.Column(db.Integer)
+    weapon_id = db.Column(db.Integer, db.ForeignKey('weapons.weapon_id'))
+    plane_id = db.Column(db.Integer, db.ForeignKey('planes.plane_id'))
+
+class PlaneDefensiveWeapon(db.Model):
+    __tablename__ = "plane_defensive_weapons"
+
+    id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer)
+    rounds = db.Column(db.Integer)
+    weapon_id = db.Column(db.Integer, db.ForeignKey('weapons.weapon_id'))
+    plane_id = db.Column(db.Integer, db.ForeignKey('planes.plane_id'))
+
+class SusArmType(db.Model):
+    __tablename__ = "sus_arm_types"
+
+    sus_arm_type_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    suspended_armaments = db.relationship('SuspendedArmament', backref='sus_arm_type')
+
+class SuspendedArmament(db.Model):
+    __tablename__ = "suspended_armaments"
+
+    sus_arm_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    arm_type = db.Column(db.Integer, ForeignKey('sus_arm_types.sus_arm_type_id'))

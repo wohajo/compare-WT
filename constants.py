@@ -43,3 +43,9 @@ FLIGHT_PERFOMANCE_MODULES = ['Fuselage repair', 'Radiator', 'Compressor', 'Wings
     'Engine injection', 'G-suit', 'New boosters', '95 octane fuel usage']
 
 SURVIVABILITY_MODULES = ['Airframe', 'Cover', 'Protective vest', 'Rear armor plate']
+
+FIGHTER_TYPES = ['Fighter', 'Air Defence fighter', 'Interceptors', 'Jet fighter', 'Naval fighter',
+    'Strike fighter']
+
+BOMBER_TYPES = ['Dive bomber', 'Frontline bomber', 'Heavy bomber', 'Jet bombers', 'Light bomber'
+    'Long Range bomber', 'Medium bomber', 'Naval bomber', 'Torpedo bomber']
