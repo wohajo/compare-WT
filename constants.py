@@ -32,7 +32,7 @@ WORDS_TO_REMOVE = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea leve
     'Take-off run(metres)', 'AB', 'RB', 'Features', 'Combat flaps', 'Take-off flaps', 
     'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute', 'Optimal velocities (km/h)',
     'Ailerons', 'Rudder', 'Elevators', 'Radiator', 'Tier', 'Flight performance', 'Survivability', 
-    'Weaponry']
+    'Weaponry', 'Wings (km/h)', 'Gear (km/h)', 'Flaps (km/h)', 'Max Static G']
 
 WORD_TO_REMOVE_PROCESSING =['General characteristics' , 'Offensive armament', 'Flight characteristics',
 'Defensive armament', 'Suspended armament', 'Economy']

@@ -160,6 +160,9 @@ def process_features_table(lst, url):
             new_list.append(False)
         return new_list
 
+def process_limits_table(lst, url):
+    return lst
+
 def process_optimal_velocities_table(lst, url):
     if len(lst) == 0:
         return lst

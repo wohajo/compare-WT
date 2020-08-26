@@ -83,6 +83,9 @@ def get_planes_tables(soup, url):
     # tables[1] is for features
     # features are in following order: ['Combat flaps', 'Take-off flaps', 'Landing flaps', 'Air brakes', 'Arrestor gear', 'Drogue chute']
     
+    # tables[2] is for limits
+    # ['Wings (km/h)', 'Gear (km/h)', 'Flaps (km/h)', 'Max Static G']
+
     # tables[3] is for optimal velocities
     # velocities are in following order: ['Ailerons', 'Rudder', 'Elevators', 'Radiator']
     
@@ -114,13 +117,24 @@ def get_planes_tables(soup, url):
         new_features = []
 
     tables_lists.append(flatten_list(new_features))
+
+    limits = html_table_to_list(tables[2])
+    if(limits[0][0] == 'Limits' and len(limits[-1]) == 7):
+        new_limits = flatten_list(remove_empty_lists(remove_unwanted_words(limits)))
+        new_limits.remove('Limits')
+    else:
+        print('Table \'limits\' not found! It propably has to be inserted manually')
+        write_log(8, 'scrape_data.log', url)
+        new_limits = []
+
+    tables_lists.append(new_limits)
     
     velocities = html_table_to_list(tables[3])
     if(velocities[0][0] == 'Optimal velocities (km/h)'):
         new_velocities = remove_empty_lists(remove_unwanted_words(velocities))
     else:
         print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
-        write_log(8, 'scrape_data.log', url)
+        write_log(9, 'scrape_data.log', url)
         new_velocities = []
 
     tables_lists.append(flatten_list(new_velocities))
@@ -130,7 +144,7 @@ def get_planes_tables(soup, url):
         new_modules = remove_empty_lists(remove_unwanted_words(modules))
     else:
         print('Table \'modules\' not found! It propably has to be inserted manually')
-        write_log(9, 'scrape_data.log', url)
+        write_log(10, 'scrape_data.log', url)
         new_modules = []
 
     tables_lists.append(new_modules)
@@ -204,9 +218,10 @@ def get_plane_full_info(url):
     6. Economy. \n
     7. Characteristics table. \n
     8. Features table. \n
-    9. Optimal velocities table. \n
-    10. Modules table. \n
-    11. Title image.
+    9. Limits table. \n
+    10. Optimal velocities table. \n
+    11. Modules table. \n
+    12. Title image.
     '''
     
     html_content = requests.get(url).text
@@ -236,9 +251,10 @@ def process_plane_full_info(url):
     new_list.append(process_economy(lst[5], url))
     new_list.append(process_characteristics_table(lst[6], url))
     new_list.append(process_features_table(lst[7], url))
-    new_list.append(process_optimal_velocities_table(lst[8], url))
-    new_list.append(process_modules(lst[9], url))
-    new_list.append(lst[10])
+    new_list.append(process_limits_table(lst[8], url))
+    new_list.append(process_optimal_velocities_table(lst[9], url))
+    new_list.append(process_modules(lst[10], url))
+    new_list.append(lst[11])
 
     return new_list
 
