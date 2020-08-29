@@ -136,6 +136,8 @@ class Plane(db.Model):
     air_brakes = db.Column(db.Boolean)
     arrestor_gear = db.Column(db.Boolean)
     drogue_chute = db.Column(db.Boolean)
+    radar_warning_receiver = db.Column(db.Boolean)
+    ballistic_computer = db.Column(db.Boolean)
 
     # limits
     sod_structural = db.Column(db.Integer)
@@ -143,7 +145,6 @@ class Plane(db.Model):
     sod_combat_flaps = db.Column(db.Integer)
     sod_takeoff_flaps = db.Column(db.Integer)
     sod_landing_flaps = db.Column(db.Integer)
-    turn_stock_ab = db.Column(db.Integer)
 
     # optimal velocities
     ailerons = db.Column(db.Integer)

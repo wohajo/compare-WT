@@ -7,7 +7,8 @@ def create_database():
     if os.path.exists('temp_db.db'):
         print('Removing old database...')
         os.remove('temp_db.db')
-    
+        print('Removed!')
+    print('Creating new database...')
     db.create_all()
     
     countries = [
@@ -47,9 +48,11 @@ def create_database():
     ]
 
     sus_arm_type = [
-        SusArmType(name='radial'),
-        SusArmType(name='inline'),
-        SusArmType(name='jet'),
+        SusArmType(name='bomb'),
+        SusArmType(name='rocket'),
+        SusArmType(name='gun pod'),
+        SusArmType(name='air-to-air missile'),
+        SusArmType(name='air-to-ground missile')
     ]
 
     db.session.bulk_save_objects(countries)

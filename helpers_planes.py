@@ -42,10 +42,12 @@ def process_general_characteristics(lst, url):
     lst[5] = float(lst[5])
     if 'Fighter' in lst[6] or 'fighter' in lst[6]:
         lst[6] = 'fighter'
-    if 'Bomber' in lst[6] or 'bomber' in lst[6]:
+    elif 'Bomber' in lst[6] or 'bomber' in lst[6]:
         lst[6] = 'bomber'
-    if 'Attacker' in lst[6] or 'attacker' in lst[6]:
+    elif 'Attacker' in lst[6] or 'attacker' in lst[6]:
         lst[6] = 'attacker'
+    else:
+        lst[6] = None
     lst[7] = int(lst[7].replace(' people', '').replace(' person', ''))
     lst[8] = float(lst[8].replace(' t', ''))
 
@@ -109,7 +111,11 @@ def process_suspended_armament(lst, url):
                     setup[i] = int(setup[i].replace(' x ', ''))
             setup = [x for x in setup if not isinstance(x, int)]
             new_list.append(setup)
-    return new_list
+        new_list = flatten_list(new_list)
+        res = [] 
+        [res.append(x) for x in new_list if x not in res] 
+    
+    return res
 
 def process_economy(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
@@ -188,5 +194,6 @@ def process_modules(lst, url):
     else:
         new_list = flatten_list([_list[1::] for _list in lst])
         new_list = list(filter(None, new_list))
+        new_list = [word.replace('.', '') for word in new_list]
 
     return new_list
