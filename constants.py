@@ -37,7 +37,7 @@ WORDS_TO_REMOVE = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea leve
 WORD_TO_REMOVE_PROCESSING =['General characteristics' , 'Offensive armament', 'Flight characteristics',
 'Defensive armament', 'Suspended armament', 'Economy']
 
-ROMAN_TO_INTEGER = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7}
+ROMAN_TO_INTEGER = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
 
 FLIGHT_PERFOMANCE_MODULES = ['Fuselage repair', 'Radiator', 'Compressor', 'Wings repair', 'Engine'
     'Engine injection', 'G-suit', 'New boosters', '95 octane fuel usage']

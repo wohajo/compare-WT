@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from constants import WORDS_TO_REMOVE
+from constants import WORDS_TO_REMOVE, ROMAN_TO_INTEGER
 
 def crop_list(list, start, end):
     '''
@@ -70,6 +70,35 @@ def flatten_list(lst):
     flattened_list = [y for x in lst for y in x]
 
     return flattened_list
+
+def roman_to_int(roman):
+    roman_list = list(roman)
+
+    result = 0
+    current_idx = None
+    current_value = None
+    next_idx = None
+    next_value = None
+
+    for i in range(0, len(roman_list)):
+        current_idx = roman_list[i]
+        current_value = ROMAN_TO_INTEGER[current_idx]
+
+        if i == len(roman_list) - 1:
+            result = result + current_value
+            return result 
+
+        next_idx = roman_list[i + 1]
+        next_value = ROMAN_TO_INTEGER[next_idx]
+
+        if current_value < next_value:
+            result = result - current_value
+        elif next_idx == None:
+            return result
+        else:
+            result = result + current_value
+
+    return result
 
 def write_log(code, filename, url):
 

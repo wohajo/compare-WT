@@ -11,7 +11,7 @@ a {
 }
 
 body {
-    background-color: rgb(85, 83, 83) !important;
+    background-color: white;
 }
 
 /* menu */
@@ -19,7 +19,7 @@ body {
 .sidebar {
     height: 100%;
     width: 230px;
-    background-color: #CCCC99;
+    background-color: #999966;
     color: white;
     position: fixed;
     z-index: 1;
@@ -28,9 +28,9 @@ body {
     overflow-x: hidden;
     padding-top: 100px;
     font-size: xx-large;
-    box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
-    -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
-    -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0);
+    /* box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
+    /* -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
+    /* -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
     transition: ease 0.3s;
 }
 
@@ -80,7 +80,6 @@ body {
 main {
     padding: 50px 10px 10px 10px;
     font-size: 40px;
-    background-color: rgb(83, 83, 83);
 }
 
 .sidebar--open {

@@ -1,6 +1,6 @@
 import re
-from helpers import write_log, remove_weird_chars, flatten_list
-from constants import WORD_TO_REMOVE_PROCESSING, ROMAN_TO_INTEGER
+from constants import WORD_TO_REMOVE_PROCESSING
+from helpers import roman_to_int, write_log, remove_weird_chars, flatten_list
 
 def filter_characteristics(n):
     if '.' in n:
@@ -36,7 +36,7 @@ def process_general_characteristics(lst, url):
 
     lst[0] = lst[0].replace('\xa0', ' ')
     lst[2] = lst[2].replace(' Rank', '')
-    lst[2] = ROMAN_TO_INTEGER[lst[2]]
+    lst[2] = roman_to_int(lst[2])
     lst[3] = float(lst[3])
     lst[4] = float(lst[4])
     lst[5] = float(lst[5])
