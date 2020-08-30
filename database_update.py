@@ -7,6 +7,7 @@ from helpers import *
 from random import randint
 from helpers_planes import *
 from bs4 import BeautifulSoup
+from helpers_planes_db import *
 from constants import SCRAPE_LINKS
 
 def get_vehicles_links(index):
@@ -54,6 +55,10 @@ def get_all_vehicles_links_interval(start, stop):
     return vehicles_links_list_tier
 
 def update_database():
+    '''
+    [IN PROGRESS] \n
+    Returns all planes' links.
+    '''
     vehicles_links = get_all_vehicles_links_interval(0, 6)
     return vehicles_links
 
@@ -153,6 +158,9 @@ def get_planes_tables(soup, url):
     return tables_lists
 
 def get_vehicle_img_link(soup):
+    '''
+    Returns vehicle\'s title image link.
+    ''' 
     img_tag = soup.find('div', {'class': 'ttx-image'})
     text = []
     text.append(img_tag.img['src'])
@@ -262,26 +270,9 @@ def process_plane_full_info(url):
 def add_plane_to_db(url):
     plane_list = process_plane_full_info(url)
 
-    enigne_type = db.session.query(EngineType).filter_by(name=plane_list[1][3]).scalar()
-    enigne_type_id = None
-    cooling_sys = db.session.query(CoolingSystem).filter_by(name=plane_list[1][4]).scalar()
-    cooling_sys_id = None
-
-    if cooling_sys is not None:
-        # append cooling sys to engine
-        pass
-    else:
-        # add to db, get the id
-        pass
-
-    if enigne_type is not None:
-        pass
-    else:
-        pass
-
-    # engine = Engine(name=plane_list[1][2], cooling_id=cooling_sys.cooling_sys_id, engine_type_id=1)
-    # db.session.add(engine)
-    # db.session.commit()
+    engine = add_plane_engine(plane_list[1], url)
+    db.session.add(engine)
+    db.session.commit()
     print('added ' + url)
 
 if __name__ == "__main__":
