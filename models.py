@@ -17,14 +17,14 @@ class Country(db.Model):
     __tablename__ = "countries"
 
     country_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False, unique=True)
     planes = db.relationship('Plane', backref='country') 
 
 class PlaneClass(db.Model):
     __tablename__ = "plane_classes"
 
     plane_class_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False, unique=True)
     planes = db.relationship('Plane', backref='plane_class') 
     
 class PlaneModule(db.Model):
@@ -32,14 +32,14 @@ class PlaneModule(db.Model):
 
     plane_module_id = db.Column(db.Integer, primary_key=True)
     tier = db.Column(db.Integer, nullable=False)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False, unique=True)
     module_type_id = db.Column(db.Integer, ForeignKey('modules_types.module_type_id'))
 
 class ModuleType(db.Model):
     __tablename__ = "modules_types"
 
     module_type_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(45), nullable=False)
+    name = db.Column(db.String(45), nullable=False, unique=True)
     plane_modules = db.relationship('PlaneModule', backref='module_type')
 
 class Engine(db.Model):
@@ -50,9 +50,10 @@ class Engine(db.Model):
     __tablename__ = "engines"
 
     engine_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), nullable=False)
+    name = db.Column(db.String(60), nullable=False, unique=True)
     engine_type_id = db.Column(db.Integer, ForeignKey('engine_types.engine_type_id'))
     cooling_id = db.Column(db.Integer, ForeignKey('cooling_systems.cooling_sys_id'))
+    planes = db.relationship('Plane', backref='engine')
 
 class EngineType(db.Model):
     '''
@@ -62,14 +63,14 @@ class EngineType(db.Model):
     __tablename__ = "engine_types"
 
     engine_type_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), nullable=False)
+    name = db.Column(db.String(60), nullable=False, unique=True)
     engines = db.relationship('Engine', backref='engine_type')
 
 class CoolingSystem(db.Model):
     __tablename__ = "cooling_systems" 
 
     cooling_sys_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False, unique=True)
     engines = db.relationship('Engine', backref='cooling_system')
 
 class Plane(db.Model):
@@ -98,7 +99,7 @@ class Plane(db.Model):
     no_engines = db.Column(db.Integer)
     engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane')
-    offensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
+    defensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
     plane_sus_arm_setups = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
     
     # economy
@@ -156,7 +157,7 @@ class Weapon(db.Model):
     __tablename__ = "weapons" 
 
     weapon_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30))
+    name = db.Column(db.String(30), unique=True)
     rounds_min = db.Column(db.Integer)
     planes_offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane_off_weapon')
     planes_offensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane_def_weapon')
@@ -183,12 +184,12 @@ class SusArmType(db.Model):
     __tablename__ = "sus_arm_types"
 
     sus_arm_type_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), unique=True)
     suspended_armaments = db.relationship('SuspendedArmament', backref='sus_arm_type')
 
 class SuspendedArmament(db.Model):
     __tablename__ = "suspended_armaments"
 
     sus_arm_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
+    name = db.Column(db.String(80), unique=True)
     arm_type = db.Column(db.Integer, ForeignKey('sus_arm_types.sus_arm_type_id'))

@@ -4,6 +4,7 @@ import random
 import requests
 from models import *
 from helpers import *
+from sqlalchemy import exc
 from random import randint
 from helpers_planes import *
 from bs4 import BeautifulSoup
@@ -268,18 +269,28 @@ def process_plane_full_info(url):
     return new_list
 
 def add_plane_to_db(url):
-    plane_list = process_plane_full_info(url)
+    try:
+        plane_list = process_plane_full_info(url)
 
-    engine = add_plane_engine(plane_list[1], url)
-    db.session.add(engine)
-    db.session.commit()
-    print('added ' + url)
+        engine_id = get_or_create_plane_engine(plane_list[1], url)
+        country_id = get_plane_country(plane_list[0][1], url)
+
+        plane = Plane(name=plane_list[0][0], engine_id=engine_id, country_id=country_id)
+
+        db.session.add(plane)
+        db.session.commit()
+        print('added ' + url)
+    except exc.IntegrityError:
+        print('Error: plane already in database! ' + url)
+        db.session.rollback()
 
 if __name__ == "__main__":
     # update_database()
     # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     # process_plane_full_info('https://wiki.warthunder.com/IL-4')
     add_plane_to_db('https://wiki.warthunder.com/J35D')
+    add_plane_to_db('https://wiki.warthunder.com/J21A-2')
+    add_plane_to_db('https://wiki.warthunder.com/J21A-1')
     # process_plane_full_info('https://wiki.warthunder.com/Lancaster_B_Mk_III')
     # process_plane_full_info('https://wiki.warthunder.com/Pe-8')
     # process_plane_full_info('https://wiki.warthunder.com/F-104G')
