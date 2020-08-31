@@ -86,9 +86,9 @@ class Plane(db.Model):
     img_link = db.Column(db.String(300))
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
     rank = db.Column(db.Integer)
-    battle_rating_ab = db.Column(db.Float)
-    battle_rating_rb = db.Column(db.Float)
     battle_rating_sb = db.Column(db.Float)
+    battle_rating_rb = db.Column(db.Float)
+    battle_rating_ab = db.Column(db.Float)
     plane_class_id = db.Column(db.Integer, ForeignKey('plane_classes.plane_class_id'))
     crew = db.Column(db.Integer)
     
@@ -98,6 +98,7 @@ class Plane(db.Model):
     ceiling = db.Column(db.Integer)
     no_engines = db.Column(db.Integer)
     engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
+    # weaponry
     offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane')
     defensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
     plane_sus_arm_setups = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
@@ -105,14 +106,19 @@ class Plane(db.Model):
     # economy
     research = db.Column(db.Integer)
     purchase = db.Column(db.Integer)
-    repair_min = db.Column(db.Integer)
-    repair_max = db.Column(db.Integer)
+    repair_min_ab = db.Column(db.Integer)
+    repair_max_ab = db.Column(db.Integer)
+    repair_min_rb = db.Column(db.Integer)
+    repair_max_rb = db.Column(db.Integer)
+    repair_min_sb = db.Column(db.Integer)
+    repair_max_sb = db.Column(db.Integer)
     crew_training = db.Column(db.Integer)
     experts = db.Column(db.Integer)
     aces = db.Column(db.Integer)
     reward_rp = db.Column(db.Integer)
-    reward_sl = db.Column(db.Integer)
-    plane_modules = db.relationship('PlaneModule', secondary=_planes_modules, backref=backref('planes_modules', lazy='dynamic'))
+    reward_sl_sb = db.Column(db.Integer)
+    reward_sl_rb = db.Column(db.Integer)
+    reward_sl_ab = db.Column(db.Integer)
     
     # characteristics 
     chr_stock_ab = db.Column(db.Integer)
@@ -131,6 +137,7 @@ class Plane(db.Model):
     take_off_run = db.Column(db.Integer)
     
     # features
+    plane_modules = db.relationship('PlaneModule', secondary=_planes_modules, backref=backref('planes_modules', lazy='dynamic'))
     combat_flaps = db.Column(db.Boolean)
     take_off_flaps = db.Column(db.Boolean)
     landing_flaps = db.Column(db.Boolean)

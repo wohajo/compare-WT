@@ -272,30 +272,64 @@ def add_plane_to_db(url):
     try:
         plane_list = process_plane_full_info(url)
 
-        engine_id = get_or_create_plane_engine(plane_list[1], url)
-        country_id = get_plane_country(plane_list[0][1], url)
+        # first row
 
-        plane = Plane(name=plane_list[0][0], engine_id=engine_id, country_id=country_id)
+        if len(plane_list[0]) == 0:
+            write_log('plane_adding', 'db_adding.log', url)
+            return None
+
+        plane = Plane(name=plane_list[0][0], img_link=plane_list[11])
+
+        plane.rank=plane_list[0][2]
+        plane.battle_rating_sb=plane_list[0][3]
+        plane.battle_rating_rb=plane_list[0][4]
+        plane.battle_rating_ab=plane_list[0][5]
+        
+        plane.plane_class_id=None
+        plane.crew=plane_list[0][7]
+        plane.take_off_weight=plane_list[0][8]
+
+        if len(plane_list[0]) == 10:
+            plane.burst_mass=plane_list[0][9]
+
+        country_id = get_plane_country(plane_list[0][1], url)
+        plane.country_id = country_id
+
+        # second row
+        add_engine_and_sod_to_plane(plane, plane_list[1], url)
+        # third row
+        # offensive weapons
+        # fourth row
+        # defensive weapons 
+        # fifth row
+        # suspended armament
+        # sixth row
+        add_economy_to_plane(plane, plane_list[5], url)
+        # seventh row
+
+        # end of rows
 
         db.session.add(plane)
         db.session.commit()
         print('added ' + url)
+        print('-' * 50)
+
     except exc.IntegrityError:
         print('Error: plane already in database! ' + url)
         db.session.rollback()
 
 if __name__ == "__main__":
     # update_database()
-    # process_plane_full_info('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    # process_plane_full_info('https://wiki.warthunder.com/IL-4')
+    # add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
+    add_plane_to_db('https://wiki.warthunder.com/IL-4')
     add_plane_to_db('https://wiki.warthunder.com/J35D')
-    add_plane_to_db('https://wiki.warthunder.com/J21A-2')
-    add_plane_to_db('https://wiki.warthunder.com/J21A-1')
-    # process_plane_full_info('https://wiki.warthunder.com/Lancaster_B_Mk_III')
-    # process_plane_full_info('https://wiki.warthunder.com/Pe-8')
-    # process_plane_full_info('https://wiki.warthunder.com/F-104G')
-    # process_plane_full_info('https://wiki.warthunder.com/Tu-14T')
-    # process_plane_full_info('https://wiki.warthunder.com/IL-2M_(1943)')
-    # process_plane_full_info('https://wiki.warthunder.com/B18A')
-    # process_plane_full_info('https://wiki.warthunder.com/A6M3')
-    # process_plane_full_info('https://wiki.warthunder.com/Fury_Mk_II')
+    # add_plane_to_db('https://wiki.warthunder.com/J21A-2')
+    # add_plane_to_db('https://wiki.warthunder.com/J21A-1')
+    # add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
+    # add_plane_to_db('https://wiki.warthunder.com/Pe-8')
+    # add_plane_to_db('https://wiki.warthunder.com/F-104G')
+    # add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
+    # add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
+    # add_plane_to_db('https://wiki.warthunder.com/B18A')
+    # add_plane_to_db('https://wiki.warthunder.com/A6M3')
+    # add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')

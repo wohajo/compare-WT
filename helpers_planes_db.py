@@ -47,3 +47,36 @@ def get_plane_country(country, url):
     else:
         write_log('country_adding', 'db_adding.log', url)
         return None
+
+def add_economy_to_plane(plane, economy, url):
+    if len(economy) != 0:
+            plane.research = economy[0] 
+            plane.purchase = economy[1]
+            plane.repair_min_sb = economy[2]
+            plane.repair_max_sb = economy[3]
+            plane.repair_min_rb = economy[4]
+            plane.repair_max_rb = economy[5]
+            plane.repair_min_ab = economy[6]
+            plane.repair_max_ab = economy[7]
+            plane.crew_training = economy[8]
+            plane.experts = economy[9]
+            plane.aces = economy[10]
+            plane.reward_rp = economy[11]
+            plane.reward_sl_sb = economy[12]
+            plane.reward_sl_rb = economy[13]
+            plane.reward_sl_ab = economy[14]
+    else:
+        write_log('economy_insert', 'db_adding.log', url)
+
+def add_engine_and_sod_to_plane(plane, lst, url):
+    if len(lst) != 0:
+            plane.ceiling = lst[0]
+            plane.no_engines = lst[1]
+            plane.sod_structural = lst[5]
+            plane.sod_gear = lst[6]
+            engine_id = get_or_create_plane_engine(lst, url)
+    else:
+            engine_id = None
+            write_log('engine_addding', 'db_adding.log', url)
+
+    plane.engine_id = engine_id
