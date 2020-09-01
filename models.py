@@ -95,7 +95,6 @@ class Plane(db.Model):
     # flight
     take_off_weight = db.Column(db.Integer)
     burst_mass = db.Column(db.Float)
-    ceiling = db.Column(db.Integer)
     no_engines = db.Column(db.Integer)
     engine_id = db.Column(db.Integer, ForeignKey('engines.engine_id'))
     # weaponry
@@ -121,10 +120,10 @@ class Plane(db.Model):
     reward_sl_ab = db.Column(db.Integer)
     
     # characteristics 
-    chr_stock_ab = db.Column(db.Integer)
-    chr_upgraded_ab = db.Column(db.Integer)
-    chr_stock_rb = db.Column(db.Integer)
-    chr_upgraded_rb = db.Column(db.Integer)
+    max_speed_stock_ab = db.Column(db.Integer)
+    max_speed_upgraded_ab = db.Column(db.Integer)
+    max_speed_stock_rb = db.Column(db.Integer)
+    max_speed_upgraded_rb = db.Column(db.Integer)
     max_alt = db.Column(db.Integer)
     turn_stock_ab = db.Column(db.Integer)
     turn_upgraded_ab = db.Column(db.Integer)

@@ -153,6 +153,7 @@ def process_characteristics_table(lst, url):
         lst[1].insert(7, lst[0][7])
 
     for i in range(0, 2):
+        lst[i] = [n.replace(' ', '').replace(',', '') for n in lst[i]]
         lst[i] = [filter_characteristics(n) for n in lst[i]]
 
     return lst
@@ -171,7 +172,7 @@ def process_limits_table(lst, url):
         return []
     else:
         lst = lst[2:5]
-        lst = [int(word) if isinstance(word, int) else None for word in lst]
+        lst = [int(word.replace(' ', '').replace(',', '')) if word != 'N/A' else None for word in lst]
         return lst
 
 def process_optimal_velocities_table(lst, url):

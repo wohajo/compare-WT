@@ -271,42 +271,35 @@ def process_plane_full_info(url):
 def add_plane_to_db(url):
     try:
         plane_list = process_plane_full_info(url)
-
+        plane = None
         # first row
 
         if len(plane_list[0]) == 0:
             write_log('plane_adding', 'db_adding.log', url)
             return None
+        else:
+            plane = Plane(name=plane_list[0][0], img_link=plane_list[11])
+            add_general_characteristics(plane, plane_list[0], url)
 
-        plane = Plane(name=plane_list[0][0], img_link=plane_list[11])
-
-        plane.rank=plane_list[0][2]
-        plane.battle_rating_sb=plane_list[0][3]
-        plane.battle_rating_rb=plane_list[0][4]
-        plane.battle_rating_ab=plane_list[0][5]
-        
-        plane.plane_class_id=None
-        plane.crew=plane_list[0][7]
-        plane.take_off_weight=plane_list[0][8]
-
-        if len(plane_list[0]) == 10:
-            plane.burst_mass=plane_list[0][9]
-
-        country_id = get_plane_country(plane_list[0][1], url)
-        plane.country_id = country_id
-
-        # second row
+        # 2nd row
         add_engine_and_sod_to_plane(plane, plane_list[1], url)
-        # third row
+        # 3rd row
         # offensive weapons
-        # fourth row
+        # 4th row
         # defensive weapons 
-        # fifth row
+        # 5th row
         # suspended armament
-        # sixth row
+        # 6th row
         add_economy_to_plane(plane, plane_list[5], url)
-        # seventh row
-
+        # 7th row
+        add_characteristics_to_plane(plane, plane_list[6], url)
+        # 8th row
+        add_features_to_plane(plane, plane_list[7], url)
+        # 9th row
+        add_flaps_sods_to_plane(plane, plane_list[8], url)
+        # 10th row
+        add_optimal_velocities_to_plane(plane, plane_list[9], url)
+        # 11st row
         # end of rows
 
         db.session.add(plane)
@@ -316,20 +309,21 @@ def add_plane_to_db(url):
 
     except exc.IntegrityError:
         print('Error: plane already in database! ' + url)
+        print('-' * 50)
         db.session.rollback()
 
 if __name__ == "__main__":
     # update_database()
-    # add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
+    add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
     add_plane_to_db('https://wiki.warthunder.com/IL-4')
     add_plane_to_db('https://wiki.warthunder.com/J35D')
-    # add_plane_to_db('https://wiki.warthunder.com/J21A-2')
-    # add_plane_to_db('https://wiki.warthunder.com/J21A-1')
-    # add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
-    # add_plane_to_db('https://wiki.warthunder.com/Pe-8')
-    # add_plane_to_db('https://wiki.warthunder.com/F-104G')
-    # add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
-    # add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
-    # add_plane_to_db('https://wiki.warthunder.com/B18A')
-    # add_plane_to_db('https://wiki.warthunder.com/A6M3')
-    # add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')
+    add_plane_to_db('https://wiki.warthunder.com/J21A-2')
+    add_plane_to_db('https://wiki.warthunder.com/J21A-1')
+    add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
+    add_plane_to_db('https://wiki.warthunder.com/Pe-8')
+    add_plane_to_db('https://wiki.warthunder.com/F-104G')
+    add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
+    add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
+    add_plane_to_db('https://wiki.warthunder.com/B18A')
+    add_plane_to_db('https://wiki.warthunder.com/A6M3')
+    add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')
