@@ -29,7 +29,7 @@ def separate_quantity_weapon(lst):
 
 def process_general_characteristics(lst, url):
     #TODO remember about hydroplanes
-    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
+    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) not in [9, 10]:
         write_log(0, 'processing.log', url)
         lst = []
         return lst
@@ -118,7 +118,7 @@ def process_suspended_armament(lst, url):
     return res
 
 def process_economy(lst, url):
-    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0:
+    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) != 15:
         write_log(5, 'processing.log', url)
         lst = []
         return lst
