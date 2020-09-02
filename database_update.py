@@ -312,8 +312,8 @@ def add_plane_to_db(url):
         # 10th row
         add_optimal_velocities_to_plane(plane, plane_list[9], url)
         # 11st row
+        add_modules_to_plane(plane, plane_list[10], url)
         # end of rows
-
         db.session.commit()
         print('added ' + url)
         print('-' * 50)

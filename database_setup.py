@@ -1,7 +1,7 @@
 import os
 from models import *
 from website_startup import db
-from constants import COUNTRIES
+from constants import COUNTRIES, FLIGHT_PERFOMANCE_MODULES, SURVIVABILITY_MODULES
 
 def create_database():
     if os.path.exists('temp_db.db'):
@@ -55,12 +55,17 @@ def create_database():
         SusArmType(name='air-to-ground missile')
     ]
 
+    flight_performance_modules = [PlaneModule(name=module_name, module_type_id=1) for module_name in FLIGHT_PERFOMANCE_MODULES]
+    survivalibity_modules = [PlaneModule(name=module_name, module_type_id=2) for module_name in SURVIVABILITY_MODULES]
+
     db.session.bulk_save_objects(countries)
     db.session.bulk_save_objects(module_types)
     db.session.bulk_save_objects(plane_classes)
     db.session.bulk_save_objects(cooling_systems)
     db.session.bulk_save_objects(engine_type)
     db.session.bulk_save_objects(sus_arm_type)
+    db.session.bulk_save_objects(flight_performance_modules)
+    db.session.bulk_save_objects(survivalibity_modules)
     db.session.commit()
 
 if __name__ == "__main__":

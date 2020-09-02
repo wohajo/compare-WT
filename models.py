@@ -31,7 +31,6 @@ class PlaneModule(db.Model):
     __tablename__ = "planes_modules"
 
     plane_module_id = db.Column(db.Integer, primary_key=True)
-    tier = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(30), nullable=False, unique=True)
     module_type_id = db.Column(db.Integer, ForeignKey('modules_types.module_type_id'))
 

@@ -39,10 +39,12 @@ WORD_TO_REMOVE_PROCESSING =['General characteristics' , 'Offensive armament', 'F
 
 ROMAN_TO_INTEGER = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
 
-FLIGHT_PERFOMANCE_MODULES = ['Fuselage repair', 'Radiator', 'Compressor', 'Wings repair', 'Engine'
+FLIGHT_PERFOMANCE_MODULES = ['Fuselage repair', 'Radiator', 'Compressor', 'Wings repair', 'Engine',
     'Engine injection', 'G-suit', 'New boosters', '95 octane fuel usage']
 
 SURVIVABILITY_MODULES = ['Airframe', 'Cover', 'Protective vest', 'Rear armor plate']
+
+# not used
 
 FIGHTER_TYPES = ['Fighter', 'Air Defence fighter', 'Interceptors', 'Jet fighter', 'Naval fighter',
     'Strike fighter']

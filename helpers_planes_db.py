@@ -2,9 +2,9 @@ from models import *
 from __init__ import db
 from helpers import write_log, list_to_chunks
 
-def get_or_create_plane_engine(engine_info, url):
+def get_id_or_create_plane_engine(engine_info, url):
     '''
-    Converts info given about a plane's engine to a db object, checks if it exists, and returns it. 
+    Converts info given about a plane's engine to a db object, checks if it exists, and returns it's id. 
     '''
     engine = db.session.query(Engine).filter_by(name=engine_info[2]).scalar()
     engine_type_id = None
@@ -75,7 +75,7 @@ def add_engine_and_sod_to_plane(plane, lst, url):
             plane.no_engines = lst[1]
             plane.sod_structural = lst[5]
             plane.sod_gear = lst[6]
-            engine_id = get_or_create_plane_engine(lst, url)
+            engine_id = get_id_or_create_plane_engine(lst, url)
     else:
             engine_id = None
             write_log('engine/ceiling/sod_addding', 'db_adding.log', url)
@@ -184,16 +184,16 @@ def add_weapons_to_plane(plane, is_defensive, weapons, url):
     else:
         lst = (list_to_chunks(weapons, 4))
         for weapon_list in lst:
-            weapon_id = get_or_create_weapon(weapon_list, url)
+            weapon_id = get_id_or_create_weapon(weapon_list)
             if is_defensive:
                 plane_weapon = PlaneDefensiveWeapon(quantity=weapon_list[0], rounds=weapon_list[2], weapon_id=weapon_id, plane_id=plane.plane_id)
             else:
                 plane_weapon = PlaneOffensiveWeapon(quantity=weapon_list[0], rounds=weapon_list[2], weapon_id=weapon_id, plane_id=plane.plane_id)
             db.session.add(plane_weapon)
 
-def get_or_create_weapon(weapon_info, url):
+def get_id_or_create_weapon(weapon_info):
     '''
-    Converts info given about a weapon to a db object, checks if it exists, and returns it. 
+    Converts info given about a weapon to a db object, checks if it exists, and returns it's id. 
     '''
     weapon = db.session.query(Weapon).filter_by(name=weapon_info[1]).scalar()
 
@@ -204,3 +204,22 @@ def get_or_create_weapon(weapon_info, url):
         db.session.flush()
 
     return weapon.weapon_id
+
+def add_modules_to_plane(plane, modules, url):
+    for module_name in modules:
+        module = get_or_create_plane_module(module_name)
+        plane.plane_modules.append(module)
+
+def get_or_create_plane_module(module_name):
+    '''
+    Converts info given about a module to a db object, checks if it exists, and returns it's id. 
+    '''
+    module = db.session.query(PlaneModule).filter_by(name=module_name).scalar()
+
+    if module is None:
+
+        module = PlaneModule(name=module_name, module_type_id=3)
+        db.session.add(module)
+        db.session.flush()
+
+    return module
