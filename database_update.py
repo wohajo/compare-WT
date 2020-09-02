@@ -281,7 +281,7 @@ def add_plane_to_db(url):
             plane_list[0][1] = 'Great_Britain'
 
         plane = None
-        # first row
+        # 1st row
 
         if len(plane_list[0]) == 0:
             write_log('plane_adding', 'db_adding.log', url)
@@ -293,9 +293,12 @@ def add_plane_to_db(url):
         # 2nd row
         add_engine_and_sod_to_plane(plane, plane_list[1], url)
         # 3rd row
-        # offensive weapons
+        db.session.add(plane)
+        db.session.flush()
+        # to get plane's id
+        add_weapons_to_plane(plane, False, plane_list[2], url)
         # 4th row
-        # defensive weapons 
+        add_weapons_to_plane(plane, True, plane_list[3], url)
         # 5th row
         # suspended armament
         # 6th row
@@ -311,13 +314,12 @@ def add_plane_to_db(url):
         # 11st row
         # end of rows
 
-        db.session.add(plane)
         db.session.commit()
         print('added ' + url)
         print('-' * 50)
 
     except exc.IntegrityError:
-        print('Error: plane already in database! ' + url)
+        print('Error: object already in database! ' + url)
         print('-' * 50)
         db.session.rollback()
 
@@ -326,12 +328,12 @@ if __name__ == "__main__":
     # add_plane_to_db('https://wiki.warthunder.com/MiG-9_(China)')
     # add_plane_to_db('https://wiki.warthunder.com/MiG-9')
     # add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    # add_plane_to_db('https://wiki.warthunder.com/IL-4')
+    add_plane_to_db('https://wiki.warthunder.com/IL-4')
     add_plane_to_db('https://wiki.warthunder.com/J35D')
     # add_plane_to_db('https://wiki.warthunder.com/J21A-2')
     # add_plane_to_db('https://wiki.warthunder.com/J21A-1')
     # add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
-    # add_plane_to_db('https://wiki.warthunder.com/Pe-8')
+    add_plane_to_db('https://wiki.warthunder.com/Pe-8')
     # add_plane_to_db('https://wiki.warthunder.com/F-104G')
     # add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
     # add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')

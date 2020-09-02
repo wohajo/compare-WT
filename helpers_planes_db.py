@@ -1,6 +1,6 @@
 from models import *
 from __init__ import db
-from helpers import write_log
+from helpers import write_log, list_to_chunks
 
 def get_or_create_plane_engine(engine_info, url):
     '''
@@ -88,7 +88,16 @@ def add_general_characteristics(plane, lst, url):
         plane.battle_rating_sb = lst[3]
         plane.battle_rating_rb = lst[4]
         plane.battle_rating_ab = lst[5]
-        plane.plane_class_id = None
+
+        if lst[6] == 'fighter':
+            plane.plane_class_id = 1
+        elif lst[6] == 'attacker':
+            plane.plane_class_id = 2
+        elif lst[6] == 'bomber':
+            plane.plane_class_id = 3
+        else:
+            plane.plane_class_id = None
+
         plane.crew=lst[7]
         plane.take_off_weight=lst[8]
 
@@ -165,3 +174,33 @@ def add_optimal_velocities_to_plane(plane, optimal_vel, url):
         plane.radiator = optimal_vel[3]
     else:
         write_log('optimal_velocities_adding', 'db_adding.log', url)
+
+def add_weapons_to_plane(plane, is_defensive, weapons, url):
+    '''
+    Adds defensive and offensive weapons to plane, based on is_defensive variable.
+    '''
+    if len(weapons) % 4 != 0:
+        write_log('weapons_adding', 'db_adding.log', url)
+    else:
+        lst = (list_to_chunks(weapons, 4))
+        for weapon_list in lst:
+            weapon_id = get_or_create_weapon(weapon_list, url)
+            if is_defensive:
+                plane_weapon = PlaneDefensiveWeapon(quantity=weapon_list[0], rounds=weapon_list[2], weapon_id=weapon_id, plane_id=plane.plane_id)
+            else:
+                plane_weapon = PlaneOffensiveWeapon(quantity=weapon_list[0], rounds=weapon_list[2], weapon_id=weapon_id, plane_id=plane.plane_id)
+            db.session.add(plane_weapon)
+
+def get_or_create_weapon(weapon_info, url):
+    '''
+    Converts info given about a weapon to a db object, checks if it exists, and returns it. 
+    '''
+    weapon = db.session.query(Weapon).filter_by(name=weapon_info[1]).scalar()
+
+    if weapon is None:
+
+        weapon = Weapon(name=weapon_info[1], rounds_min=weapon_info[3])
+        db.session.add(weapon)
+        db.session.flush()
+
+    return weapon.weapon_id

@@ -2,6 +2,14 @@ import os
 from datetime import datetime
 from constants import WORDS_TO_REMOVE, ROMAN_TO_INTEGER
 
+def list_to_chunks(lst, n):
+    '''
+    Crops list into chunks with n values and returns list of lists.
+    '''
+    new_list = [lst[i:i + n] for i in range(0, len(lst), n)]  
+
+    return new_list
+
 def crop_list(list, start, end):
     '''
     Returns list containing items cropped from starting string to ending string. 
