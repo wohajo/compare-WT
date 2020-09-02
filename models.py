@@ -99,7 +99,7 @@ class Plane(db.Model):
     # weaponry
     offensive_weapons = db.relationship('PlaneOffensiveWeapon', backref='plane')
     defensive_weapons = db.relationship('PlaneDefensiveWeapon', backref='plane')
-    plane_sus_arm_setups = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
+    plane_sus_arm = db.relationship('SuspendedArmament', secondary=_planes_sus_arm, backref=backref('planes_sus_arm', lazy='dynamic'))
     
     # economy
     research = db.Column(db.Integer)

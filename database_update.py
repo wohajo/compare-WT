@@ -57,11 +57,19 @@ def get_all_vehicles_links_interval(start, stop):
 
 def update_database():
     '''
-    [IN PROGRESS] \n
-    Returns all planes' links.
+    Adds vehicles from SCRAPE_LINKS[0-6] (planes). 
     '''
-    vehicles_links = get_all_vehicles_links_interval(0, 6)
-    return vehicles_links
+    vehicles_links = flatten_list(get_all_vehicles_links_interval(0, 6))
+    length = len(vehicles_links)
+    current = 0
+    
+    for vehicle in vehicles_links:
+        add_plane_to_db(vehicle)
+        print(('Added {}/{}').format(current, length))
+        current = current + 1
+        sleeping_time = random.randint(1, 3)
+        print(('Sleeping for {}s').format(sleeping_time))
+        time.sleep(sleeping_time)
 
 # planes
 
@@ -300,7 +308,7 @@ def add_plane_to_db(url):
         # 4th row
         add_weapons_to_plane(plane, True, plane_list[3], url)
         # 5th row
-        # suspended armament
+        add_suspended_armament_to_plane(plane, plane_list[4], url)
         # 6th row
         add_economy_to_plane(plane, plane_list[5], url)
         # 7th row
@@ -324,19 +332,8 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-    # update_database()
-    # add_plane_to_db('https://wiki.warthunder.com/MiG-9_(China)')
-    # add_plane_to_db('https://wiki.warthunder.com/MiG-9')
-    # add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    add_plane_to_db('https://wiki.warthunder.com/IL-4')
-    add_plane_to_db('https://wiki.warthunder.com/J35D')
-    # add_plane_to_db('https://wiki.warthunder.com/J21A-2')
-    # add_plane_to_db('https://wiki.warthunder.com/J21A-1')
-    # add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
-    add_plane_to_db('https://wiki.warthunder.com/Pe-8')
-    # add_plane_to_db('https://wiki.warthunder.com/F-104G')
-    # add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
-    # add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
-    # add_plane_to_db('https://wiki.warthunder.com/B18A')
-    # add_plane_to_db('https://wiki.warthunder.com/A6M3')
-    # add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')
+
+    start = time.time()
+    update_database()
+    end = time.time()
+    print(('elapsed {}s').format(end - start))

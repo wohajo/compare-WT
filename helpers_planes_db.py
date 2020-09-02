@@ -212,7 +212,7 @@ def add_modules_to_plane(plane, modules, url):
 
 def get_or_create_plane_module(module_name):
     '''
-    Converts info given about a module to a db object, checks if it exists, and returns it's id. 
+    Converts info given about a module to a db object, checks if it exists, and returns it. 
     '''
     module = db.session.query(PlaneModule).filter_by(name=module_name).scalar()
 
@@ -223,3 +223,36 @@ def get_or_create_plane_module(module_name):
         db.session.flush()
 
     return module
+
+def add_suspended_armament_to_plane(plane, suspended_armament, url):
+    for arm_name in suspended_armament:
+        arm = get_or_create_sus_arm(arm_name)
+        plane.plane_sus_arm.append(arm)
+        
+def get_or_create_sus_arm(arm_name):
+    '''
+    Converts info given about suspended weapon to a db object, checks if it exists, and returns it's id. 
+    '''
+    arm = db.session.query(SuspendedArmament).filter_by(name=arm_name).scalar()
+
+    if arm is None:
+        if ('bomb') in arm_name:
+            arm_type_id = 1
+        elif ('rocket') in arm_name:
+            arm_type_id = 2
+        elif ('torpedo') in arm_name:
+            arm_type_id = 3
+        elif ('secondary') in arm_name:
+            arm_type_id = 4
+        elif ('air-to-air') in arm_name:
+            arm_type_id = 5
+        elif('air-to-ground') in arm_name:
+            arm_type_id = 6
+        else:
+            arm_type_id = None
+
+        arm = SuspendedArmament(name=arm_name, arm_type=arm_type_id)
+        db.session.add(arm)
+        db.session.flush()
+
+    return arm

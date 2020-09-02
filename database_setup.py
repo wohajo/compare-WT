@@ -50,6 +50,7 @@ def create_database():
     sus_arm_type = [
         SusArmType(name='bomb'),
         SusArmType(name='rocket'),
+        SusArmType(name='torpedo'),
         SusArmType(name='gun pod'),
         SusArmType(name='air-to-air missile'),
         SusArmType(name='air-to-ground missile')

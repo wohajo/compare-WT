@@ -172,7 +172,7 @@ def process_limits_table(lst, url):
         return []
     else:
         lst = lst[2:5]
-        lst = [int(word.replace(' ', '').replace(',', '')) if word != 'N/A' else None for word in lst]
+        lst = [int(word.replace(' ', '').replace(',', '')) if word != 'N/A' or '?' not in word else None for word in lst]
         return lst
 
 def process_optimal_velocities_table(lst, url):
