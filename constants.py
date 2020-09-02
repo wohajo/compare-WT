@@ -24,7 +24,7 @@ SCRAPE_LINKS = [
     'https://wiki.warthunder.com/Category:Seventh_rank_helicopters'
     ]
 
-COUNTRIES = ['Britain', 'China', 'France', 'Germany', 'Italy',
+COUNTRIES = ['Great_Britain', 'China', 'France', 'Germany', 'Italy',
             'Japan', 'Sweden', 'USA', 'USSR']
 
 WORDS_TO_REMOVE = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea level)', 

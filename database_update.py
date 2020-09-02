@@ -9,7 +9,7 @@ from random import randint
 from helpers_planes import *
 from bs4 import BeautifulSoup
 from helpers_planes_db import *
-from constants import SCRAPE_LINKS
+from constants import SCRAPE_LINKS, COUNTRIES
 
 def get_vehicles_links(index):
     '''
@@ -271,6 +271,15 @@ def process_plane_full_info(url):
 def add_plane_to_db(url):
     try:
         plane_list = process_plane_full_info(url)
+
+        country_in_link = [something for something in COUNTRIES if something in url]
+
+        if len(country_in_link) != 0:
+            plane_list[0][0] = plane_list[0][0][1:] + ' (' + country_in_link[0] + ')' 
+
+        if plane_list[0][1] == 'Britain':
+            plane_list[0][1] = 'Great_Britain'
+
         plane = None
         # first row
 
@@ -314,16 +323,18 @@ def add_plane_to_db(url):
 
 if __name__ == "__main__":
     # update_database()
+    add_plane_to_db('https://wiki.warthunder.com/MiG-9_(China)')
+    add_plane_to_db('https://wiki.warthunder.com/MiG-9')
     add_plane_to_db('https://wiki.warthunder.com/F-4EJ_Phantom_II')
-    add_plane_to_db('https://wiki.warthunder.com/IL-4')
-    add_plane_to_db('https://wiki.warthunder.com/J35D')
-    add_plane_to_db('https://wiki.warthunder.com/J21A-2')
-    add_plane_to_db('https://wiki.warthunder.com/J21A-1')
+    # add_plane_to_db('https://wiki.warthunder.com/IL-4')
+    # add_plane_to_db('https://wiki.warthunder.com/J35D')
+    # add_plane_to_db('https://wiki.warthunder.com/J21A-2')
+    # add_plane_to_db('https://wiki.warthunder.com/J21A-1')
     add_plane_to_db('https://wiki.warthunder.com/Lancaster_B_Mk_III')
-    add_plane_to_db('https://wiki.warthunder.com/Pe-8')
-    add_plane_to_db('https://wiki.warthunder.com/F-104G')
-    add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
-    add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
-    add_plane_to_db('https://wiki.warthunder.com/B18A')
-    add_plane_to_db('https://wiki.warthunder.com/A6M3')
-    add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')
+    # add_plane_to_db('https://wiki.warthunder.com/Pe-8')
+    # add_plane_to_db('https://wiki.warthunder.com/F-104G')
+    # add_plane_to_db('https://wiki.warthunder.com/Tu-14T')
+    # add_plane_to_db('https://wiki.warthunder.com/IL-2M_(1943)')
+    # add_plane_to_db('https://wiki.warthunder.com/B18A')
+    # add_plane_to_db('https://wiki.warthunder.com/A6M3')
+    # add_plane_to_db('https://wiki.warthunder.com/Fury_Mk_II')
