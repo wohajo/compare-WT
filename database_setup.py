@@ -4,9 +4,9 @@ from website_startup import db
 from constants import COUNTRIES, FLIGHT_PERFOMANCE_MODULES, SURVIVABILITY_MODULES
 
 def create_database():
-    if os.path.exists('temp_db.db'):
+    if os.path.exists('planes_database.db'):
         print('Removing old database...')
-        os.remove('temp_db.db')
+        os.remove('planes_database.db')
         print('Removed!')
     if os.path.exists('vehicles.txt'):
         print('Removing old vehicle links...')
@@ -15,6 +15,18 @@ def create_database():
     if os.path.exists('inserted.log'):
         print('Removing old insertion log...')
         os.remove('inserted.log')
+        print('Removed!')
+    if os.path.exists('db_adding.log'):
+        print('Removing old db_adding log...')
+        os.remove('db_adding.log')
+        print('Removed!')
+    if os.path.exists('processing.log'):
+        print('Removing old processing log...')
+        os.remove('processing.log')
+        print('Removed!')
+    if os.path.exists('scrape_data.log'):
+        print('Removing old scraping log...')
+        os.remove('scrape_data.log')
         print('Removed!')
     print('Creating new database...')
     db.create_all()

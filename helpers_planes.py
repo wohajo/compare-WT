@@ -118,7 +118,7 @@ def process_suspended_armament(lst, url):
     return res
 
 def process_economy(lst, url):
-    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) != 15:
+    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) != 12:
         write_log(5, 'processing.log', url)
         lst = []
         return lst
@@ -143,7 +143,7 @@ def process_economy(lst, url):
         return new_list
 
 def process_characteristics_table(lst, url):
-    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
+    if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
         write_log(5, 'processing.log', url)
         lst = []
         return lst
@@ -173,7 +173,7 @@ def process_limits_table(lst, url):
     else:
         lst = lst[2:5]
         for i in range(len(lst)):
-            if '?' in lst[i] or 'N/A' in lst[i] or '_' in lst[i]:
+            if '?' in lst[i] or 'N/A' in lst[i] or '_' in lst[i] or not re.match('\d', lst[i]):
                 lst[i] = None
             else:
                 lst[i] = int(lst[i].replace(' ', '').replace(',', ''))
@@ -186,7 +186,10 @@ def process_optimal_velocities_table(lst, url):
         new_list = []
 
         for word in lst:
-            new_list.append(word.replace('< ', '').replace('N/A', '0').replace('> ', ''))
+            if '_' in word:
+                new_list.append('0')
+            else:
+                new_list.append(word.replace('< ', '').replace('N/A', '0').replace('> ', ''))
 
         new_list = [None if word == '0' else int(word) for word in new_list]
 

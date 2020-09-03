@@ -1,7 +1,7 @@
 venv/
 .vscode/
 __pycache__/
-temp_db.db
+planes_database.db
 user-agent.txt
 tempCodeRunnerFile.py
 scrape_data.log

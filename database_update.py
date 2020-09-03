@@ -40,10 +40,31 @@ def ask_if_update_links():
 
 def ask_if_start_over():
     vehicles_links = ask_if_update_links()
-    # print('Do you want to start where you left over?')
-    # value = input('y(es)/n(o): \n')
     
-    return vehicles_links
+    print('Do you want to start where you left over? \nIf you just updated links it is probably better to start from the beginning.')
+    value = input('y(es)/n(o): \n')
+
+    if value == 'y' or value == 'yes':
+        if os.path.exists('inserted.log') and os.path.exists('vehicles.txt'):
+            last_line = None
+
+            with open('inserted.log', 'r') as f:
+                lines = f.read().splitlines()
+                last_line = lines[-1]
+
+            vehicles_links = [line.strip() for line in open('vehicles.txt', 'r')]
+            vehicle_index = vehicles_links.index(last_line)
+            return vehicles_links[vehicle_index + 1:]
+        else:
+            print('No inserted.log or vehicles.txt file found! Starting from first vehicle...')
+            return vehicles_links
+
+    else:
+        if os.path.exists('inserted.log'):
+            print('Removing old inserted log...')
+            os.remove('inserted.log')
+            print('Removed!')
+        return vehicles_links
 
 def get_vehicles_links(index):
     '''
@@ -96,16 +117,17 @@ def insert_all_to_database():
     vehicles_links = ask_if_start_over()
     length = len(vehicles_links)
 
-    current = 1
+    current = 0
     start = time.time()
     for vehicle in vehicles_links:
         add_plane_to_db(vehicle)
-        print(('Added {}/{}').format(current, length))
         current = current + 1
+        add_insert_log(vehicle + '\n')
+        print(('Added {}/{}').format(current, length))
         sleeping_time = random.randint(1, 3)
         print(('Sleeping for {}s').format(sleeping_time))
         time.sleep(sleeping_time)
-        add_insert_log(vehicle + '\n')
+        print('-' * 50)
 
     end = time.time()
     print(('elapsed {}s').format(end - start))
@@ -395,7 +417,6 @@ def add_plane_to_db(url):
         # end of rows
         db.session.commit()
         print('added ' + url)
-        print('-' * 50)
 
     except exc.IntegrityError:
         print('Error: object already in database! ' + url)
@@ -403,4 +424,5 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
+    add_plane_to_db('https://wiki.warthunder.com/J35D')
     insert_all_to_database()
