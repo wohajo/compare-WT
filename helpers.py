@@ -2,6 +2,11 @@ import os
 from datetime import datetime
 from constants import WORDS_TO_REMOVE, ROMAN_TO_INTEGER
 
+
+def add_insert_log(url):
+    with open('inserted.log', 'a') as file:
+        file.write(url)
+
 def list_to_chunks(lst, n):
     '''
     Crops list into chunks with n values and returns list of lists.

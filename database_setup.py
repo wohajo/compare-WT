@@ -8,6 +8,14 @@ def create_database():
         print('Removing old database...')
         os.remove('temp_db.db')
         print('Removed!')
+    if os.path.exists('vehicles.txt'):
+        print('Removing old vehicle links...')
+        os.remove('vehicles.txt')
+        print('Removed!')
+    if os.path.exists('inserted.log'):
+        print('Removing old insertion log...')
+        os.remove('inserted.log')
+        print('Removed!')
     print('Creating new database...')
     db.create_all()
     

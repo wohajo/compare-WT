@@ -7,3 +7,6 @@ tempCodeRunnerFile.py
 scrape_data.log
 processing.log
 db_adding.log
+inserted.log
+vehicles.txt
+*.db-journal
