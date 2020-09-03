@@ -246,7 +246,7 @@ def get_or_create_sus_arm(arm_name):
             arm_type_id = 4
         elif ('air-to-air') in arm_name:
             arm_type_id = 5
-        elif('air-to-ground') in arm_name:
+        elif('air-to-ground') in arm_name or ('AGM') in arm_name or ('Bullpup') in arm_name:
             arm_type_id = 6
         else:
             arm_type_id = None

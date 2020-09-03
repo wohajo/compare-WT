@@ -65,8 +65,8 @@ def process_flight_characteristics(lst, url):
     else:
         engines = lst[1].split(' х ')
         lst[0] = int(lst[0].replace(' m', '').replace(' ', ''))
-        lst[4] = int(lst[4].replace(' km/h', '').replace(' ', '')) 
-        lst[5] = int(lst[5].replace(' km/h', '').replace(' ', ''))
+        lst[4] = int(lst[4].replace(' km/h', '').replace(' ', '').split('.')[0]) 
+        lst[5] = int(lst[5].replace(' km/h', '').replace(' ', '').split('.')[0])
         if len(engines) == 1:
             lst[1] = 1
             lst.insert(2, engines[0])
@@ -172,8 +172,12 @@ def process_limits_table(lst, url):
         return []
     else:
         lst = lst[2:5]
-        lst = [int(word.replace(' ', '').replace(',', '')) if word != 'N/A' or '?' not in word else None for word in lst]
-        return lst
+        for i in range(len(lst)):
+            if '?' in lst[i] or 'N/A' in lst[i] or '_' in lst[i]:
+                lst[i] = None
+            else:
+                lst[i] = int(lst[i].replace(' ', '').replace(',', ''))
+    return lst
 
 def process_optimal_velocities_table(lst, url):
     if len(lst) == 0:

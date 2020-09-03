@@ -61,8 +61,8 @@ def update_database():
     '''
     vehicles_links = flatten_list(get_all_vehicles_links_interval(0, 6))
     length = len(vehicles_links)
-    current = 0
-    
+    current = 1
+    start = time.time()
     for vehicle in vehicles_links:
         add_plane_to_db(vehicle)
         print(('Added {}/{}').format(current, length))
@@ -70,7 +70,8 @@ def update_database():
         sleeping_time = random.randint(1, 3)
         print(('Sleeping for {}s').format(sleeping_time))
         time.sleep(sleeping_time)
-
+    end = time.time()
+    print(('elapsed {}s').format(end - start))
 # planes
 
 def get_basic_stats(soup):
@@ -332,8 +333,4 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-
-    start = time.time()
     update_database()
-    end = time.time()
-    print(('elapsed {}s').format(end - start))
