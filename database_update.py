@@ -265,9 +265,16 @@ def get_vehicle_img_link(soup):
     '''
     Returns vehicle\'s title image link.
     ''' 
-    img_tag = soup.find('div', {'class': 'ttx-image'})
+    div_tag = soup.find('div', {'class': 'ttx-image'})
     text = []
-    text.append(img_tag.img['src'])
+
+    img_tag = div_tag.find("img", recursive=False)
+
+    if img_tag is None:
+        text.append('')
+    else:
+        print((img_tag['src']))
+        text.append(img_tag['src'])
 
     return text
 
