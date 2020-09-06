@@ -6,9 +6,10 @@ from models import *
 from helpers import *
 from sqlalchemy import exc
 from random import randint
-from helpers_planes import *
+from list_modifiers import *
 from bs4 import BeautifulSoup
-from helpers_planes_db import *
+from planes_db_handlers import *
+from planes_processing_functions import *
 from constants import SCRAPE_LINKS, COUNTRIES
 
 
@@ -17,23 +18,23 @@ def ask_if_update_links():
     value = input('y(es)/n(o): \n')
 
     if value == 'y' or value == 'yes':
-        if os.path.exists('vehicles.txt'):
+        if os.path.exists('planes.txt'):
             print('Removing old vehicle links...')
-            os.remove('vehicles.txt')
+            os.remove('planes.txt')
             print('Removed!')
         vehicles_links = flatten_list(get_all_vehicles_links_interval(0, 6))
         for vehicle in vehicles_links:
-            with open('vehicles.txt', 'a') as file:
+            with open('planes.txt', 'a') as file:
                 file.write(vehicle + '\n')
     
     else:
-        if os.path.exists('vehicles.txt'):
-            vehicles_links = [line.strip() for line in open('vehicles.txt', 'r')]
+        if os.path.exists('planes.txt'):
+            vehicles_links = [line.strip() for line in open('planes.txt', 'r')]
         else:
             print('Vehicle links not found! Downloading new links...')
             vehicles_links = flatten_list(get_all_vehicles_links_interval(0, 6))
             for vehicle in vehicles_links:
-                with open('vehicles.txt', 'a') as file:
+                with open('planes.txt', 'a') as file:
                     file.write(vehicle + '\n')
     
     return vehicles_links
@@ -45,24 +46,24 @@ def ask_if_start_over():
     value = input('y(es)/n(o): \n')
 
     if value == 'y' or value == 'yes':
-        if os.path.exists('inserted.log') and os.path.exists('vehicles.txt'):
+        if os.path.exists('logs/inserted_planes.log') and os.path.exists('planes.txt'):
             last_line = None
 
-            with open('inserted.log', 'r') as f:
+            with open('logs/inserted_planes.log', 'r') as f:
                 lines = f.read().splitlines()
                 last_line = lines[-1]
 
-            vehicles_links = [line.strip() for line in open('vehicles.txt', 'r')]
+            vehicles_links = [line.strip() for line in open('planes.txt', 'r')]
             vehicle_index = vehicles_links.index(last_line)
             return vehicles_links[vehicle_index + 1:]
         else:
-            print('No inserted.log or vehicles.txt file found! Starting from first vehicle...')
+            print('No inserted_planes.log or planes.txt file found! Starting from first vehicle...')
             return vehicles_links
 
     else:
-        if os.path.exists('inserted.log'):
+        if os.path.exists('logs/inserted_planes.log'):
             print('Removing old inserted log...')
-            os.remove('inserted.log')
+            os.remove('logs/inserted_planes.log')
             print('Removed!')
         return vehicles_links
 
@@ -110,9 +111,9 @@ def get_all_vehicles_links_interval(start, stop):
 
     return vehicles_links_list_tier
 
-def insert_all_to_database():
+def insert_all_planes_to_database():
     '''
-    Adds vehicles from SCRAPE_LINKS[0-6] (planes). 
+    Adds vehicles from SCRAPE_LINKS (planes). 
     '''
     vehicles_links = ask_if_start_over()
     length = len(vehicles_links)
@@ -131,6 +132,7 @@ def insert_all_to_database():
 
     end = time.time()
     print(('elapsed {}s').format(end - start))
+
 # planes
 
 def get_basic_stats(soup):
@@ -177,7 +179,7 @@ def get_planes_tables(soup, url):
         characteristics_with_max_speed = html_table_to_list(tables[0])
     except IndexError:
         print('Table \'characteristics\' not found! It propably has to be inserted manually')
-        write_log(6, 'scrape_data.log', url)
+        write_log(6, 'scrape_data_planes.log', url)
         new_characteristics = []
     else:
         if(characteristics_with_max_speed[0][0] == 'Characteristics'):
@@ -187,7 +189,7 @@ def get_planes_tables(soup, url):
                 del new_characteristics[0]
         else:
             print('Table \'characteristics\' not found! It propably has to be inserted manually')
-            write_log(6, 'scrape_data.log', url)
+            write_log(6, 'scrape_data_planes.log', url)
             new_characteristics = []
 
     tables_lists.append(new_characteristics)
@@ -196,14 +198,14 @@ def get_planes_tables(soup, url):
         features = html_table_to_list(tables[1])
     except IndexError:
         print('Table \'features\' not found! It propably has to be inserted manually')
-        write_log(7, 'scrape_data.log', url)
+        write_log(7, 'scrape_data_planes.log', url)
         new_features = []
     else:
         if(features[0][0] == 'Features'):
             new_features = remove_empty_lists(remove_unwanted_words(features))
         else:
             print('Table \'features\' not found! It propably has to be inserted manually')
-            write_log(7, 'scrape_data.log', url)
+            write_log(7, 'scrape_data_planes.log', url)
             new_features = []
 
     tables_lists.append(flatten_list(new_features))
@@ -212,7 +214,7 @@ def get_planes_tables(soup, url):
         limits = html_table_to_list(tables[2])
     except IndexError:
         print('Table \'limits\' not found! It propably has to be inserted manually')
-        write_log(8, 'scrape_data.log', url)
+        write_log(8, 'scrape_data_planes.log', url)
         new_limits = []
     else:
         if(limits[0][0] == 'Limits' and len(limits[-1]) == 7):
@@ -220,7 +222,7 @@ def get_planes_tables(soup, url):
             new_limits.remove('Limits')
         else:
             print('Table \'limits\' not found! It propably has to be inserted manually')
-            write_log(8, 'scrape_data.log', url)
+            write_log(8, 'scrape_data_planes.log', url)
             new_limits = []
 
     tables_lists.append(new_limits)
@@ -229,14 +231,14 @@ def get_planes_tables(soup, url):
         velocities = html_table_to_list(tables[3])
     except IndexError:
         print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
-        write_log(9, 'scrape_data.log', url)
+        write_log(9, 'scrape_data_planes.log', url)
         new_velocities = []
     else:
         if(velocities[0][0] == 'Optimal velocities (km/h)'):
             new_velocities = remove_empty_lists(remove_unwanted_words(velocities))
         else:
             print('Table \'optimal velocities\' not found! It propably has to be inserted manually')
-            write_log(9, 'scrape_data.log', url)
+            write_log(9, 'scrape_data_planes.log', url)
             new_velocities = []
 
     tables_lists.append(flatten_list(new_velocities))
@@ -245,14 +247,14 @@ def get_planes_tables(soup, url):
         modules = html_table_to_list(tables[-1])
     except IndexError:
         print('Table \'modules\' not found! It propably has to be inserted manually')
-        write_log(10, 'scrape_data.log', url)
+        write_log(10, 'scrape_data_planes.log', url)
         new_modules = []
     else:
         if(modules[0][0] == 'Tier'):
             new_modules = remove_empty_lists(remove_unwanted_words(modules))
         else:
             print('Table \'modules\' not found! It propably has to be inserted manually')
-            write_log(10, 'scrape_data.log', url)
+            write_log(10, 'scrape_data_planes.log', url)
             new_modules = []
 
     tables_lists.append(new_modules)
@@ -385,7 +387,7 @@ def add_plane_to_db(url):
         # 1st row
 
         if len(plane_list[0]) == 0:
-            write_log('plane_adding', 'db_adding.log', url)
+            write_log('plane_adding', 'db_adding_planes.log', url)
             return None
         else:
             plane = Plane(name=plane_list[0][0], img_link=plane_list[11])
@@ -424,5 +426,4 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-    add_plane_to_db('https://wiki.warthunder.com/J35D')
-    insert_all_to_database()
+    insert_all_planes_to_database()

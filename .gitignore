@@ -4,9 +4,9 @@ __pycache__/
 planes_database.db
 user-agent.txt
 tempCodeRunnerFile.py
-scrape_data.log
-processing.log
-db_adding.log
-inserted.log
-vehicles.txt
+scrape_data_planes.log
+processing_planes.log
+db_adding_planes.log
+inserted_planes.log
+planes.txt
 *.db-journal

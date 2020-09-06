@@ -1,6 +1,7 @@
 import re
 from constants import WORD_TO_REMOVE_PROCESSING
-from helpers import roman_to_int, write_log, remove_weird_chars, flatten_list
+from helpers import roman_to_int, write_log
+from list_modifiers import remove_weird_chars, flatten_list
 
 def filter_characteristics(n):
     if '.' in n:
@@ -30,7 +31,7 @@ def separate_quantity_weapon(lst):
 def process_general_characteristics(lst, url):
     #TODO remember about hydroplanes
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) not in [9, 10]:
-        write_log(0, 'processing.log', url)
+        write_log(0, 'processing_planes.log', url)
         lst = []
         return lst
 
@@ -59,7 +60,7 @@ def process_general_characteristics(lst, url):
 def process_flight_characteristics(lst, url):
     
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) != 6:
-        write_log(1, 'processing.log', url)
+        write_log(1, 'processing_planes.log', url)
         lst = []
         return lst
     else:
@@ -77,7 +78,7 @@ def process_flight_characteristics(lst, url):
 
 def process_defensive_armament(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
-        write_log(2, 'processing.log', url)
+        write_log(2, 'processing_planes.log', url)
         lst = []
         return lst
     else:
@@ -88,7 +89,7 @@ def process_defensive_armament(lst, url):
 
 def process_offensive_armament(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
-        write_log(3, 'processing.log', url)
+        write_log(3, 'processing_planes.log', url)
         lst = []
         return lst
     else:
@@ -99,7 +100,7 @@ def process_offensive_armament(lst, url):
 
 def process_suspended_armament(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst):
-        write_log(4, 'processing.log', url)
+        write_log(4, 'processing_planes.log', url)
         lst = []
         return lst
     else:
@@ -119,7 +120,7 @@ def process_suspended_armament(lst, url):
 
 def process_economy(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) != 12:
-        write_log(5, 'processing.log', url)
+        write_log(5, 'processing_planes.log', url)
         lst = []
         return lst
     else:
@@ -144,7 +145,7 @@ def process_economy(lst, url):
 
 def process_characteristics_table(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
-        write_log(5, 'processing.log', url)
+        write_log(5, 'processing_planes.log', url)
         lst = []
         return lst
     
@@ -197,7 +198,7 @@ def process_optimal_velocities_table(lst, url):
 
 def process_modules(lst, url):
     if len(lst) == 0:
-        write_log(9, 'processing.log', url)
+        write_log(9, 'processing_planes.log', url)
         return []
     else:
         new_list = flatten_list([_list[1::] for _list in lst])

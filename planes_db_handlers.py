@@ -1,6 +1,7 @@
 from models import *
 from __init__ import db
-from helpers import write_log, list_to_chunks
+from helpers import write_log
+from list_modifiers import list_to_chunks
 
 def get_id_or_create_plane_engine(engine_info, url):
     '''
@@ -18,7 +19,7 @@ def get_id_or_create_plane_engine(engine_info, url):
         elif engine_info[3] == 'Jet':
             engine_type_id = 3
         else:
-            write_log('engine_adding_type', 'db_adding.log', url)
+            write_log('engine_adding_type', 'db_adding_planes.log', url)
         
         if engine_info[4] == 'air':
             cooling_id = 1
@@ -27,7 +28,7 @@ def get_id_or_create_plane_engine(engine_info, url):
         elif engine_info[4] == 'oil':
             cooling_id = 3
         else:
-            write_log('engine_adding_cooling', 'db_adding.log', url)
+            write_log('engine_adding_cooling', 'db_adding_planes.log', url)
 
         engine = Engine(name=engine_info[2], cooling_id=cooling_id, engine_type_id=engine_type_id)
         db.session.add(engine)
@@ -45,7 +46,7 @@ def get_plane_country(country, url):
     if country is not None:
         return country_id
     else:
-        write_log('country_adding', 'db_adding.log', url)
+        write_log('country_adding', 'db_adding_planes.log', url)
         return None
 
 def add_economy_to_plane(plane, economy, url):
@@ -66,7 +67,7 @@ def add_economy_to_plane(plane, economy, url):
             plane.reward_sl_rb = economy[13]
             plane.reward_sl_ab = economy[14]
     else:
-        write_log('economy_insert', 'db_adding.log', url)
+        write_log('economy_insert', 'db_adding_planes.log', url)
 
 def add_engine_and_sod_to_plane(plane, lst, url):
     if len(lst) != 0:
@@ -78,7 +79,7 @@ def add_engine_and_sod_to_plane(plane, lst, url):
             engine_id = get_id_or_create_plane_engine(lst, url)
     else:
             engine_id = None
-            write_log('engine/ceiling/sod_addding', 'db_adding.log', url)
+            write_log('engine/ceiling/sod_addding', 'db_adding_planes.log', url)
 
     plane.engine_id = engine_id
 
@@ -107,7 +108,7 @@ def add_general_characteristics(plane, lst, url):
         country_id = get_plane_country(lst[1], url)
         plane.country_id = country_id
     else:
-        write_log('general_characteristics_adding', 'db_adding.log', url)
+        write_log('general_characteristics_adding', 'db_adding_planes.log', url)
 
 def add_characteristics_to_plane(plane, characteristics, url):
     if len(characteristics) != 0:
@@ -120,7 +121,7 @@ def add_characteristics_to_plane(plane, characteristics, url):
             if plane.max_alt is None:
                 plane.max_alt = characteristics[0][2] 
         else:
-            write_log('max_alt_adding', 'db_adding.log', url)
+            write_log('max_alt_adding', 'db_adding_planes.log', url)
 
         plane.turn_stock_ab = characteristics[0][3]
         plane.turn_upgraded_ab = characteristics[1][3]
@@ -135,14 +136,14 @@ def add_characteristics_to_plane(plane, characteristics, url):
             plane.take_off_run = characteristics[0][7]
         else:
             plane.take_off_run = None
-            write_log('take_off_run_adding', 'db_adding.log', url)
+            write_log('take_off_run_adding', 'db_adding_planes.log', url)
     else:
-            write_log('characteristics_adding', 'db_adding.log', url)
+            write_log('characteristics_adding', 'db_adding_planes.log', url)
 
 def add_features_to_plane(plane, features, url):
     if len(features) != 0:
         if None in features:
-            write_log('features_adding', 'db_adding.log', url)
+            write_log('features_adding', 'db_adding_planes.log', url)
         plane.combat_flaps = features[0]
         plane.take_off_flaps = features[1]
         plane.landing_flaps = features[2]
@@ -152,35 +153,35 @@ def add_features_to_plane(plane, features, url):
         plane.radar_warning_receiver = False
         plane.ballistic_computer = False
     else:
-        write_log('features_adding', 'db_adding.log', url)
+        write_log('features_adding', 'db_adding_planes.log', url)
 
 def add_flaps_sods_to_plane(plane, sods, url):
     if len(sods) != 0:
         if None in sods:
-            write_log('flaps_sods_adding', 'db_adding.log', url)
+            write_log('flaps_sods_adding', 'db_adding_planes.log', url)
         plane.sod_combat_flaps = sods[0]
         plane.sod_takeoff_flaps = sods[1]
         plane.sod_landing_flaps = sods[2]
     else:
-        write_log('flaps_sods_adding', 'db_adding.log', url)
+        write_log('flaps_sods_adding', 'db_adding_planes.log', url)
 
 def add_optimal_velocities_to_plane(plane, optimal_vel, url):
     if len(optimal_vel) != 0:
         if None in optimal_vel:
-            write_log('optimal_velocities_adding', 'db_adding.log', url)
+            write_log('optimal_velocities_adding', 'db_adding_planes.log', url)
         plane.ailerons = optimal_vel[0]
         plane.rudder = optimal_vel[1]
         plane.elevators = optimal_vel[2]
         plane.radiator = optimal_vel[3]
     else:
-        write_log('optimal_velocities_adding', 'db_adding.log', url)
+        write_log('optimal_velocities_adding', 'db_adding_planes.log', url)
 
 def add_weapons_to_plane(plane, is_defensive, weapons, url):
     '''
     Adds defensive and offensive weapons to plane, based on is_defensive variable.
     '''
     if len(weapons) % 4 != 0:
-        write_log('weapons_adding', 'db_adding.log', url)
+        write_log('weapons_adding', 'db_adding_planes.log', url)
     else:
         lst = (list_to_chunks(weapons, 4))
         for weapon_list in lst:

@@ -3,40 +3,6 @@ from datetime import datetime
 from constants import WORDS_TO_REMOVE, ROMAN_TO_INTEGER
 
 
-def add_insert_log(url):
-    with open('inserted.log', 'a') as file:
-        file.write(url)
-
-def list_to_chunks(lst, n):
-    '''
-    Crops list into chunks with n values and returns list of lists.
-    '''
-    new_list = [lst[i:i + n] for i in range(0, len(lst), n)]  
-
-    return new_list
-
-def crop_list(list, start, end):
-    '''
-    Returns list containing items cropped from starting string to ending string. 
-    '''
-
-    start = list.index(start) + 1
-    end = list.index(end)
-
-    return list[start:end]
-
-def remove_weird_chars(lst):
-    '''
-    Returns list without trailing spaces and unnecessary characters.
-    '''
-
-    new_list = []
-
-    for item in lst:
-        new_list.append(item.strip().replace(u'\xa0', ' '))
-
-    return new_list
-
 def html_table_to_list(table):
     '''
     Converts given HTML table with header and sub-header to a list of lists and returns it.
@@ -56,33 +22,6 @@ def html_table_to_list(table):
         rows.append([td.get_text(strip = True) for td in tr.find_all('td')])
 
     return rows
-
-def remove_empty_lists(lst):
-    '''
-    Removes empty lists from list and returns a cleaned up copy.
-    '''
-    
-    new_list = list(filter(lambda x: x, lst))
-
-    return new_list
-
-def remove_unwanted_words(lst):
-    '''
-    Removes unwanted words from list and returns a new copy.
-    '''
-
-    new_list = [list(filter(lambda w: w not in WORDS_TO_REMOVE, sublist)) for sublist in lst]
-
-    return new_list
-
-def flatten_list(lst):
-    '''
-    Flattens 2D list to 1D and returns it.
-    '''
-
-    flattened_list = [y for x in lst for y in x]
-
-    return flattened_list
 
 def roman_to_int(roman):
     roman_list = list(roman)
@@ -113,6 +52,10 @@ def roman_to_int(roman):
 
     return result
 
+def add_insert_log(url):
+    with open('logs/inserted_planes.log', 'a') as file:
+        file.write(url)
+
 def write_log(code, filename, url):
 
     '''
@@ -138,5 +81,5 @@ def write_log(code, filename, url):
     elif code == 9:
         code = 'modules_table'
 
-    with open(filename, 'a') as file:
+    with open('logs/' + filename, 'a') as file:
             file.write(('{}, Error_codename:{}, vehicle:{} \n').format(datetime.now(), code, url))

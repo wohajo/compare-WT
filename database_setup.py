@@ -8,25 +8,25 @@ def create_database():
         print('Removing old database...')
         os.remove('planes_database.db')
         print('Removed!')
-    if os.path.exists('vehicles.txt'):
+    if os.path.exists('planes.txt'):
         print('Removing old vehicle links...')
-        os.remove('vehicles.txt')
+        os.remove('planes.txt')
         print('Removed!')
-    if os.path.exists('inserted.log'):
+    if os.path.exists('logs/inserted_planes.log'):
         print('Removing old insertion log...')
-        os.remove('inserted.log')
+        os.remove('logs/inserted_planes.log')
         print('Removed!')
-    if os.path.exists('db_adding.log'):
+    if os.path.exists('logs/db_adding_planes.log'):
         print('Removing old db_adding log...')
-        os.remove('db_adding.log')
+        os.remove('logs/db_adding_planes.log')
         print('Removed!')
-    if os.path.exists('processing.log'):
+    if os.path.exists('logs/processing_planes.log'):
         print('Removing old processing log...')
-        os.remove('processing.log')
+        os.remove('logs/processing_planes.log')
         print('Removed!')
-    if os.path.exists('scrape_data.log'):
+    if os.path.exists('logs/scrape_data_planes.log'):
         print('Removing old scraping log...')
-        os.remove('scrape_data.log')
+        os.remove('logs/scrape_data_planes.log')
         print('Removed!')
     print('Creating new database...')
     db.create_all()
