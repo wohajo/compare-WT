@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+Choose a country
+<select>
+    {% for country in countries %}
+        <option value={{country.country_id}}>
+            {{country.name}}
+        </option>
+    {% endfor %}
+</select></br>
+Choose a plane
+<select>
+    {% for plane in planes %}
+        <option value={{plane.plane_id}}>
+            {{plane.name}}
+        </option>
+    {% endfor %}
+</select>
+{% endblock content %}

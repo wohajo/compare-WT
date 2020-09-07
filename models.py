@@ -1,5 +1,5 @@
 import sqlalchemy
-from website_startup import db
+from __init__ import db
 from sqlalchemy.orm import backref
 from sqlalchemy.sql.schema import ForeignKey
 
