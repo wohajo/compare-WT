@@ -89,7 +89,9 @@ main {
 }
 
 select {
-    width: 250px;
+    width: 180px;
+    height: 30px;
+    border: none;
 }
 
 /* small screens */
