@@ -4,6 +4,10 @@ from website_startup import db
 from constants import COUNTRIES, FLIGHT_PERFOMANCE_MODULES, SURVIVABILITY_MODULES
 
 def create_database():
+    print('=' * 50)
+    if not os.path.exists('logs'):
+        print('Creating logs directory...')
+        os.mkdir('logs')
     if os.path.exists('planes_database.db'):
         print('Removing old database...')
         os.remove('planes_database.db')
@@ -30,6 +34,7 @@ def create_database():
         print('Removed!')
     print('Creating new database...')
     db.create_all()
+    print('=' * 50)
     
     countries = [
         Country(name=COUNTRIES[0]),
