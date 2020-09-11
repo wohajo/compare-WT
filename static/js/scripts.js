@@ -20,7 +20,7 @@ function menuToggleClick() {
 country_select.onchange = function() {
     country_id = country_select.value;
 
-    fetch('/planes/' + country_id).then(function(response) {
+    fetch('/co+pl/' + country_id).then(function(response) {
         response.json().then(function(data) {
             let optionHTML = ''
             for (let plane of data.planes) {
