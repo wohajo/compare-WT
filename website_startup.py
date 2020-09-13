@@ -112,7 +112,7 @@ def plane(plane_id):
 
     plane_object['offensive_armament'] = []
     plane_object['defensive_armament'] = []
-    plane_object['suspended_armament'] = [{'name': sus_arm.name, 'type': sus_arm.sus_arm_type.name} for sus_arm in plane.plane_sus_arm]
+    plane_object['suspended_armament'] = [{'name': sus_arm.name, 'type': sus_arm.sus_arm_type.name} if sus_arm.sus_arm_type is not None else {'name': sus_arm.name, 'type': None} for sus_arm in plane.plane_sus_arm]
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneOffensiveWeapon).filter(PlaneOffensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneOffensiveWeapon.weapon_id).all():
         plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})

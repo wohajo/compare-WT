@@ -388,7 +388,7 @@ def add_plane_to_db(url):
             plane_list[0][0] = plane_list[0][0][1:] + ' (' + country_in_link[0] + ')' 
 
         if plane_list[0][1] == 'Britain':
-            plane_list[0][1] = 'Great_Britain'
+            plane_list[0][1] = 'Great Britain'
 
         plane = None
         # 1st row
