@@ -108,6 +108,17 @@ def plane(plane_id):
     plane_object['rudder'] = plane.rudder
     plane_object['elevators'] = plane.elevators
     plane_object['radiator'] = plane.radiator
+    plane_object['modules'] = [{'name': module.name, 'type': module.module_type.name} for module in plane.plane_modules]
+
+    plane_object['offensive_armament'] = []
+    plane_object['defensive_armament'] = []
+    plane_object['suspended_armament'] = [{'name': sus_arm.name, 'type': sus_arm.sus_arm_type.name} for sus_arm in plane.plane_sus_arm]
+
+    for weapon, plane_weapon in db.session.query(Weapon, PlaneOffensiveWeapon).filter(PlaneOffensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneOffensiveWeapon.weapon_id).all():
+        plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})
+
+    for weapon, plane_weapon in db.session.query(Weapon, PlaneDefensiveWeapon).filter(PlaneDefensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneDefensiveWeapon.weapon_id).all():
+        plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})
 
     return jsonify({'planes' : plane_object})
 
