@@ -433,4 +433,8 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-    insert_all_planes_to_database()
+    # insert_all_planes_to_database()
+    # add_plane_to_db('https://wiki.warthunder.com/Spitfire_Mk.IIa_Venture_I')
+    # add_plane_to_db('https://wiki.warthunder.com/Spitfire_Mk_Vb/trop')
+    add_plane_to_db('https://wiki.warthunder.com/Meteor_F_Mk.8_Reaper')
+    add_plane_to_db('https://wiki.warthunder.com/DB-7_(Great_Britain)')

@@ -51,8 +51,23 @@ def get_plane_country(country, url):
 
 def add_economy_to_plane(plane, economy, url):
     if len(economy) != 0:
-            plane.research = economy[0] 
-            plane.purchase = economy[1]
+        plane.research = economy[0] 
+        plane.purchase = economy[1]
+
+        if economy[0] == 0 and economy[1] == 0:
+            plane.is_premium = True
+            plane.repair_min_sb = economy[2]
+            plane.repair_min_rb = economy[3]
+            plane.repair_min_ab = economy[4]
+            plane.crew_training = economy[5]
+            plane.experts = economy[6]
+            plane.aces = economy[7]
+            plane.reward_rp = economy[8]
+            plane.reward_sl_sb = economy[9]
+            plane.reward_sl_rb = economy[10]
+            plane.reward_sl_ab = economy[11]
+        else:
+            plane.is_premium = False
             plane.repair_min_sb = economy[2]
             plane.repair_max_sb = economy[3]
             plane.repair_min_rb = economy[4]

@@ -35,7 +35,7 @@ WORDS_TO_REMOVE = ['Characteristics', 'Stock', 'Max Speed(km/h at 0 m - sea leve
     'Weaponry', 'Wings (km/h)', 'Gear (km/h)', 'Flaps (km/h)', 'Max Static G']
 
 WORD_TO_REMOVE_PROCESSING =['General characteristics' , 'Offensive armament', 'Flight characteristics',
-'Defensive armament', 'Suspended armament', 'Economy', 'Premium']
+'Defensive armament', 'Suspended armament', 'Economy']
 
 ROMAN_TO_INTEGER = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
 

@@ -104,6 +104,8 @@ class Plane(db.Model):
     # economy
     research = db.Column(db.Integer)
     purchase = db.Column(db.Integer)
+    is_premium = db.Column(db.Integer)
+    purchase_ge = db.Column(db.Integer)
     repair_min_ab = db.Column(db.Integer)
     repair_max_ab = db.Column(db.Integer)
     repair_min_rb = db.Column(db.Integer)

@@ -124,24 +124,31 @@ def process_economy(lst, url):
         lst = []
         return lst
     else:
-        new_list = [word.replace(' %', '').replace(' ', '') for word in lst]
-        if 'free' not in lst:
-            repair_sb = new_list[2].partition('/')
-            repair_rb = new_list[3].partition('/')
-            repair_ab = new_list[4].partition('/')
-            new_list[2] = repair_sb[0] 
-            new_list[3] = repair_rb[0]
-            new_list[4] = repair_ab[0]
-            new_list.insert(3, repair_sb[2])
-            new_list.insert(5, repair_rb[2])
-            new_list.insert(7, repair_ab[2])
+        if lst[0] in ['Premium', 'premium']:
+            new_list = [word.replace(' %', '').replace(' ', '').replace('×2', '') for word in lst]
+            new_list[0] = 0
+            if 'or' in new_list[1]:
+                new_list[1] = 0
         else:
-            new_list = [word.replace('free', '0') for word in new_list]
-            for i in range(3, 9):
-                new_list.insert(i, '0')
+            new_list = [word.replace(' %', '').replace(' ', '') for word in lst]
+            if 'free' not in lst:
+                repair_sb = new_list[2].partition('/')
+                repair_rb = new_list[3].partition('/')
+                repair_ab = new_list[4].partition('/')
+                new_list[2] = repair_sb[0] 
+                new_list[3] = repair_rb[0]
+                new_list[4] = repair_ab[0]
+                new_list.insert(3, repair_sb[2])
+                new_list.insert(5, repair_rb[2])
+                new_list.insert(7, repair_ab[2])
+            else:
+                new_list = [word.replace('free', '0') for word in new_list]
+                for i in range(3, 9):
+                    new_list.insert(i, '0')
 
-        new_list = [int(word) for word in new_list]
-        return new_list
+    new_list = [int(word) for word in new_list]
+        
+    return new_list
 
 def process_characteristics_table(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
