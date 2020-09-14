@@ -54,7 +54,7 @@ def add_economy_to_plane(plane, economy, url):
         plane.research = economy[0] 
         plane.purchase = economy[1]
 
-        if economy[0] == 0 and economy[1] == 0:
+        if economy[0] == 0 and len(economy) == 12:
             plane.is_premium = True
             plane.repair_min_sb = economy[2]
             plane.repair_min_rb = economy[3]
