@@ -29,7 +29,6 @@ def separate_quantity_weapon(lst):
     return new_list
 
 def process_general_characteristics(lst, url):
-    #TODO remember about hydroplanes
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst) not in [9, 10]:
         write_log(0, 'processing_planes.log', url)
         lst = []
@@ -152,7 +151,7 @@ def process_economy(lst, url):
 
 def process_characteristics_table(lst, url):
     if any(word in WORD_TO_REMOVE_PROCESSING for word in lst) or len(lst) == 0 or len(lst[0]) != 8 or len(lst[1]) not in [6, 8]:
-        write_log(5, 'processing_planes.log', url)
+        write_log(6, 'processing_planes.log', url)
         lst = []
         return lst
     
@@ -168,6 +167,7 @@ def process_characteristics_table(lst, url):
 
 def process_features_table(lst, url):
     if len(lst) == 0:
+        write_log(7, 'processing_planes.log', url)
         return lst
     else:
         new_list = [False if word == 'X' else True for word in lst]
@@ -177,6 +177,7 @@ def process_features_table(lst, url):
 
 def process_limits_table(lst, url):
     if len(lst) == 0:
+        write_log(8, 'processing_planes.log', url)
         return []
     else:
         lst = lst[2:5]
@@ -189,6 +190,7 @@ def process_limits_table(lst, url):
 
 def process_optimal_velocities_table(lst, url):
     if len(lst) == 0:
+        write_log(9, 'processing_planes.log', url)
         return lst
     else:
         new_list = []
@@ -205,7 +207,7 @@ def process_optimal_velocities_table(lst, url):
 
 def process_modules(lst, url):
     if len(lst) == 0:
-        write_log(9, 'processing_planes.log', url)
+        write_log(10, 'processing_planes.log', url)
         return []
     else:
         new_list = flatten_list([_list[1::] for _list in lst])

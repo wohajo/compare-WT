@@ -68,8 +68,9 @@ def write_log(code, filename, url):
     5: Economy \n
     6: Characteristics table \n
     7: Features table \n
-    8: Optimal velocities table \n
-    9: Modules table \n
+    8: Limits table \n
+    9: Optimal velocities table \n
+    10: Modules table \n
     '''
 
     if code == 6:
