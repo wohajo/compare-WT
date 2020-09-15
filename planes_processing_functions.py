@@ -1,5 +1,5 @@
 import re
-from constants import WORD_TO_REMOVE_PROCESSING
+from constants import WORD_TO_REMOVE_PROCESSING, WORDS_TO_REMOVE
 from helpers import roman_to_int, write_log
 from list_modifiers import remove_weird_chars, flatten_list
 
@@ -197,8 +197,8 @@ def process_optimal_velocities_table(lst, url):
             if '_' in word:
                 new_list.append('0')
             else:
-                new_list.append(word.replace('< ', '').replace('N/A', '0').replace('> ', ''))
-
+                new_list.append(word.replace('<', '').replace('N/A', '0').replace('>', '').replace(' ', ''))
+        new_list = [word for word in new_list if word not in WORDS_TO_REMOVE]
         new_list = [None if word == '0' else int(word) for word in new_list]
 
         return new_list

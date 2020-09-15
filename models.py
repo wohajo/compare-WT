@@ -82,7 +82,8 @@ class Plane(db.Model):
     # general
     plane_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
-    img_link = db.Column(db.String(300))
+    img_link = db.Column(db.String(400))
+    wiki_link = db.Column(db.String(400))
     country_id = db.Column(db.Integer, ForeignKey('countries.country_id'))
     rank = db.Column(db.Integer)
     battle_rating_sb = db.Column(db.Float)

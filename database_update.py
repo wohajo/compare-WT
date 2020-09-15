@@ -424,6 +424,7 @@ def add_plane_to_db(url):
         # 11st row
         add_modules_to_plane(plane, plane_list[10], url)
         # end of rows
+        plane.wiki_link = url
         db.session.commit()
         print('added ' + url)
 
