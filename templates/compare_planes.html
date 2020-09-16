@@ -1,9 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-<form method="POST">
-    {{ comparsion_form_1.csrf_token }}
-    {{ comparsion_form_1.country }}
-    {{ comparsion_form_1.plane }}
-    <input type="submit">
-</form>
+<div class="comparsion-choosers-wrapper">
+    <!-- TODO get rid of BR -->
+    <form method="POST">
+        {{ comparsion_form_1.csrf_token }}
+        {{ comparsion_form_1.country(class="country-comparsion-chooser", id="country-comparsion-chooser-1") }} <br>
+        {{ comparsion_form_1.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-1") }}
+    </form>    
+    <form method="POST">
+        {{ comparsion_form_2.csrf_token }}
+        {{ comparsion_form_2.country(class="country-comparsion-chooser", id="country-comparsion-chooser-2") }} <br>
+        {{ comparsion_form_2.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-2") }}
+    </form>
+    <form method="POST">
+        {{ comparsion_form_3.csrf_token }}
+        {{ comparsion_form_3.country(class="country-comparsion-chooser", id="country-comparsion-chooser-3") }} <br>
+        {{ comparsion_form_3.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-3") }}
+    </form>
+    <form method="POST">
+        {{ comparsion_form_4.csrf_token }}
+        {{ comparsion_form_4.country(class="country-comparsion-chooser", id="country-comparsion-chooser-4") }} <br>
+        {{ comparsion_form_4.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-4") }}
+    </form>
+</div>
 {% endblock content %}

@@ -11,19 +11,29 @@ from flask import render_template, request
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/compare-planes', methods=['GET', 'POST'])
+@app.route('/compare-planes', methods=['GET'])
 def compare_planes():
-    planes = Plane.query.filter_by(country_id=1).all()
+    planes_first_country = Plane.query.filter_by(country_id=1).all()
     countries = Country.query.all()
+
     comparsion_form_1 = PlaneCountryForm()
     comparsion_form_1.country.choices = [(country.country_id, country.name) for country in countries]
-    comparsion_form_1.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes]
+    comparsion_form_1.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
 
-    if request.method == 'POST':
+    comparsion_form_2 = PlaneCountryForm()
+    comparsion_form_2.country.choices = [(country.country_id, country.name) for country in countries]
+    comparsion_form_2.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
 
-        return '<h1>Country: {}, Plane: {}</h1>'.format(comparsion_form_1.country.data, comparsion_form_1.plane.data)
+    comparsion_form_3 = PlaneCountryForm()
+    comparsion_form_3.country.choices = [(country.country_id, country.name) for country in countries]
+    comparsion_form_3.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
 
-    return render_template('compare_planes.html', title='Compare planes', comparsion_form_1=comparsion_form_1, planes=planes, countries=countries)
+    comparsion_form_4 = PlaneCountryForm()
+    comparsion_form_4.country.choices = [(country.country_id, country.name) for country in countries]
+    comparsion_form_4.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
+
+    return render_template('compare_planes.html', title='Compare planes', 
+    comparsion_form_1=comparsion_form_1, comparsion_form_2=comparsion_form_2, comparsion_form_3=comparsion_form_3, comparsion_form_4=comparsion_form_4, planes=planes_first_country, countries=countries)
 
 @app.route('/co+pl/<country_id>')
 def get_planes_by_country(country_id):

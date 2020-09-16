@@ -94,6 +94,16 @@ select {
     border: none;
 }
 
+/* comparsion */
+
+form {
+    display: block;
+}
+
+.comparsion-choosers-wrapper {
+    display: flex;
+}
+
 /* small screens */
 
 @media only screen and (max-width: 700px) {
