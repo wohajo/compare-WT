@@ -131,7 +131,7 @@ def plane(plane_id):
     for weapon, plane_weapon in db.session.query(Weapon, PlaneDefensiveWeapon).filter(PlaneDefensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneDefensiveWeapon.weapon_id).all():
         plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})
 
-    return jsonify({'planes' : plane_object})
+    return jsonify({'plane' : plane_object})
 
 @app.route('/compare-tanks')
 def compare_tanks():

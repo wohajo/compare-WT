@@ -85,6 +85,10 @@ body {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 50px 10px 10px 10px;
 }
 
@@ -102,6 +106,30 @@ form {
 
 .comparsion-choosers-wrapper {
     display: flex;
+    padding-left: 180px;
+}
+
+.comparsion-table-wrapper {
+    width: 900px;
+    display: flex;
+}
+
+.comparsion-table {
+    display: block;
+    width: 180px;
+}
+
+.comparsion-p {
+    padding: 10px;
+    min-height: 19px;
+}
+
+.comparsion-p:nth-child(odd) {
+    background: yellow;
+}
+
+.image-p {
+    padding: 10px;
 }
 
 /* small screens */
