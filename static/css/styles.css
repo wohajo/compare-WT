@@ -112,6 +112,7 @@ form {
 .comparsion-table-wrapper {
     width: 900px;
     display: flex;
+    text-align: center;
 }
 
 .comparsion-table {
@@ -129,7 +130,18 @@ form {
 }
 
 .image-p {
+    text-align: center;
     padding: 10px;
+    min-height: 110px;
+}
+
+.image-p > img {
+    width: 95%;
+    height: 40%;
+}
+
+.name-p {
+    height: 35px;
 }
 
 /* small screens */

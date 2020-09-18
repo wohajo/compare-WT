@@ -5,6 +5,7 @@ from wtforms.form import Form
 from flask.json import jsonify
 from flask_wtf import FlaskForm
 from wtforms import SelectField
+from helpers import int_to_roman
 from flask import render_template, request
 
 @app.route('/')
@@ -18,19 +19,19 @@ def compare_planes():
 
     comparsion_form_1 = PlaneCountryForm()
     comparsion_form_1.country.choices = [(country.country_id, country.name) for country in countries]
-    comparsion_form_1.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
+    comparsion_form_1.plane.choices = [(plane.plane_id, plane.name + ' [' + str(int_to_roman(plane.rank)) + ']') for plane in planes_first_country]
 
     comparsion_form_2 = PlaneCountryForm()
     comparsion_form_2.country.choices = [(country.country_id, country.name) for country in countries]
-    comparsion_form_2.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
+    comparsion_form_2.plane.choices = [(plane.plane_id, plane.name + ' [' + str(int_to_roman(plane.rank)) + ']') for plane in planes_first_country]
 
     comparsion_form_3 = PlaneCountryForm()
     comparsion_form_3.country.choices = [(country.country_id, country.name) for country in countries]
-    comparsion_form_3.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
+    comparsion_form_3.plane.choices = [(plane.plane_id, plane.name + ' [' + str(int_to_roman(plane.rank)) + ']') for plane in planes_first_country]
 
     comparsion_form_4 = PlaneCountryForm()
     comparsion_form_4.country.choices = [(country.country_id, country.name) for country in countries]
-    comparsion_form_4.plane.choices = [(plane.plane_id, plane.name + ' [' + str(plane.rank) + ']') for plane in planes_first_country]
+    comparsion_form_4.plane.choices = [(plane.plane_id, plane.name + ' [' + str(int_to_roman(plane.rank)) + ']') for plane in planes_first_country]
 
     return render_template('compare_planes.html', title='Compare planes', 
     comparsion_form_1=comparsion_form_1, comparsion_form_2=comparsion_form_2, comparsion_form_3=comparsion_form_3, comparsion_form_4=comparsion_form_4, planes=planes_first_country, countries=countries)
@@ -43,7 +44,7 @@ def get_planes_by_country(country_id):
     for plane in planes:
         plane_object = {}
         plane_object['id'] = plane.plane_id
-        plane_object['name'] = plane.name + ' [' + str(plane.rank) + ']'
+        plane_object['name'] = plane.name + ' [' + str(int_to_roman(plane.rank)) + ']'
         planes_list.append(plane_object)
 
     return jsonify({'planes' : planes_list})
@@ -55,7 +56,7 @@ def plane(plane_id):
     plane_object = {}
     plane_object['img_link'] = plane.img_link
     plane_object['name'] = plane.name
-    plane_object['tier'] = plane.rank
+    plane_object['tier'] = int_to_roman(plane.rank)
     plane_object['battle_rating_ab'] = plane.battle_rating_ab
     plane_object['battle_rating_rb'] = plane.battle_rating_rb
     plane_object['battle_rating_sb'] = plane.battle_rating_sb
@@ -64,9 +65,15 @@ def plane(plane_id):
     plane_object['take_off_weight'] = plane.take_off_weight
     plane_object['burst_mass'] = plane.burst_mass
     plane_object['no_engines'] = plane.no_engines
-    plane_object['engine_name'] = plane.engine.name
-    plane_object['engine_type'] = plane.engine.engine_type.name
-    plane_object['engine_cooling_type'] = plane.engine.cooling_system.name
+
+    if plane.engine is not None:
+        plane_object['engine_name'] = plane.engine.name
+        plane_object['engine_type'] = plane.engine.engine_type.name
+        plane_object['engine_cooling_type'] = plane.engine.cooling_system.name
+    else:
+        plane_object['engine_name'] = "N/A"
+        plane_object['engine_type'] = "N/A"
+        plane_object['engine_cooling_type'] = "N/A" 
     
     plane_object['is_premium'] = plane.is_premium
     plane_object['research'] = plane.research

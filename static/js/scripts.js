@@ -1,9 +1,9 @@
 var menuToggle = document.getElementById("menu-sidebar-toggle")
 var menu = document.getElementById("menu-sidebar")
-let countrySelect = document.getElementById('country-comparsion-chooser-1')
-let planeSelect = document.getElementById('plane-comparsion-chooser-1')
+var comparsionTablesArray = document.getElementsByClassName('comparsion-table')
+var countrySelectionArray = document.getElementsByClassName('country-comparsion-chooser')
+var planeSelectionArray = document.getElementsByClassName('plane-comparsion-chooser')
 
-menuToggle.addEventListener("click", menuToggleClick)
 
 function menuToggleClick() {
     menu.classList.toggle("sidebar--open")
@@ -17,8 +17,31 @@ function menuToggleClick() {
     // }
 }
 
-countrySelect.onchange = function() {
-    countryId = countrySelect.value;
+function changePlaneSelection(planeChooser, comparsionTable) {
+    planeId = planeChooser.value;
+
+    fetch('/ple/' + planeId).then(function(response) {
+        response.json().then(function(data) {
+            name_ = data.plane.name
+            imageLink = data.plane.img_link
+            tier = data.plane.tier
+            class_ = data.plane.class
+
+            imageDiv = comparsionTable.getElementsByClassName('image-p')[0]
+            nameDiv = comparsionTable.getElementsByClassName('name-p')[0]
+            tierDiv = comparsionTable.getElementsByClassName('tier-p')[0]
+            classDiv = comparsionTable.getElementsByClassName('class-p')[0]
+
+            imageDiv.innerHTML = '<img src="' + imageLink + '" ' + 'alt="'+ name_ +'"></img>'
+            nameDiv.innerHTML = name_
+            tierDiv.innerHTML = tier
+            classDiv.innerHTML = class_
+        })
+    })
+}
+
+function changeCountrySelection(countryChooser, planeChooser) {
+    countryId = countryChooser.value;
 
     fetch('/co+pl/' + countryId).then(function(response) {
         response.json().then(function(data) {
@@ -27,20 +50,21 @@ countrySelect.onchange = function() {
                 optionHTML += '<option value="' + plane.id + '">' + plane.name + '</option>';
             }
 
-            planeSelect.innerHTML = optionHTML
+            planeChooser.innerHTML = optionHTML
         })
     })
 }
 
-planeSelect.onchange = function() {
-    planeId = planeSelect.value;
+// shhhh! be quiet, they are listening
 
-    fetch('/ple/' + planeId).then(function(response) {
-        response.json().then(function(data) {
-            console.log(data)
-            nameDiv = document.getElementsByClassName('comparsion-table')[1].getElementsByClassName('name-p')[0]
-            nameHTML = data.plane.name
-            nameDiv.innerHTML = nameHTML
-        })
-    })
-}
+menuToggle.addEventListener("click", menuToggleClick)
+
+countrySelectionArray[0].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[0])});
+countrySelectionArray[1].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[1])});
+countrySelectionArray[2].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[2])});
+countrySelectionArray[3].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[3])});
+
+planeSelectionArray[0].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[1])});
+planeSelectionArray[1].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[2])});
+planeSelectionArray[2].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[3])});
+planeSelectionArray[3].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[4])});
