@@ -26,16 +26,46 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             imageLink = data.plane.img_link
             tier = data.plane.tier
             class_ = data.plane.class
+            battleRatingAb = data.plane.battle_rating_ab
+            battleRatingRb = data.plane.battle_rating_rb
+            battleRatingSb = data.plane.battle_rating_sb
+            crew = data.plane.crew
+            takeOffWeight = data.plane.take_off_weight
+            burstMass = data.plane.burst_mass
+            noEngines = data.plane.no_engines
+            engineType = data.plane.engine_type
+            engineCoolingType = data.plane.engine_cooling_type
+            engineName = data.plane.engine_name
 
             imageDiv = comparsionTable.getElementsByClassName('image-p')[0]
             nameDiv = comparsionTable.getElementsByClassName('name-p')[0]
             tierDiv = comparsionTable.getElementsByClassName('tier-p')[0]
             classDiv = comparsionTable.getElementsByClassName('class-p')[0]
+            brAbDiv = comparsionTable.getElementsByClassName('battle-rating-ab-p')[0]
+            brRbDiv = comparsionTable.getElementsByClassName('battle-rating-rb-p')[0]
+            brSbDiv = comparsionTable.getElementsByClassName('battle-rating-sb-p')[0]
+            crewDiv = comparsionTable.getElementsByClassName('crew-p')[0]
+            takeOffWeightDiv = comparsionTable.getElementsByClassName('take-off-weight-p')[0]
+            burstMassDiv = comparsionTable.getElementsByClassName('burst-mass-p')[0]
+            noEnginesDiv = comparsionTable.getElementsByClassName('no-engines-p')[0]
+            engineTypeDiv = comparsionTable.getElementsByClassName('engine-type-p')[0]
+            engineCoolingTypeDiv = comparsionTable.getElementsByClassName('engine-cooling-type-p')[0]
+            engineNameDiv = comparsionTable.getElementsByClassName('engine-name-p')[0]
 
             imageDiv.innerHTML = '<img src="' + imageLink + '" ' + 'alt="'+ name_ +'"></img>'
             nameDiv.innerHTML = name_
             tierDiv.innerHTML = tier
             classDiv.innerHTML = class_
+            brAbDiv.innerHTML = battleRatingAb
+            brRbDiv.innerHTML = battleRatingRb
+            brSbDiv.innerHTML = battleRatingSb
+            crewDiv.innerHTML = crew
+            takeOffWeightDiv.innerHTML = takeOffWeight 
+            burstMassDiv.innerHTML = burstMass
+            noEnginesDiv.innerHTML = noEngines
+            engineTypeDiv.innerHTML = engineType
+            engineCoolingTypeDiv.innerHTML = engineCoolingType
+            engineNameDiv.innerHTML = engineName
         })
     })
 }

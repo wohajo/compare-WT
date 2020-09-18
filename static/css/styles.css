@@ -93,7 +93,8 @@ main {
 }
 
 select {
-    width: 180px;
+    font-size: large;
+    width: 16vw;
     height: 30px;
     border: none;
 }
@@ -106,42 +107,54 @@ form {
 
 .comparsion-choosers-wrapper {
     display: flex;
-    padding-left: 180px;
+    padding-left: 16vw;
 }
 
 .comparsion-table-wrapper {
-    width: 900px;
+    width: 80vw;
     display: flex;
     text-align: center;
 }
 
 .comparsion-table {
+    font-size: large;
     display: block;
-    width: 180px;
+    width: 16vw;
 }
 
 .comparsion-p {
     padding: 10px;
-    min-height: 19px;
+    min-height: 25px;
 }
 
 .comparsion-p:nth-child(odd) {
     background: yellow;
 }
 
+.comparsion-divider {
+    background-color: red;
+}
+
 .image-p {
     text-align: center;
     padding: 10px;
-    min-height: 110px;
+    min-height: 15vh;
 }
 
 .image-p > img {
-    width: 95%;
-    height: 40%;
+    height: 14vh;
 }
 
 .name-p {
     height: 35px;
+}
+
+.take-off-weight-p::after {
+    content: ' t';
+}
+
+.burst-mass-p::after {
+    content: ' kg/s';
 }
 
 /* small screens */
