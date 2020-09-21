@@ -254,16 +254,25 @@ def get_or_create_sus_arm(arm_name):
     if arm is None:
         if ('bomb') in arm_name:
             arm_type_id = 1
+            arm_name = arm_name.replace('bomb', '')
         elif ('rocket') in arm_name:
             arm_type_id = 2
+            arm_name = arm_name.replace('rocket', '')
         elif ('torpedo') in arm_name:
             arm_type_id = 3
+            arm_name = arm_name.replace('torpedo', '')
         elif ('secondary') in arm_name:
             arm_type_id = 4
+            arm_name = arm_name.replace('secondary', '')
         elif ('air-to-air') in arm_name:
             arm_type_id = 5
+            arm_name = arm_name.replace('air-to-air missiles', '').replace('air-to-air missile', '')
         elif('air-to-ground') in arm_name or ('AGM') in arm_name or ('Bullpup') or ('ATGM') in arm_name:
             arm_type_id = 6
+            arm_name = arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('Bullpup', '').replace('ATGM', '').replace('AGM', '')
+        elif ('mine') in arm_name:
+            arm_type_id = 7
+            arm_name = arm_name.replace('mine', '')
         else:
             arm_type_id = None
 

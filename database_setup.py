@@ -78,7 +78,8 @@ def create_database():
         SusArmType(name='torpedo'),
         SusArmType(name='gun pod'),
         SusArmType(name='air-to-air missile'),
-        SusArmType(name='air-to-ground missile')
+        SusArmType(name='air-to-ground missile'),
+        SusArmType(name='mine')
     ]
 
     flight_performance_modules = [PlaneModule(name=module_name, module_type_id=1) for module_name in FLIGHT_PERFOMANCE_MODULES]
