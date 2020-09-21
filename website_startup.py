@@ -71,9 +71,9 @@ def plane(plane_id):
         plane_object['engine_type'] = plane.engine.engine_type.name
         plane_object['engine_cooling_type'] = plane.engine.cooling_system.name
     else:
-        plane_object['engine_name'] = "N/A"
-        plane_object['engine_type'] = "N/A"
-        plane_object['engine_cooling_type'] = "N/A" 
+        plane_object['engine_name'] = None
+        plane_object['engine_type'] = None
+        plane_object['engine_cooling_type'] = None 
     
     plane_object['is_premium'] = plane.is_premium
     plane_object['research'] = plane.research

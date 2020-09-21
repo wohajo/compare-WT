@@ -19,7 +19,7 @@ body {
 .sidebar {
     height: 100%;
     width: 230px;
-    background-color: #999966;
+    background-color: #be0b0b;
     color: white;
     position: fixed;
     z-index: 1;
@@ -76,12 +76,16 @@ body {
 }
 
 .topbar {
-    background-color: #999966;
+    background-color: #6c0404;
     padding: 20px;
     text-align: center;
     font-size: xx-large;
     color: white;
     font-weight: bolder;
+}
+
+body {
+    background-color: #6c0404;
 }
 
 main {
@@ -94,6 +98,7 @@ main {
 
 select {
     font-size: large;
+    font-weight: bold;
     width: 16vw;
     height: 30px;
     border: none;
@@ -105,9 +110,14 @@ form {
     display: block;
 }
 
+.comparsion-table-empty > p {
+    font-weight: bold;
+}
+
 .comparsion-choosers-wrapper {
     display: flex;
     padding-left: 16vw;
+    margin-bottom: 20px;
 }
 
 .comparsion-table-wrapper {
@@ -128,7 +138,11 @@ form {
 }
 
 .comparsion-p:nth-child(odd) {
-    background: yellow;
+    background: #999966;
+}
+
+.comparsion-p:nth-child(even) {
+    background: #797950;
 }
 
 .comparsion-divider {
