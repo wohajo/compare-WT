@@ -90,6 +90,8 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocUpgradedRb = checkIfNull(data.plane.roc_upgraded_rb)
             takeOffRun = checkIfNull(data.plane.take_off_run)
 
+            susArm = checkIfNull(data.plane.suspended_armament)
+
             imageDiv = comparsionTable.getElementsByClassName('image-p')[0]
             nameDiv = comparsionTable.getElementsByClassName('name-p')[0]
             tierDiv = comparsionTable.getElementsByClassName('tier-p')[0]
@@ -137,6 +139,8 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocUpgradedRbDiv = comparsionTable.getElementsByClassName('roc-upgraded-rb-p')[0]
             takeOffRunDiv = comparsionTable.getElementsByClassName('take-off-run-p')[0]
 
+            susArmDiv = comparsionTable.getElementsByClassName('sus-arm-p')[0]
+
             imageDiv.innerHTML = '<img src="' + imageLink + '" ' + 'alt="'+ name_ +'"></img>'
             nameDiv.innerHTML = name_
             tierDiv.innerHTML = tier
@@ -183,6 +187,8 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocStockRbDiv.innerHTML = rocStockRb
             rocUpgradedRbDiv.innerHTML = rocUpgradedRb
             takeOffRunDiv.innerHTML = takeOffRun
+
+            susArmDiv.innerHTML = susArm
         })
     })
 }
