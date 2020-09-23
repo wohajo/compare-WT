@@ -136,16 +136,16 @@ form {
     border-right: 1px solid black;
 }
 
-.comparsion-p {
+.comparsion-p, .desc-p {
     padding: 10px;
     min-height: 25px;
 }
 
-.comparsion-p:nth-child(odd) {
+.comparsion-p:nth-child(odd), .desc-p:nth-child(odd) {
     background: #888888e1;
 }
 
-.comparsion-p:nth-child(even) {
+.comparsion-p:nth-child(even), .desc-p:nth-child(even) {
     background: #808080;
 }
 
@@ -174,14 +174,33 @@ form {
     border-bottom: 1px solid black;
 }
 
-.take-off-weight-p::after {
+.comparsion-p.take-off-weight-p::after {
     content: ' t';
 }
 
-.burst-mass-p::after {
+.comparsion-p.burst-mass-p::after {
     content: ' kg/s';
 }
 
+.comparsion-p.km-h-p::after {
+    content: ' km/h';
+}
+
+.comparsion-p.m-p::after {
+    content: ' m';
+}
+
+.comparsion-p.s-p::after {
+    content: ' s';
+}
+
+.comparsion-p.m-s-p::after {
+    content: ' m/s';
+}
+
+.comparsion-p.sl-p::after {
+    content: ' sl';
+}
 
 .modules-p {
     min-height: 300px;

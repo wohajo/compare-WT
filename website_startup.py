@@ -133,10 +133,10 @@ def plane(plane_id):
     plane_object['suspended_armament'] = [sus_arm.name + ' (' + sus_arm.sus_arm_type.name + ') \n' if sus_arm.sus_arm_type is not None else {'name': sus_arm.name, 'type': None} for sus_arm in plane.plane_sus_arm]
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneOffensiveWeapon).filter(PlaneOffensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneOffensiveWeapon.weapon_id).all():
-        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + ')')
+        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + '/min)')
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneDefensiveWeapon).filter(PlaneDefensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneDefensiveWeapon.weapon_id).all():
-        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + ')')
+        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + '/min)')
 
     return jsonify({'plane' : plane_object})
 
