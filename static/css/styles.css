@@ -132,6 +132,10 @@ form {
     width: 16vw;
 }
 
+.general-comparsion-table-wrapper {
+    width: 100%;
+}
+
 .desc-p {
     border-right: 1px solid black;
 }
@@ -212,6 +216,18 @@ form {
 
 .sus-arm-p {
     min-height: 150px;
+}
+
+.test {
+    width: 100%;
+    display: block;
+    padding: 4px;
+    font-weight: bold;
+    background-color: red;
+}
+
+table {
+    width: 100%;
 }
 
 /* small screens */
