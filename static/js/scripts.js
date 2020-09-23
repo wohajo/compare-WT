@@ -89,7 +89,30 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocStockRb = checkIfNull(data.plane.roc_stock_rb)
             rocUpgradedRb = checkIfNull(data.plane.roc_upgraded_rb)
             takeOffRun = checkIfNull(data.plane.take_off_run)
+            
+            combatFlaps = checkBool(data.plane.combat_flaps)
+            takeOffFlaps = checkBool(data.plane.take_off_flaps)
+            landingFlaps = checkBool(data.plane.landing_flaps)
+            airBrakes = checkBool(data.plane.air_brakes)
+            arrestorGear = checkBool(data.plane.arrestor_gear) 
+            drogueChute = checkBool(data.plane.drogue_chute) 
+            radarWarningReceiver = checkBool(data.plane.radar_warning_receiver) 
+            ballisticComputer = checkBool(data.plane.ballistic_computer)
 
+            sodStructural = checkIfNull(data.plane.sod_structural)
+            sodGear = checkIfNull(data.plane.sod_gear)
+            sodCombatFlaps = checkIfNull(data.plane.sod_combat_flaps)
+            sodTakeoffFlaps = checkIfNull(data.plane.sod_takeoff_flaps)
+            sodLandingFlaps = checkIfNull(data.plane.sod_landing_flaps)
+
+            ailerons = checkIfNull(data.plane.ailerons)
+            rudder = checkIfNull(data.plane.rudder)
+            elevators = checkIfNull(data.plane.elevators)
+            radiator = checkIfNull(data.plane.radiator)
+            modules = checkIfNull(data.plane.modules)
+
+            offArm = checkIfNull(data.plane.offensive_armament)
+            defArm = checkIfNull(data.plane.defensive_armament)
             susArm = checkIfNull(data.plane.suspended_armament)
 
             imageDiv = comparsionTable.getElementsByClassName('image-p')[0]
@@ -138,8 +161,31 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocStockRbDiv = comparsionTable.getElementsByClassName('roc-stock-rb-p')[0]
             rocUpgradedRbDiv = comparsionTable.getElementsByClassName('roc-upgraded-rb-p')[0]
             takeOffRunDiv = comparsionTable.getElementsByClassName('take-off-run-p')[0]
+            
+            combatFlapsDiv = comparsionTable.getElementsByClassName('combat-flaps-p')[0]
+            takeOffFlapsDiv = comparsionTable.getElementsByClassName('take-off-flaps-p')[0]
+            landingFlapsDiv = comparsionTable.getElementsByClassName('landing-flaps-p')[0]
+            airBrakesDiv = comparsionTable.getElementsByClassName('air-brakes-p')[0]
+            arrestorGearDiv = comparsionTable.getElementsByClassName('arrestor-gear-p')[0]
+            drogueChuteDiv = comparsionTable.getElementsByClassName('drogue-chute-p')[0]
+            radarWarningReceiverDiv = comparsionTable.getElementsByClassName('radar-warning-receiver-p')[0]
+            ballisticComputerDiv = comparsionTable.getElementsByClassName('ballistic-computer-p')[0]
 
-            susArmDiv = comparsionTable.getElementsByClassName('sus-arm-p')[0]
+            sodStructuralDiv = comparsionTable.getElementsByClassName('sod-structural-p')[0]
+            sodGearDiv = comparsionTable.getElementsByClassName('sod-gear-p')[0]
+            sodCombatFlapsDiv = comparsionTable.getElementsByClassName('sod-combat-flaps-p')[0]
+            sodTakeoffFlapsDiv = comparsionTable.getElementsByClassName('sod-takeoff-flaps-p')[0]
+            sodLandingFlapsDiv = comparsionTable.getElementsByClassName('sod-landing-flaps-p')[0]
+
+            aileronsDiv = comparsionTable.getElementsByClassName('ailerons-p')[0]
+            rudderDiv = comparsionTable.getElementsByClassName('rudder-p')[0]
+            elevatorsDiv = comparsionTable.getElementsByClassName('elevators-p')[0]
+            radiatorDiv = comparsionTable.getElementsByClassName('radiator-p')[0]
+            modulesDiv = comparsionTable.getElementsByClassName('modules-p')[0]
+
+            offArmDiv = comparsionTable.getElementsByClassName('offensive-armament-p')[0]
+            defArmDiv = comparsionTable.getElementsByClassName('defensive-armament-p')[0]
+            susArmDiv = comparsionTable.getElementsByClassName('suspended-armament-p')[0]
 
             imageDiv.innerHTML = '<img src="' + imageLink + '" ' + 'alt="'+ name_ +'"></img>'
             nameDiv.innerHTML = name_
@@ -188,6 +234,29 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rocUpgradedRbDiv.innerHTML = rocUpgradedRb
             takeOffRunDiv.innerHTML = takeOffRun
 
+            combatFlapsDiv.innerHTML = combatFlaps 
+            takeOffFlapsDiv.innerHTML = takeOffFlaps 
+            landingFlapsDiv.innerHTML = landingFlaps 
+            airBrakesDiv.innerHTML = airBrakes 
+            arrestorGearDiv.innerHTML = arrestorGear 
+            drogueChuteDiv.innerHTML = drogueChute 
+            radarWarningReceiverDiv.innerHTML = radarWarningReceiver 
+            ballisticComputerDiv.innerHTML = ballisticComputer
+
+            sodStructuralDiv.innerHTML = sodStructural
+            sodGearDiv.innerHTML = sodGear
+            sodCombatFlapsDiv.innerHTML = sodCombatFlaps
+            sodTakeoffFlapsDiv.innerHTML = sodTakeoffFlaps
+            sodLandingFlapsDiv.innerHTML = sodLandingFlaps
+
+            aileronsDiv.innerHTML = ailerons
+            rudderDiv.innerHTML = rudder
+            elevatorsDiv.innerHTML = elevators
+            radiatorDiv.innerHTML = radiator
+            modulesDiv.innerHTML = modules
+
+            offArmDiv.innerHTML = offArm
+            defArmDiv.innerHTML = defArm
             susArmDiv.innerHTML = susArm
         })
     })

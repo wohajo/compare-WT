@@ -157,6 +157,9 @@ form {
     text-align: center;
     padding: 10px;
     min-height: 15vh;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 .image-p > img {
@@ -165,6 +168,10 @@ form {
 
 .name-p {
     height: 35px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 150px;
+    border-bottom: 1px solid black;
 }
 
 .take-off-weight-p::after {
@@ -173,6 +180,19 @@ form {
 
 .burst-mass-p::after {
     content: ' kg/s';
+}
+
+
+.modules-p {
+    min-height: 300px;
+}
+
+.offensive-armament-p, .defensive-armament-p {
+    min-height: 80px;
+}
+
+.sus-arm-p {
+    min-height: 150px;
 }
 
 /* small screens */
@@ -190,5 +210,35 @@ form {
 
     .topbar, main, footer {
         margin-left: 0;
+    }
+
+    .comparsion-table {
+        font-size: x-small;
+    }
+
+    .comparsion-p {
+        padding: 1px;
+        min-height: 40px;
+    }
+
+    .image-p > img {
+        height: 5vh;
+    }
+
+    .image-p {
+        text-align: center;
+        padding: 10px;
+        min-height: 15vh;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+    
+    .name-p {
+        height: 35px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 5vh;
+        border-bottom: 1px solid black;
     }
 }

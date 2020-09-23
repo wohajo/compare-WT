@@ -126,31 +126,31 @@ def plane(plane_id):
     plane_object['rudder'] = plane.rudder
     plane_object['elevators'] = plane.elevators
     plane_object['radiator'] = plane.radiator
-    plane_object['modules'] = [{'name': module.name, 'type': module.module_type.name} for module in plane.plane_modules]
+    plane_object['modules'] = [module.name + ' (' + module.module_type.name + ') \n' for module in plane.plane_modules]
 
     plane_object['offensive_armament'] = []
     plane_object['defensive_armament'] = []
     plane_object['suspended_armament'] = [sus_arm.name + ' (' + sus_arm.sus_arm_type.name + ') \n' if sus_arm.sus_arm_type is not None else {'name': sus_arm.name, 'type': None} for sus_arm in plane.plane_sus_arm]
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneOffensiveWeapon).filter(PlaneOffensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneOffensiveWeapon.weapon_id).all():
-        plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})
+        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + ')')
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneDefensiveWeapon).filter(PlaneDefensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneDefensiveWeapon.weapon_id).all():
-        plane_object['offensive_armament'].append({'quantity': plane_weapon.quantity, 'name': weapon.name, 'rounds': plane_weapon.rounds, 'rounds_min': weapon.rounds_min})
+        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + ')')
 
     return jsonify({'plane' : plane_object})
 
 @app.route('/compare-tanks')
 def compare_tanks():
-    return render_template('compare_tanks.html', title='Compare tanks')
+    return render_template('in_progress.html', title='Compare tanks')
 
 @app.route('/compare-helicopters')
 def compare_helicopters():
-    return render_template('compare_helicopters.html', title='Compare helicopters')
+    return render_template('in_progress.html', title='Compare helicopters')
 
 @app.route('/compare-fleet')
 def compare_fleet():
-    return render_template('compare_fleet.html', title='Compare fleet')
+    return render_template('in_progress.html', title='Compare fleet')
 
 @app.route('/planes')
 def planes():
@@ -158,15 +158,15 @@ def planes():
 
 @app.route('/tanks')
 def tanks():
-    return render_template('tanks.html', title='Tanks')
+    return render_template('in_progress.html', title='Tanks')
 
 @app.route('/helicopters')
 def helicopters():
-    return render_template('helicopters.html', title='Helicopters')
+    return render_template('in_progress.html', title='Helicopters')
 
 @app.route('/fleet')
 def fleet():
-    return render_template('fleet.html', title='Fleet')
+    return render_template('in_progress.html', title='Fleet')
 
 @app.route('/about')
 def about():

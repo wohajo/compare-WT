@@ -434,4 +434,4 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-    insert_all_planes_to_database()
+    add_plane_to_db('https://wiki.warthunder.com/J35D')
