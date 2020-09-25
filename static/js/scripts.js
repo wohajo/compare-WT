@@ -1,6 +1,5 @@
 var menuToggle = document.getElementById("menu-sidebar-toggle")
 var menu = document.getElementById("menu-sidebar")
-var comparsionTablesArray = document.getElementsByClassName('comparsion-table')
 var countrySelectionArray = document.getElementsByClassName('country-comparsion-chooser')
 var planeSelectionArray = document.getElementsByClassName('plane-comparsion-chooser')
 
@@ -27,17 +26,17 @@ function checkIfNull(value) {
 
 function checkBool(value) {
     if (value == '0' || value == 0) {
-        return "no"
+        return "no" // icon
     }
     else if (value == '1' || value == 1) {
-        return "yes"
+        return "yes" // icon
     }
     else {
         return "N/A"
     }
 }
 
-function changePlaneSelection(planeChooser, comparsionTable) {
+function changePlaneSelection(planeChooser, number) {
     planeId = planeChooser.value;
 
     fetch('/ple/' + planeId).then(function(response) {
@@ -53,10 +52,6 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             crew = checkIfNull(data.plane.crew)
             takeOffWeight = checkIfNull(data.plane.take_off_weight)
             burstMass = checkIfNull(data.plane.burst_mass)
-            noEngines = checkIfNull(data.plane.no_engines)
-            engineType = checkIfNull(data.plane.engine_type)
-            engineCoolingType = checkIfNull(data.plane.engine_cooling_type)
-            engineName = checkIfNull(data.plane.engine_name)
             
             isPremium = checkBool(data.plane.is_premium)
             research = checkIfNull(data.plane.research)
@@ -75,6 +70,10 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rewardSlRb = checkIfNull(data.plane.reward_sl_rb)
             rewardSlAb = checkIfNull(data.plane.reward_sl_ab)
 
+            noEngines = checkIfNull(data.plane.no_engines)
+            engineType = checkIfNull(data.plane.engine_type)
+            engineCoolingType = checkIfNull(data.plane.engine_cooling_type)
+            engineName = checkIfNull(data.plane.engine_name)
             maxSpeedStockAb = checkIfNull(data.plane.max_speed_stock_ab)
             maxSpeedUpgradedAb = checkIfNull(data.plane.max_speed_upgraded_ab)
             maxSpeedStockRb = checkIfNull(data.plane.max_speed_stock_rb)
@@ -115,77 +114,74 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             defArm = checkIfNull(data.plane.defensive_armament)
             susArm = checkIfNull(data.plane.suspended_armament)
 
-            imageDiv = comparsionTable.getElementsByClassName('image-p')[0]
-            nameDiv = comparsionTable.getElementsByClassName('name-p')[0]
-            tierDiv = comparsionTable.getElementsByClassName('tier-p')[0]
-            classDiv = comparsionTable.getElementsByClassName('class-p')[0]
-            brAbDiv = comparsionTable.getElementsByClassName('battle-rating-ab-p')[0]
-            brRbDiv = comparsionTable.getElementsByClassName('battle-rating-rb-p')[0]
-            brSbDiv = comparsionTable.getElementsByClassName('battle-rating-sb-p')[0]
-            crewDiv = comparsionTable.getElementsByClassName('crew-p')[0]
-            takeOffWeightDiv = comparsionTable.getElementsByClassName('take-off-weight-p')[0]
-            burstMassDiv = comparsionTable.getElementsByClassName('burst-mass-p')[0]
-            noEnginesDiv = comparsionTable.getElementsByClassName('no-engines-p')[0]
-            engineTypeDiv = comparsionTable.getElementsByClassName('engine-type-p')[0]
-            engineCoolingTypeDiv = comparsionTable.getElementsByClassName('engine-cooling-type-p')[0]
-            engineNameDiv = comparsionTable.getElementsByClassName('engine-name-p')[0]
+            imageDiv = document.getElementsByClassName('image-p')[number]
+            nameDiv = document.getElementsByClassName('name-p')[number]
+            tierDiv = document.getElementsByClassName('tier-p')[number]
+            classDiv = document.getElementsByClassName('class-p')[number]
+            brAbDiv = document.getElementsByClassName('battle-rating-ab-p')[number]
+            brRbDiv = document.getElementsByClassName('battle-rating-rb-p')[number]
+            brSbDiv = document.getElementsByClassName('battle-rating-sb-p')[number]
+            crewDiv = document.getElementsByClassName('crew-p')[number]
+            takeOffWeightDiv = document.getElementsByClassName('take-off-weight-p')[number]
+            burstMassDiv = document.getElementsByClassName('burst-mass-p')[number]
+            engineDiv = document.getElementsByClassName('engine-p')[number]
             
-            isPremiumDiv = comparsionTable.getElementsByClassName('is-premium-p')[0]
-            researchDiv = comparsionTable.getElementsByClassName('research-p')[0]
-            purchaseDiv = comparsionTable.getElementsByClassName('purchase-p ')[0]
-            repairMinAbDiv = comparsionTable.getElementsByClassName('repair-min-ab-p')[0]
-            repairMaxAbDiv = comparsionTable.getElementsByClassName('repair-max-ab-p')[0]
-            repairMinRbDiv = comparsionTable.getElementsByClassName('repair-min-rb-p')[0]
-            repairMaxRbDiv = comparsionTable.getElementsByClassName('repair-max-rb-p')[0]
-            repairMinSbDiv = comparsionTable.getElementsByClassName('repair-min-sb-p')[0]
-            repairMaxSbDiv = comparsionTable.getElementsByClassName('repair-max-sb-p')[0]
-            crewTrainingDiv = comparsionTable.getElementsByClassName('crew-training-p')[0]
-            expertsDiv = comparsionTable.getElementsByClassName('experts-p')[0]
-            acesDiv = comparsionTable.getElementsByClassName('aces-p')[0]
-            rewardRpDiv = comparsionTable.getElementsByClassName('reward-rp-p')[0]
-            rewardSlSbDiv = comparsionTable.getElementsByClassName('reward-sl-ab-p')[0]
-            rewardSlRbDiv = comparsionTable.getElementsByClassName('reward-sl-rb-p')[0]
-            rewardSlAbDiv = comparsionTable.getElementsByClassName('reward-sl-sb-p')[0]
+            isPremiumDiv = document.getElementsByClassName('is-premium-p')[number]
+            researchDiv = document.getElementsByClassName('research-p')[number]
+            purchaseDiv = document.getElementsByClassName('purchase-p ')[number]
+            repairMinAbDiv = document.getElementsByClassName('repair-min-ab-p')[number]
+            repairMaxAbDiv = document.getElementsByClassName('repair-max-ab-p')[number]
+            repairMinRbDiv = document.getElementsByClassName('repair-min-rb-p')[number]
+            repairMaxRbDiv = document.getElementsByClassName('repair-max-rb-p')[number]
+            repairMinSbDiv = document.getElementsByClassName('repair-min-sb-p')[number]
+            repairMaxSbDiv = document.getElementsByClassName('repair-max-sb-p')[number]
+            crewTrainingDiv = document.getElementsByClassName('crew-training-p')[number]
+            expertsDiv = document.getElementsByClassName('experts-p')[number]
+            acesDiv = document.getElementsByClassName('aces-p')[number]
+            rewardRpDiv = document.getElementsByClassName('reward-rp-p')[number]
+            rewardSlSbDiv = document.getElementsByClassName('reward-sl-ab-p')[number]
+            rewardSlRbDiv = document.getElementsByClassName('reward-sl-rb-p')[number]
+            rewardSlAbDiv = document.getElementsByClassName('reward-sl-sb-p')[number]
 
-            maxSpeedStockAbDiv = comparsionTable.getElementsByClassName('max-speed-stock-ab-p')[0]
-            maxSpeedUpgradedAbDiv = comparsionTable.getElementsByClassName('max-speed-upgraded-ab-p')[0]
-            maxSpeedStockRbDiv = comparsionTable.getElementsByClassName('max-speed-stock-rb-p')[0]
-            maxSpeedUpgradedRbDiv = comparsionTable.getElementsByClassName('max-speed-upgraded-rb-p')[0]
-            maxAltDiv = comparsionTable.getElementsByClassName('max-alt-p')[0]
-            turnStockAbDiv = comparsionTable.getElementsByClassName('turn-stock-ab-p')[0]
-            turnUpgradedAbDiv = comparsionTable.getElementsByClassName('turn-upgraded-ab-p')[0]
-            turnStockRbDiv = comparsionTable.getElementsByClassName('turn-stock-rb-p')[0]
-            turnUpgradedRbDiv = comparsionTable.getElementsByClassName('turn-upgraded-rb-p')[0]
-            rocStockAbDiv = comparsionTable.getElementsByClassName('roc-stock-ab-p')[0]
-            rocUpgradedAbDiv = comparsionTable.getElementsByClassName('roc-upgraded-ab-p')[0]
-            rocStockRbDiv = comparsionTable.getElementsByClassName('roc-stock-rb-p')[0]
-            rocUpgradedRbDiv = comparsionTable.getElementsByClassName('roc-upgraded-rb-p')[0]
-            takeOffRunDiv = comparsionTable.getElementsByClassName('take-off-run-p')[0]
+            maxSpeedStockAbDiv = document.getElementsByClassName('max-speed-stock-ab-p')[number]
+            maxSpeedUpgradedAbDiv = document.getElementsByClassName('max-speed-upgraded-ab-p')[number]
+            maxSpeedStockRbDiv = document.getElementsByClassName('max-speed-stock-rb-p')[number]
+            maxSpeedUpgradedRbDiv = document.getElementsByClassName('max-speed-upgraded-rb-p')[number]
+            maxAltDiv = document.getElementsByClassName('max-alt-p')[number]
+            turnStockAbDiv = document.getElementsByClassName('turn-stock-ab-p')[number]
+            turnUpgradedAbDiv = document.getElementsByClassName('turn-upgraded-ab-p')[number]
+            turnStockRbDiv = document.getElementsByClassName('turn-stock-rb-p')[number]
+            turnUpgradedRbDiv = document.getElementsByClassName('turn-upgraded-rb-p')[number]
+            rocStockAbDiv = document.getElementsByClassName('roc-stock-ab-p')[number]
+            rocUpgradedAbDiv = document.getElementsByClassName('roc-upgraded-ab-p')[number]
+            rocStockRbDiv = document.getElementsByClassName('roc-stock-rb-p')[number]
+            rocUpgradedRbDiv = document.getElementsByClassName('roc-upgraded-rb-p')[number]
+            takeOffRunDiv = document.getElementsByClassName('take-off-run-p')[number]
             
-            combatFlapsDiv = comparsionTable.getElementsByClassName('combat-flaps-p')[0]
-            takeOffFlapsDiv = comparsionTable.getElementsByClassName('take-off-flaps-p')[0]
-            landingFlapsDiv = comparsionTable.getElementsByClassName('landing-flaps-p')[0]
-            airBrakesDiv = comparsionTable.getElementsByClassName('air-brakes-p')[0]
-            arrestorGearDiv = comparsionTable.getElementsByClassName('arrestor-gear-p')[0]
-            drogueChuteDiv = comparsionTable.getElementsByClassName('drogue-chute-p')[0]
-            radarWarningReceiverDiv = comparsionTable.getElementsByClassName('radar-warning-receiver-p')[0]
-            ballisticComputerDiv = comparsionTable.getElementsByClassName('ballistic-computer-p')[0]
+            combatFlapsDiv = document.getElementsByClassName('combat-flaps-p')[number]
+            takeOffFlapsDiv = document.getElementsByClassName('take-off-flaps-p')[number]
+            landingFlapsDiv = document.getElementsByClassName('landing-flaps-p')[number]
+            airBrakesDiv = document.getElementsByClassName('air-brakes-p')[number]
+            arrestorGearDiv = document.getElementsByClassName('arrestor-gear-p')[number]
+            drogueChuteDiv = document.getElementsByClassName('drogue-chute-p')[number]
+            radarWarningReceiverDiv = document.getElementsByClassName('radar-warning-receiver-p')[number]
+            ballisticComputerDiv = document.getElementsByClassName('ballistic-computer-p')[number]
 
-            sodStructuralDiv = comparsionTable.getElementsByClassName('sod-structural-p')[0]
-            sodGearDiv = comparsionTable.getElementsByClassName('sod-gear-p')[0]
-            sodCombatFlapsDiv = comparsionTable.getElementsByClassName('sod-combat-flaps-p')[0]
-            sodTakeoffFlapsDiv = comparsionTable.getElementsByClassName('sod-takeoff-flaps-p')[0]
-            sodLandingFlapsDiv = comparsionTable.getElementsByClassName('sod-landing-flaps-p')[0]
+            sodStructuralDiv = document.getElementsByClassName('sod-structural-p')[number]
+            sodGearDiv = document.getElementsByClassName('sod-gear-p')[number]
+            sodCombatFlapsDiv = document.getElementsByClassName('sod-combat-flaps-p')[number]
+            sodTakeoffFlapsDiv = document.getElementsByClassName('sod-takeoff-flaps-p')[number]
+            sodLandingFlapsDiv = document.getElementsByClassName('sod-landing-flaps-p')[number]
 
-            aileronsDiv = comparsionTable.getElementsByClassName('ailerons-p')[0]
-            rudderDiv = comparsionTable.getElementsByClassName('rudder-p')[0]
-            elevatorsDiv = comparsionTable.getElementsByClassName('elevators-p')[0]
-            radiatorDiv = comparsionTable.getElementsByClassName('radiator-p')[0]
-            modulesDiv = comparsionTable.getElementsByClassName('modules-p')[0]
+            aileronsDiv = document.getElementsByClassName('ailerons-p')[number]
+            rudderDiv = document.getElementsByClassName('rudder-p')[number]
+            elevatorsDiv = document.getElementsByClassName('elevators-p')[number]
+            radiatorDiv = document.getElementsByClassName('radiator-p')[number]
+            modulesDiv = document.getElementsByClassName('modules-p')[number]
 
-            offArmDiv = comparsionTable.getElementsByClassName('offensive-armament-p')[0]
-            defArmDiv = comparsionTable.getElementsByClassName('defensive-armament-p')[0]
-            susArmDiv = comparsionTable.getElementsByClassName('suspended-armament-p')[0]
+            offArmDiv = document.getElementsByClassName('offensive-armament-p')[number]
+            defArmDiv = document.getElementsByClassName('defensive-armament-p')[number]
+            susArmDiv = document.getElementsByClassName('suspended-armament-p')[number]
 
             imageDiv.innerHTML = '<img src="' + imageLink + '" ' + 'alt="'+ name_ +'"></img>'
             nameDiv.innerHTML = name_
@@ -197,11 +193,7 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             crewDiv.innerHTML = crew
             takeOffWeightDiv.innerHTML = takeOffWeight 
             burstMassDiv.innerHTML = burstMass
-            noEnginesDiv.innerHTML = noEngines
-            engineTypeDiv.innerHTML = engineType
-            engineCoolingTypeDiv.innerHTML = engineCoolingType
-            engineNameDiv.innerHTML = engineName
-            
+
             isPremiumDiv.innerHTML = isPremium
             researchDiv.innerHTML = research
             purchaseDiv.innerHTML = purchase
@@ -218,6 +210,8 @@ function changePlaneSelection(planeChooser, comparsionTable) {
             rewardSlSbDiv.innerHTML = rewardSlSb
             rewardSlRbDiv.innerHTML = rewardSlRb
             rewardSlAbDiv.innerHTML = rewardSlAb
+
+            engineDiv.innerHTML = noEngines + " x " + engineName + " (" + engineType + ")" 
 
             maxSpeedStockAbDiv.innerHTML = maxSpeedStockAb
             maxSpeedUpgradedAbDiv.innerHTML = maxSpeedUpgradedAb
@@ -286,7 +280,9 @@ countrySelectionArray[1].addEventListener("change", function() {changeCountrySel
 countrySelectionArray[2].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[2])});
 countrySelectionArray[3].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[3])});
 
-planeSelectionArray[0].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[1])});
-planeSelectionArray[1].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[2])});
-planeSelectionArray[2].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[3])});
-planeSelectionArray[3].addEventListener("change", function() {changePlaneSelection(this, comparsionTablesArray[4])});
+planeSelectionArray[0].addEventListener("change", function() {changePlaneSelection(this, 0)});
+planeSelectionArray[1].addEventListener("change", function() {changePlaneSelection(this, 1)});
+planeSelectionArray[2].addEventListener("change", function() {changePlaneSelection(this, 2)});
+planeSelectionArray[3].addEventListener("change", function() {changePlaneSelection(this, 3)});
+
+

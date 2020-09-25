@@ -122,7 +122,6 @@ form {
 
 .comparsion-table-wrapper {
     width: 80vw;
-    display: flex;
     text-align: center;
 }
 
@@ -130,10 +129,6 @@ form {
     font-size: large;
     display: block;
     width: 16vw;
-}
-
-.general-comparsion-table-wrapper {
-    width: 100%;
 }
 
 .desc-p {
@@ -168,14 +163,6 @@ form {
 
 .image-p > img {
     height: 14vh;
-}
-
-.name-p {
-    height: 35px;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 150px;
-    border-bottom: 1px solid black;
 }
 
 .comparsion-p.take-off-weight-p::after {
@@ -218,8 +205,7 @@ form {
     min-height: 150px;
 }
 
-.test {
-    width: 100%;
+.divider {
     display: block;
     padding: 4px;
     font-weight: bold;
@@ -228,6 +214,12 @@ form {
 
 table {
     width: 100%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+td {
+    width: 20%;
 }
 
 /* small screens */
