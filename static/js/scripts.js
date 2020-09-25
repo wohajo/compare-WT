@@ -92,11 +92,12 @@ function changePlaneSelection(planeChooser, number) {
             combatFlaps = checkBool(data.plane.combat_flaps)
             takeOffFlaps = checkBool(data.plane.take_off_flaps)
             landingFlaps = checkBool(data.plane.landing_flaps)
-            airBrakes = checkBool(data.plane.air_brakes)
-            arrestorGear = checkBool(data.plane.arrestor_gear) 
-            drogueChute = checkBool(data.plane.drogue_chute) 
-            radarWarningReceiver = checkBool(data.plane.radar_warning_receiver) 
-            ballisticComputer = checkBool(data.plane.ballistic_computer)
+            // airBrakes = checkBool(data.plane.air_brakes)
+            // arrestorGear = checkBool(data.plane.arrestor_gear) 
+            // drogueChute = checkBool(data.plane.drogue_chute) 
+            // radarWarningReceiver = checkBool(data.plane.radar_warning_receiver) 
+            // ballisticComputer = checkBool(data.plane.ballistic_computer)
+            modules = checkIfNull(data.plane.modules)
 
             sodStructural = checkIfNull(data.plane.sod_structural)
             sodGear = checkIfNull(data.plane.sod_gear)
@@ -108,7 +109,6 @@ function changePlaneSelection(planeChooser, number) {
             rudder = checkIfNull(data.plane.rudder)
             elevators = checkIfNull(data.plane.elevators)
             radiator = checkIfNull(data.plane.radiator)
-            modules = checkIfNull(data.plane.modules)
 
             offArm = checkIfNull(data.plane.offensive_armament)
             defArm = checkIfNull(data.plane.defensive_armament)
@@ -161,11 +161,13 @@ function changePlaneSelection(planeChooser, number) {
             combatFlapsDiv = document.getElementsByClassName('combat-flaps-p')[number]
             takeOffFlapsDiv = document.getElementsByClassName('take-off-flaps-p')[number]
             landingFlapsDiv = document.getElementsByClassName('landing-flaps-p')[number]
-            airBrakesDiv = document.getElementsByClassName('air-brakes-p')[number]
-            arrestorGearDiv = document.getElementsByClassName('arrestor-gear-p')[number]
-            drogueChuteDiv = document.getElementsByClassName('drogue-chute-p')[number]
-            radarWarningReceiverDiv = document.getElementsByClassName('radar-warning-receiver-p')[number]
-            ballisticComputerDiv = document.getElementsByClassName('ballistic-computer-p')[number]
+            // TODO make some icons for commented
+            // airBrakesDiv = document.getElementsByClassName('air-brakes-p')[number]
+            // arrestorGearDiv = document.getElementsByClassName('arrestor-gear-p')[number]
+            // drogueChuteDiv = document.getElementsByClassName('drogue-chute-p')[number]
+            // radarWarningReceiverDiv = document.getElementsByClassName('radar-warning-receiver-p')[number]
+            // ballisticComputerDiv = document.getElementsByClassName('ballistic-computer-p')[number]
+            modulesDiv = document.getElementsByClassName('modules-p')[number]
 
             sodStructuralDiv = document.getElementsByClassName('sod-structural-p')[number]
             sodGearDiv = document.getElementsByClassName('sod-gear-p')[number]
@@ -177,7 +179,6 @@ function changePlaneSelection(planeChooser, number) {
             rudderDiv = document.getElementsByClassName('rudder-p')[number]
             elevatorsDiv = document.getElementsByClassName('elevators-p')[number]
             radiatorDiv = document.getElementsByClassName('radiator-p')[number]
-            modulesDiv = document.getElementsByClassName('modules-p')[number]
 
             offArmDiv = document.getElementsByClassName('offensive-armament-p')[number]
             defArmDiv = document.getElementsByClassName('defensive-armament-p')[number]
@@ -231,11 +232,12 @@ function changePlaneSelection(planeChooser, number) {
             combatFlapsDiv.innerHTML = combatFlaps 
             takeOffFlapsDiv.innerHTML = takeOffFlaps 
             landingFlapsDiv.innerHTML = landingFlaps 
-            airBrakesDiv.innerHTML = airBrakes 
-            arrestorGearDiv.innerHTML = arrestorGear 
-            drogueChuteDiv.innerHTML = drogueChute 
-            radarWarningReceiverDiv.innerHTML = radarWarningReceiver 
-            ballisticComputerDiv.innerHTML = ballisticComputer
+            // airBrakesDiv.innerHTML = airBrakes 
+            // arrestorGearDiv.innerHTML = arrestorGear 
+            // drogueChuteDiv.innerHTML = drogueChute 
+            // radarWarningReceiverDiv.innerHTML = radarWarningReceiver 
+            // ballisticComputerDiv.innerHTML = ballisticComputer
+            modulesDiv.innerHTML = modules
 
             sodStructuralDiv.innerHTML = sodStructural
             sodGearDiv.innerHTML = sodGear
@@ -247,7 +249,6 @@ function changePlaneSelection(planeChooser, number) {
             rudderDiv.innerHTML = rudder
             elevatorsDiv.innerHTML = elevators
             radiatorDiv.innerHTML = radiator
-            modulesDiv.innerHTML = modules
 
             offArmDiv.innerHTML = offArm
             defArmDiv.innerHTML = defArm

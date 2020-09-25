@@ -10,10 +10,6 @@ a {
     cursor: pointer;
 }
 
-body {
-    background-color: white;
-}
-
 /* menu */
 
 .sidebar {
@@ -85,7 +81,7 @@ body {
 }
 
 body {
-    background-color: #74747488;
+    background-color: white;
 }
 
 main {
@@ -110,10 +106,6 @@ form {
     display: block;
 }
 
-.comparsion-table-empty > p {
-    font-weight: bold;
-}
-
 .comparsion-choosers-wrapper {
     display: flex;
     padding-left: 16vw;
@@ -123,29 +115,6 @@ form {
 .comparsion-table-wrapper {
     width: 80vw;
     text-align: center;
-}
-
-.comparsion-table {
-    font-size: large;
-    display: block;
-    width: 16vw;
-}
-
-.desc-p {
-    border-right: 1px solid black;
-}
-
-.comparsion-p, .desc-p {
-    padding: 10px;
-    min-height: 25px;
-}
-
-.comparsion-p:nth-child(odd), .desc-p:nth-child(odd) {
-    background: #888888e1;
-}
-
-.comparsion-p:nth-child(even), .desc-p:nth-child(even) {
-    background: #808080;
 }
 
 .comparsion-divider {
@@ -210,12 +179,20 @@ form {
     padding: 4px;
     font-weight: bold;
     background-color: red;
+    border: 5px solid red;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 table {
+    background-color: #74747488;
     width: 100%;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
     border-left: 1px solid black;
     border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
 }
 
 td {
@@ -259,6 +236,7 @@ td {
         position: -webkit-sticky;
         position: sticky;
         top: 0;
+        overflow: scroll;
     }
     
     .name-p {
