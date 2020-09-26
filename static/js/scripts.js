@@ -3,7 +3,6 @@ var menu = document.getElementById("menu-sidebar")
 var countrySelectionArray = document.getElementsByClassName('country-comparsion-chooser')
 var planeSelectionArray = document.getElementsByClassName('plane-comparsion-chooser')
 
-
 function menuToggleClick() {
     menu.classList.toggle("sidebar--open")
     // TODO change hamburger icon to X
@@ -74,6 +73,9 @@ function changePlaneSelection(planeChooser, number) {
             engineType = checkIfNull(data.plane.engine_type)
             engineCoolingType = checkIfNull(data.plane.engine_cooling_type)
             engineName = checkIfNull(data.plane.engine_name)
+            engineBasePower = checkIfNull(data.plane.base_power)
+            engineWEPPower = checkIfNull(data.plane.wep_power)
+
             maxSpeedStockAb = checkIfNull(data.plane.max_speed_stock_ab)
             maxSpeedUpgradedAb = checkIfNull(data.plane.max_speed_upgraded_ab)
             maxSpeedStockRb = checkIfNull(data.plane.max_speed_stock_rb)
@@ -125,6 +127,8 @@ function changePlaneSelection(planeChooser, number) {
             takeOffWeightDiv = document.getElementsByClassName('take-off-weight-p')[number]
             burstMassDiv = document.getElementsByClassName('burst-mass-p')[number]
             engineDiv = document.getElementsByClassName('engine-p')[number]
+            engineBasePowerDiv = document.getElementsByClassName('engine-base-power-p')[number]
+            engineWEPPowerDiv = document.getElementsByClassName('engine-wep-power-p')[number] 
             
             isPremiumDiv = document.getElementsByClassName('is-premium-p')[number]
             researchDiv = document.getElementsByClassName('research-p')[number]
@@ -213,6 +217,8 @@ function changePlaneSelection(planeChooser, number) {
             rewardSlAbDiv.innerHTML = rewardSlAb
 
             engineDiv.innerHTML = noEngines + " x " + engineName + " (" + engineType + ")" 
+            engineBasePowerDiv.innerHTML = engineBasePower
+            engineWEPPowerDiv.innerHTML = engineWEPPower
 
             maxSpeedStockAbDiv.innerHTML = maxSpeedStockAb
             maxSpeedUpgradedAbDiv.innerHTML = maxSpeedUpgradedAb
@@ -273,6 +279,11 @@ function changeCountrySelection(countryChooser, planeChooser) {
 }
 // #f1de2acf yellow
 // shhhh! be quiet, they are listening
+
+changePlaneSelection(planeSelectionArray[0], 0)
+changePlaneSelection(planeSelectionArray[1], 1)
+changePlaneSelection(planeSelectionArray[2], 2)
+changePlaneSelection(planeSelectionArray[3], 3)
 
 menuToggle.addEventListener("click", menuToggleClick)
 

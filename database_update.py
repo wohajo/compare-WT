@@ -447,8 +447,9 @@ def add_plane_to_db(url):
         plane.wiki_link = url
         db.session.commit()
         print('added ' + url)
-
-    except exc.IntegrityError:
+        
+    except exc.IntegrityError as er:
+        print(er._sql_message)
         print('Error: object already in database! ' + url)
         print('-' * 50)
         db.session.rollback()
