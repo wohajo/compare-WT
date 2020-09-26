@@ -167,6 +167,8 @@ def get_planes_tables(soup, url):
     # tables[3] is for optimal velocities
     # velocities are in following order: ['Ailerons', 'Rudder', 'Elevators', 'Radiator']
     
+    # tables[4] is for engine detailed info
+
     # tables[-1] is for modules
     # ['Tier[1]', 'Flight performance[2]', 'Survivability[1]', 'Weaponry[3?]']
     # module tables have 2 cols for weaponry if plane has offensive/suspended armament
@@ -245,17 +247,33 @@ def get_planes_tables(soup, url):
     tables_lists.append(flatten_list(new_velocities))
 
     try:
+        engine_detailed = html_table_to_list(tables[4])
+    except IndexError:
+        print('Table \'engine detailed info\' not found! It propably has to be inserted manually')
+        write_log(10, 'scrape_data_planes.log', url)
+        new_engine_detailed = []
+    else:
+        if(engine_detailed[0][0] in ['Engine', 'Compressor', 'Compressor (RB/SB)', ]):
+            new_engine_detailed = remove_empty_lists(remove_unwanted_words(engine_detailed))
+        else:
+            print('Table \'engine detailed info\' not found! It propably has to be inserted manually')
+            write_log(10, 'scrape_data_planes.log', url)
+            new_engine_detailed = []
+
+    tables_lists.append(new_engine_detailed)
+
+    try:
         modules = html_table_to_list(tables[-1])
     except IndexError:
         print('Table \'modules\' not found! It propably has to be inserted manually')
-        write_log(10, 'scrape_data_planes.log', url)
+        write_log(11, 'scrape_data_planes.log', url)
         new_modules = []
     else:
         if(modules[0][0] == 'Tier'):
             new_modules = remove_empty_lists(remove_unwanted_words(modules))
         else:
             print('Table \'modules\' not found! It propably has to be inserted manually')
-            write_log(10, 'scrape_data_planes.log', url)
+            write_log(11, 'scrape_data_planes.log', url)
             new_modules = []
 
     tables_lists.append(new_modules)
@@ -340,8 +358,9 @@ def get_plane_full_info(url):
     8. Features table. \n
     9. Limits table. \n
     10. Optimal velocities table. \n
-    11. Modules table. \n
-    12. Title image.
+    11. Detailed engine info table. \n
+    12. Modules table. \n
+    13. Title image.
     '''
     
     html_content = requests.get(url).text
@@ -373,8 +392,9 @@ def process_plane_full_info(url):
     new_list.append(process_features_table(lst[7], url))
     new_list.append(process_limits_table(lst[8], url))
     new_list.append(process_optimal_velocities_table(lst[9], url))
-    new_list.append(process_modules(lst[10], url))
-    new_list.append(lst[11])
+    new_list.append(process_detailed_engine_info_table(lst[10], url))
+    new_list.append(process_modules(lst[11], url))
+    new_list.append(lst[12])
 
     return new_list
 
@@ -397,11 +417,11 @@ def add_plane_to_db(url):
             write_log('plane_adding', 'db_adding_planes.log', url)
             return None
         else:
-            plane = Plane(name=plane_list[0][0], img_link=plane_list[11])
+            plane = Plane(name=plane_list[0][0], img_link=plane_list[12])
             add_general_characteristics(plane, plane_list[0], url)
 
         # 2nd row
-        add_engine_and_sod_to_plane(plane, plane_list[1], url)
+        add_engine_and_sod_to_plane(plane, plane_list[1], plane_list[10], url)
         # 3rd row
         db.session.add(plane)
         db.session.flush()
@@ -422,7 +442,7 @@ def add_plane_to_db(url):
         # 10th row
         add_optimal_velocities_to_plane(plane, plane_list[9], url)
         # 11st row
-        add_modules_to_plane(plane, plane_list[10], url)
+        add_modules_to_plane(plane, plane_list[11], url)
         # end of rows
         plane.wiki_link = url
         db.session.commit()

@@ -92,7 +92,8 @@ def write_log(code, filename, url):
     7: Features table \n
     8: Limits table \n
     9: Optimal velocities table \n
-    10: Modules table \n
+    10: Engine info table \n
+    11: Modules table \n
     '''
 
     if code == 6:
@@ -100,8 +101,12 @@ def write_log(code, filename, url):
     elif code == 7:
         code = 'features_table'
     elif code == 8:
-        code = 'optimal_velocities_table'
+        code = 'limits_table'
     elif code == 9:
+        code = 'optimal_velocities_table'
+    elif code == 10:
+        code = 'engine_info_table'
+    elif code == 11:
         code = 'modules_table'
 
     with open('logs/' + filename, 'a') as file:
