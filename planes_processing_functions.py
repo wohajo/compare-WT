@@ -205,9 +205,27 @@ def process_optimal_velocities_table(lst, url):
 
         return new_list
 
+def process_detailed_engine_info_table(lst, url):
+    new_list = []
+    is_info_found_flag = False
+
+    for _list in lst:
+        if _list[0] == 'Stationary':
+            new_list = [word.replace(',', '').replace('kgf', '').replace(' ', '') for word in _list[1:3]]
+            is_info_found_flag = True
+        if 'Compressor' in _list[0]:
+            temp = lst[lst.index(_list) + 2]
+            new_list = [word.replace(',', '').replace('hp', '').replace(' ', '') for word in temp[1::]]
+            is_info_found_flag = True
+
+    if is_info_found_flag is not True:
+        write_log(10, 'processing_planes.log', url)
+    
+    return new_list
+
 def process_modules(lst, url):
     if len(lst) == 0:
-        write_log(10, 'processing_planes.log', url)
+        write_log(11, 'processing_planes.log', url)
         return []
     else:
         new_list = flatten_list([_list[1::] for _list in lst])

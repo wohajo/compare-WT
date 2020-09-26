@@ -3,13 +3,15 @@ from __init__ import db
 from helpers import write_log
 from list_modifiers import list_to_chunks
 
-def get_id_or_create_plane_engine(engine_info, url):
+def get_id_or_create_plane_engine(engine_info, detailed_engine_info, url):
     '''
     Converts info given about a plane's engine to a db object, checks if it exists, and returns it's id. 
     '''
     engine = db.session.query(Engine).filter_by(name=engine_info[2]).scalar()
     engine_type_id = None
     cooling_id = None
+    base_power = None
+    wep_power = None
 
     if engine is None:
         if engine_info[3] == 'Radial':
@@ -30,7 +32,13 @@ def get_id_or_create_plane_engine(engine_info, url):
         else:
             write_log('engine_adding_cooling', 'db_adding_planes.log', url)
 
-        engine = Engine(name=engine_info[2], cooling_id=cooling_id, engine_type_id=engine_type_id)
+        if len(detailed_engine_info) == 2:
+            base_power = detailed_engine_info[0]
+            wep_power = detailed_engine_info[1]
+        else:
+            write_log('engine_adding_details', 'db_adding_planes.log', url)
+
+        engine = Engine(name=engine_info[2], base_power=base_power, wep_power=wep_power, cooling_id=cooling_id, engine_type_id=engine_type_id)
         db.session.add(engine)
         db.session.flush()
 
@@ -84,14 +92,14 @@ def add_economy_to_plane(plane, economy, url):
     else:
         write_log('economy_insert', 'db_adding_planes.log', url)
 
-def add_engine_and_sod_to_plane(plane, lst, url):
+def add_engine_and_sod_to_plane(plane, lst, detailed_info, url):
     if len(lst) != 0:
             if lst[0] is not None:
                 plane.max_alt = lst[0]
             plane.no_engines = lst[1]
             plane.sod_structural = lst[5]
             plane.sod_gear = lst[6]
-            engine_id = get_id_or_create_plane_engine(lst, url)
+            engine_id = get_id_or_create_plane_engine(lst, detailed_info, url)
     else:
             engine_id = None
             write_log('engine/ceiling/sod_addding', 'db_adding_planes.log', url)
