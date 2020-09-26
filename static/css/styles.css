@@ -117,8 +117,11 @@ form {
     text-align: center;
 }
 
-.comparsion-divider {
-    background-color: red;
+.comparsion-section-wrapper {
+    -webkit-box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
+    margin-bottom: 1vh;
 }
 
 .image-p {
@@ -177,27 +180,29 @@ form {
 .divider {
     display: block;
     padding: 4px;
+    font-size: larger;
     font-weight: bold;
-    background-color: red;
-    border: 5px solid red;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    background-color: cadetblue;
+    border: 5px solid cadetblue;
+    text-align: left;
 }
 
 table {
-    background-color: #74747488;
-    width: 100%;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    margin-bottom: 10px;
+    width: 100%;    
 }
 
 td {
+    padding: 4px;
     width: 20%;
 }
+
+tr {
+    border-bottom: 1px #74747488 solid;
+}
+
+/* other styling */
+
+
 
 /* small screens */
 
@@ -220,30 +225,7 @@ td {
         font-size: x-small;
     }
 
-    .comparsion-p {
-        padding: 1px;
-        min-height: 40px;
-    }
-
     .image-p > img {
         height: 5vh;
-    }
-
-    .image-p {
-        text-align: center;
-        padding: 10px;
-        min-height: 15vh;
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        overflow: scroll;
-    }
-    
-    .name-p {
-        height: 35px;
-        position: -webkit-sticky;
-        position: sticky;
-        top: 5vh;
-        border-bottom: 1px solid black;
     }
 }

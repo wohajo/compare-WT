@@ -26,10 +26,10 @@ function checkIfNull(value) {
 
 function checkBool(value) {
     if (value == '0' || value == 0) {
-        return "no" // icon
+        return "<img src='static/images/check-no-icon-24.png' alt='no'>"
     }
     else if (value == '1' || value == 1) {
-        return "yes" // icon
+        return "<img src='static/images/check-yes-icon-24.png' alt='yes'>"
     }
     else {
         return "N/A"

@@ -50,6 +50,8 @@ class Engine(db.Model):
 
     engine_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False, unique=True)
+    base_power = db.Column(db.Integer)
+    wep_power = db.Column(db.Integer)
     engine_type_id = db.Column(db.Integer, ForeignKey('engine_types.engine_type_id'))
     cooling_id = db.Column(db.Integer, ForeignKey('cooling_systems.cooling_sys_id'))
     planes = db.relationship('Plane', backref='engine')
