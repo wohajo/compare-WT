@@ -257,6 +257,7 @@ def get_or_create_sus_arm(arm_name):
     '''
     Converts info given about suspended weapon to a db object, checks if it exists, and returns it's id. 
     '''
+    new_arm_name  = arm_name
     new_arm_name = new_arm_name.replace('bomb', '').replace('rocket', '').replace('torpedo', '')
     new_arm_name = new_arm_name.replace('secondary', '').replace('air-to-air missiles', '').replace('air-to-air missile', '')
     new_arm_name = new_arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('Bullpup', '').replace('ATGM', '').replace('AGM', '')
