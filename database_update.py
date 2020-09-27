@@ -121,10 +121,8 @@ def insert_all_planes_to_database():
     current = 0
     start = time.time()
     for vehicle in vehicles_links:
-        add_plane_to_db(vehicle)
         current = current + 1
-        add_insert_log(vehicle + '\n')
-        print(('Added {}/{}').format(current, length))
+        add_plane_to_db(vehicle, current, length)
         sleeping_time = random.randint(1, 3)
         print(('Sleeping for {}s').format(sleeping_time))
         time.sleep(sleeping_time)
@@ -176,7 +174,7 @@ def get_planes_tables(soup, url):
     tables_lists = []
 
     if len(tables) == 0:
-        return [[], [], [], [], []]
+        return [[], [], [], [], [], []]
 
     try:
         characteristics_with_max_speed = html_table_to_list(tables[0])
@@ -398,7 +396,7 @@ def process_plane_full_info(url):
 
     return new_list
 
-def add_plane_to_db(url):
+def add_plane_to_db(url, current, length):
     try:
         plane_list = process_plane_full_info(url)
 
@@ -447,6 +445,8 @@ def add_plane_to_db(url):
         plane.wiki_link = url
         db.session.commit()
         print('added ' + url)
+        print(('Added {}/{}').format(current, length))
+        add_insert_log(url + '\n')
         
     except exc.IntegrityError as er:
         print(er._sql_message)
@@ -455,4 +455,5 @@ def add_plane_to_db(url):
         db.session.rollback()
 
 if __name__ == "__main__":
-    insert_all_planes_to_database()
+    # insert_all_planes_to_database()
+    add_plane_to_db('http://wiki.warthunder.com/BB-1', 1, 1)

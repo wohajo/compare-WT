@@ -140,7 +140,7 @@ def plane(plane_id):
         plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + '/min)')
 
     for weapon, plane_weapon in db.session.query(Weapon, PlaneDefensiveWeapon).filter(PlaneDefensiveWeapon.plane_id == plane_id).filter(Weapon.weapon_id == PlaneDefensiveWeapon.weapon_id).all():
-        plane_object['offensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + '/min)')
+        plane_object['defensive_armament'].append(str(plane_weapon.quantity) + 'x ' + weapon.name + ' (' + str(plane_weapon.rounds) + ') | (' + str(weapon.rounds_min) + '/min)')
 
     return jsonify({'plane' : plane_object})
 

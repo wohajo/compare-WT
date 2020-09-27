@@ -137,32 +137,36 @@ form {
     height: 14vh;
 }
 
-.comparsion-p.take-off-weight-p::after {
+.take-off-weight-p::after {
     content: ' t';
 }
 
-.comparsion-p.burst-mass-p::after {
+.burst-mass-p::after {
     content: ' kg/s';
 }
 
-.comparsion-p.km-h-p::after {
+.km-h-p::after {
     content: ' km/h';
 }
 
-.comparsion-p.m-p::after {
+.m-p::after {
     content: ' m';
 }
 
-.comparsion-p.s-p::after {
+.s-p::after {
     content: ' s';
 }
 
-.comparsion-p.m-s-p::after {
+.m-s-p::after {
     content: ' m/s';
 }
 
-.comparsion-p.sl-p::after {
+.sl-p::after {
     content: ' sl';
+}
+
+.rp-p::after {
+    content: ' rp';
 }
 
 .modules-p {
@@ -202,7 +206,43 @@ tr {
 
 /* other styling */
 
+/* tooltip style */
 
+.tooltip-info {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip-info .tooltip-text {
+    opacity: 0;
+    transition: opacity 0.2s;
+    width: 120px;
+    background-color: rgb(100, 99, 99);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 130%;
+}
+
+.tooltip-info:hover .tooltip-text {
+    opacity: 1;
+}
+
+.tooltip-info .tooltip-text::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgb(100, 99, 99) transparent transparent;
+}
 
 /* small screens */
 

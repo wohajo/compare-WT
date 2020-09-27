@@ -19,7 +19,7 @@ function checkIfNull(value) {
     if (value != null) {
         return value
     } else {
-        return "N/A"
+        return "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>"
     }
 }
 
@@ -31,7 +31,7 @@ function checkBool(value) {
         return "<img src='static/images/check-yes-icon-24.png' alt='yes'>"
     }
     else {
-        return "N/A"
+        return "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>"
     }
 }
 
@@ -256,9 +256,39 @@ function changePlaneSelection(planeChooser, number) {
             elevatorsDiv.innerHTML = elevators
             radiatorDiv.innerHTML = radiator
 
-            offArmDiv.innerHTML = offArm
-            defArmDiv.innerHTML = defArm
-            susArmDiv.innerHTML = susArm
+            offArmList = ""
+            defArmList = ""
+            susArmList = ""
+
+            if (offArm != "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>")
+            {
+                for (i in offArm) {
+                    offArmList += "<li>" + data.plane.offensive_armament[i] + "</li>";
+                }
+                offArmDiv.innerHTML = offArmList    
+            } else {
+                offArmDiv.innerHTML = offArm
+            }
+
+            if (defArm != "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>")
+            {
+                for (i in defArm) {
+                    defArmList += "<li>" + data.plane.defensive_armament[i] + "</li>";
+                }
+                defArmDiv.innerHTML = defArmList
+            } else {
+                defArmDiv.innerHTML = defArm
+            }
+
+            if (susArm != "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>")
+            {
+                for (i in susArm) {
+                    susArmList += "<li>" + data.plane.suspended_armament[i] + "</li>";
+                }
+                susArmDiv.innerHTML = susArmList    
+            } else {
+                susArmDiv.innerHTML = susArm
+            }
         })
     })
 }
