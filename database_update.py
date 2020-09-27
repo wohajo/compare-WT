@@ -455,5 +455,4 @@ def add_plane_to_db(url, current, length):
         db.session.rollback()
 
 if __name__ == "__main__":
-    # insert_all_planes_to_database()
-    add_plane_to_db('http://wiki.warthunder.com/BB-1', 1, 1)
+    insert_all_planes_to_database()
