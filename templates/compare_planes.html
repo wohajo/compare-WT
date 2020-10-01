@@ -1,29 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="comparsion-choosers-wrapper">
+<div class="level">
     <!-- TODO get rid of BR -->
-    <form method="POST">
+    <form class="level-item" method="POST">
         {{ comparsion_form_1.csrf_token }}
-        <div class="custoom-select">{{ comparsion_form_1.country(class="country-comparsion-chooser", id="country-comparsion-chooser-1") }}</div><br>
-        <div class="custoom-select">{{ comparsion_form_1.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-1") }}</div>
+        {{ comparsion_form_1.country(class="country-comparsion-chooser select", id="country-comparsion-chooser-1") }}<br>
+        {{ comparsion_form_1.plane(class="plane-comparsion-chooser select", id="plane-comparsion-chooser-1") }}
     </form>    
-    <form method="POST">
+    <form class="level-item" method="POST">
         {{ comparsion_form_2.csrf_token }}
-        <div class="custoom-select">{{ comparsion_form_2.country(class="country-comparsion-chooser", id="country-comparsion-chooser-2") }}</div><br>
-        <div class="custoom-select">{{ comparsion_form_2.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-2") }}</div>
+        {{ comparsion_form_2.country(class="country-comparsion-chooser select", id="country-comparsion-chooser-2") }}<br>
+        {{ comparsion_form_2.plane(class="plane-comparsion-chooser select", id="plane-comparsion-chooser-2") }}
     </form>
-    <form method="POST">
+    <form class="level-item" method="POST">
         {{ comparsion_form_3.csrf_token }}
-        <div class="custoom-select">{{ comparsion_form_3.country(class="country-comparsion-chooser", id="country-comparsion-chooser-3") }}</div><br>
-        <div class="custoom-select">{{ comparsion_form_3.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-3") }}</div>
+        {{ comparsion_form_3.country(class="country-comparsion-chooser select", id="country-comparsion-chooser-3") }}<br>
+        {{ comparsion_form_3.plane(class="plane-comparsion-chooser select", id="plane-comparsion-chooser-3") }}
     </form>
-    <form method="POST">
+    <form class="level-item" method="POST">
         {{ comparsion_form_4.csrf_token }}
-        <div class="custoom-select">{{ comparsion_form_4.country(class="country-comparsion-chooser", id="country-comparsion-chooser-4") }}</div><br>
-        <div class="custoom-select">{{ comparsion_form_4.plane(class="plane-comparsion-chooser", id="plane-comparsion-chooser-4") }}</div>
+        {{ comparsion_form_4.country(class="country-comparsion-chooser select", id="country-comparsion-chooser-4") }}<br>
+        {{ comparsion_form_4.plane(class="plane-comparsion-chooser select", id="plane-comparsion-chooser-4") }}
     </form>
 </div>
-<div class="comparsion-table-wrapper">
+<div class="container is-widescreen">
         {% include 'plane-comparsion-table.html' %}
 </div>
 {% endblock content %}

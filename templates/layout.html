@@ -11,37 +11,56 @@
         </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='static/css/styles.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='static/css/bulma-styles.css'>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="sidebar" id="menu-sidebar">
-        <h3>Compare</h3>
-        <ul>
-            <li><a href="{{ url_for('compare_planes') }}">planes</a></li>
-            <li><a href="{{ url_for('compare_tanks') }}">tanks</a></li>
-            <li><a href="{{ url_for('compare_helicopters') }}">helicopters</a></li>
-            <li><a href="{{ url_for('compare_fleet') }}">fleet</a></li>
-        </ul>
-        <h3>Informations</h3>
-        <ul>
-            <li><a href="{{ url_for('planes') }}">planes</a></li>
-            <li><a href="{{ url_for('tanks') }}">tanks</a></li>
-            <li><a href="{{ url_for('helicopters') }}">helicopters</a></li>
-            <li><a href="{{ url_for('fleet') }}">fleet</a></li>
-        </ul>
-        <h3>Website</h3>
-        <ul>
-            <li><a href="{{ url_for('about') }}">about</a></li>
-            <li><a href="{{ url_for('contact') }}">contact</a></li>
-        </ul>
+
+<nav class="navbar is-spaced is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+            COMPARE WAR THUNDER
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
-    <div class="sidebar__toggle" id="menu-sidebar-toggle">&#9776;</div>
-    <div class="topbar"><a href="{{ url_for('index') }}">COMPARE WT</a></div>
-    <main>
+    <div id="navbar-menu-items" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                Home
+            </a>
+    
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Compare
+                </a>
+            
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        Planes
+                    </a>
+                </div>
+            </div>
+
+            <a class="navbar-item">
+                About
+            </a>
+    </div>
+    
+        <div class="navbar-end">
+        </div>
+    </div>
+</nav>
+
+<body>
+    <div class="container">
         {% block content %}
         {% endblock content %}    
-    </main>
+    </div>
     <script src="static/js/scripts.js">
     </script>
 </body>
+
 </html>

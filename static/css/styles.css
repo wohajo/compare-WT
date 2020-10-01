@@ -1,136 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-a {
-    cursor: pointer;
-}
-
-/* menu */
-
-.sidebar {
-    height: 100%;
-    width: 236px;
-    background-color: #be0b0b;
-    color: white;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    overflow-x: hidden;
-    padding-top: 100px;
-    font-size: xx-large;
-    /* box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
-    /* -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
-    /* -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0); */
-    transition: ease 0.3s;
-}
-
-.sidebar__toggle {
-    display: none;
-    z-index: 1;
-    color: white;
-    font-size: xx-large;
-    padding: 20px;
-    position: fixed;
-    cursor: pointer;
-}
-
-.sidebar > ul {
-    margin-bottom: 50px;
-}
-
-.sidebar > h3 {
-    margin-left: 10px;
-}
-
-.sidebar > ul > li {
-    padding-left: 20px;
-}
-
-.sidebar > ul > li > a, .topbar > a {
-    padding-left: 20px;
-    color: white;
-    text-decoration: none;
-}
-
-.sidebar--open {
-    width: 200px !important;
-    box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
-    -webkit-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
-    -moz-box-shadow: 10px 0px 40px 0px rgb(0, 0, 0) !important;
-}
-
-/* main content */
-
-.topbar, main, footer {
-    margin-left: 230px;
-}
-
-.topbar {
-    background-color: #74747488;
-    padding: 20px;
-    text-align: center;
-    font-size: xx-large;
-    color: white;
-    font-weight: bolder;
-}
-
-body {
-    background-color: white;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 10px 10px 10px;
-}
-
-select {
-    font-size: large;
-    font-weight: bold;
-    width: 16vw;
-    height: 30px;
-    border: none;
-}
-
 /* comparsion */
 
-form {
-    display: block;
-}
-
-.comparsion-choosers-wrapper {
-    display: flex;
-    padding-left: 16vw;
-    margin-bottom: 20px;
-}
-
-.comparsion-table-wrapper {
-    width: 80vw;
-    text-align: center;
-}
-
 .comparsion-section-wrapper {
-    -webkit-box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
-    box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
-    margin-bottom: 1vh;
+    margin-bottom: 10px;
 }
 
 .image-p {
     text-align: center;
     padding: 10px;
     min-height: 15vh;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
 }
 
 .image-p > img {
@@ -242,30 +121,4 @@ tr {
     border-width: 5px;
     border-style: solid;
     border-color: transparent rgb(100, 99, 99) transparent transparent;
-}
-
-/* small screens */
-
-@media only screen and (max-width: 700px) {
-    .sidebar {
-        width: 0px;
-        font-size: x-large;
-        box-shadow: none;
-    }
-
-    .sidebar__toggle {
-        display: block;
-    }
-
-    .topbar, main, footer {
-        margin-left: 0;
-    }
-
-    .comparsion-table {
-        font-size: x-small;
-    }
-
-    .image-p > img {
-        height: 5vh;
-    }
 }
