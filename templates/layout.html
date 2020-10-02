@@ -10,8 +10,8 @@
         {% endif %}
         </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='static/css/styles.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='static/css/bulma-styles.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='static/css/styles.css'>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -20,7 +20,7 @@
         <a class="navbar-item" href="https://bulma.io">
             COMPARE WAR THUNDER
         </a>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu-items">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -28,7 +28,7 @@
     </div>
     <div id="navbar-menu-items" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a href="{{ url_for('index') }}" class="navbar-item">
                 Home
             </a>
     
@@ -38,13 +38,16 @@
                 </a>
             
                 <div class="navbar-dropdown">
-                    <a class="navbar-item">
+                    <a href="{{ url_for('compare_planes') }}" class="navbar-item">
                         Planes
                     </a>
                 </div>
             </div>
 
-            <a class="navbar-item">
+            <a href="{{ url_for('contact') }}" class="navbar-item">
+                Contact
+            </a>
+            <a href="{{ url_for('about') }}" class="navbar-item">
                 About
             </a>
     </div>

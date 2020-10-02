@@ -2,11 +2,11 @@
 
 /* comparsion */
 
-.comparsion-section-wrapper {
+/* .comparsion-section-wrapper {
     margin-bottom: 10px;
-}
+} */
 
-.image-p {
+/* .image-p {
     text-align: center;
     padding: 10px;
     min-height: 15vh;
@@ -58,7 +58,7 @@
 
 .sus-arm-p {
     min-height: 150px;
-}
+} */
 
 .divider {
     display: block;
@@ -70,20 +70,35 @@
     text-align: left;
 }
 
-table {
-    width: 100%;    
+.form-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.select-box-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    list-style-type: none;
+}
+
+select {
+    max-width: 20%;
+}
+
+.collapsible-table {
+    width: 100%;
+    text-align: center; 
+    align-items: center;
 }
 
 td {
-    padding: 4px;
+    text-align: center;
     width: 20%;
 }
-
-tr {
-    border-bottom: 1px #74747488 solid;
-}
-
-/* other styling */
 
 /* tooltip style */
 
