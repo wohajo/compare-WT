@@ -18,3 +18,6 @@ planes_database.db
 
 static/mybulma/node_modules
 static/mybulma/package-lock.json
+
+# output file of scss
+static/css/bulma-styles.css

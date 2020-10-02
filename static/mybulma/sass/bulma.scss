@@ -7,7 +7,7 @@
 $purple: red;
 $pink: blue;
 $brown: rgb(255, 255, 255);
-$beige-light: green;
+$beige-light: rgb(0, 7, 0);
 $beige-lighter: rgb(85, 81, 81);
 
 // Update Bulma's global variables
@@ -24,6 +24,8 @@ $body-background-color: $beige-lighter;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
+$table-color: $brown;
+$table-row-hover-background-color: cadetblue;
 $navbar-background-color: $beige-lighter;
 $navbar-item-active-background-color: $beige-lighter;
 $navbar-dropdown-background-color: $beige-lighter;
@@ -33,4 +35,5 @@ $table-background-color: $beige-light;
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/table.sass";
 @import "../node_modules/bulma/sass/components/navbar.sass";
