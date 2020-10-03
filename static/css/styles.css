@@ -73,10 +73,15 @@
 .form-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.blank-select-box {
+    min-width: 20%;
 }
 
 .select-box-wrapper {
+    max-width: 20%;
     display: flex;
     flex-direction: column;
 }

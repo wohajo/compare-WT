@@ -2,6 +2,9 @@
 {% block content %}
 <div class="level form-wrapper">
     <!-- TODO get rid of BR -->
+    <div class="select-box-wrapper blank-select-box">
+
+    </div>
     <form class="level-item select-box-wrapper" method="POST">
         {{ comparsion_form_1.csrf_token }}
         {{ comparsion_form_1.country(class="country-comparsion-chooser select", id="country-comparsion-chooser-1") }}
