@@ -2,16 +2,7 @@
 
 /* comparsion */
 
-/* .comparsion-section-wrapper {
-    margin-bottom: 10px;
-} */
-
-/* .image-p {
-    text-align: center;
-    padding: 10px;
-    min-height: 15vh;
-}
-
+/*
 .image-p > img {
     height: 14vh;
 }
@@ -60,6 +51,16 @@
     min-height: 150px;
 } */
 
+.select {
+    min-width: 100%;
+}
+
+body {
+    background-image: url("https://static.warthunder.com/upload/image/wallpapers/t2_2560x1440_logo_com_abd24d34d6f0a64cf031064cc24dd8e0.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .divider {
     display: block;
     padding: 4px;
@@ -70,28 +71,8 @@
     text-align: left;
 }
 
-.form-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-}
-
-.blank-select-box {
-    min-width: 20%;
-}
-
-.select-box-wrapper {
-    max-width: 20%;
-    display: flex;
-    flex-direction: column;
-}
-
 li {
     list-style-type: none;
-}
-
-select {
-    max-width: 20%;
 }
 
 .collapsible-table {
