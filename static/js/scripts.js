@@ -1,19 +1,26 @@
-var menuToggle = document.getElementById("menu-sidebar-toggle")
-var menu = document.getElementById("menu-sidebar")
 var countrySelectionArray = document.getElementsByClassName('country-comparsion-chooser')
 var planeSelectionArray = document.getElementsByClassName('plane-comparsion-chooser')
 
-function menuToggleClick() {
-    menu.classList.toggle("sidebar--open")
-    // TODO change hamburger icon to X
-    // if (menu.style.width = 0) {
-    //     menu.classList.add("sidebar--open")
-    //     menuToggle.innerHTML = ("&times")
-    // } else {
-    //     menu.classList.remove("sidebar--open")
-    //     menuToggle.innerHTML = ("&#9776")
-    // }
-}
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+      // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+          // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+        });
+    });
+    }
+});
 
 function checkIfNull(value) {
     if (value != null) {
@@ -243,7 +250,17 @@ function changePlaneSelection(planeChooser, number) {
             // drogueChuteDiv.innerHTML = drogueChute 
             // radarWarningReceiverDiv.innerHTML = radarWarningReceiver 
             // ballisticComputerDiv.innerHTML = ballisticComputer
+            modulesList = ""
             modulesDiv.innerHTML = modules
+            if (modules != "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>")
+            {
+                for (i in modules) {
+                    modulesList += "<li>" + data.plane.modules[i] + "</li>";
+                }
+                modulesDiv.innerHTML = modulesList
+            } else {
+                modulesDiv.innerHTML = modules
+            }
 
             sodStructuralDiv.innerHTML = sodStructural
             sodGearDiv.innerHTML = sodGear
@@ -314,8 +331,6 @@ changePlaneSelection(planeSelectionArray[0], 0)
 changePlaneSelection(planeSelectionArray[1], 1)
 changePlaneSelection(planeSelectionArray[2], 2)
 changePlaneSelection(planeSelectionArray[3], 3)
-
-menuToggle.addEventListener("click", menuToggleClick)
 
 countrySelectionArray[0].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[0])});
 countrySelectionArray[1].addEventListener("change", function() {changeCountrySelection(this, planeSelectionArray[1])});
