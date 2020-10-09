@@ -94,6 +94,7 @@ def write_log(code, filename, url):
     9: Optimal velocities table \n
     10: Engine info table \n
     11: Modules table \n
+    12: Adding plane \n
     '''
 
     if code == 6:

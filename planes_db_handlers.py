@@ -257,12 +257,12 @@ def get_or_create_sus_arm(arm_name):
     '''
     Converts info given about suspended weapon to a db object, checks if it exists, and returns it's id. 
     '''
-    new_arm_name  = arm_name
+    new_arm_name = arm_name
     new_arm_name = new_arm_name.replace('bombs', '').replace('bomb', '').replace('rockets', '').replace('torpedo', '')
     new_arm_name = new_arm_name.replace('secondary', '').replace('air-to-air missiles', '').replace('air-to-air missile', '')
-    new_arm_name = new_arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('Bullpup', '').replace('rocket', '').replace('ATGM', '').replace('AGM', '')
+    new_arm_name = new_arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('rocket', '')
     new_arm_name = new_arm_name.replace('mines', '').replace('mine', '')
-    new_arm_name = new_arm_name.rstrip()
+    new_arm_name = new_arm_name.replace('Bullpup', '').rstrip()
 
     arm = db.session.query(SuspendedArmament).filter_by(name=new_arm_name).scalar()
 
@@ -270,24 +270,31 @@ def get_or_create_sus_arm(arm_name):
         if 'bomb' in arm_name or 'bombs' in arm_name:
             arm_type_id = 1
             arm_name = arm_name.replace('bombs', '').replace('bomb', '').rstrip()
+
+        elif 'torpedo' in arm_name:
+            arm_type_id = 3
+            arm_name = arm_name.replace('torpedos', '').replace('torpedo', '').rstrip()
+
+        elif 'secondary' in arm_name:
+            arm_type_id = 4
+            arm_name = arm_name.replace('secondary', '').rstrip()
+
+        elif 'air-to-air' in arm_name:
+            arm_type_id = 5
+            arm_name = arm_name.replace('air-to-air missiles', '').replace('air-to-air missile', '').rstrip()
+
+        elif 'AGM' in arm_name or 'Bullpup' or 'ATGM' or'air-to-ground' in arm_name in arm_name:
+            arm_type_id = 6
+            arm_name = arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('Bullpup', '').replace('rockets', '').replace('rocket', '').rstrip()
+
         elif 'rocket' in arm_name or 'rockets' in arm_name:
             arm_type_id = 2
             arm_name = arm_name.replace('rockets', '').replace('rocket', '').rstrip()
-        elif ('torpedo') in arm_name:
-            arm_type_id = 3
-            arm_name = arm_name.replace('torpedos', '').replace('torpedo', '').rstrip()
-        elif ('secondary') in arm_name:
-            arm_type_id = 4
-            arm_name = arm_name.replace('secondary', '').rstrip()
-        elif ('air-to-air') in arm_name:
-            arm_type_id = 5
-            arm_name = arm_name.replace('air-to-air missiles', '').replace('air-to-air missile', '').rstrip()
-        elif('air-to-ground') in arm_name or ('AGM') in arm_name or ('Bullpup') or ('ATGM') in arm_name:
-            arm_type_id = 6
-            arm_name = arm_name.replace('air-to-ground missiles', '').replace('air-to-ground missile', '').replace('Bullpup', '').replace('ATGM', '').replace('AGM', '').replace('rockets', '').replace('rocket', '').rstrip()
-        elif ('mine') in arm_name:
+
+        elif 'mine' in arm_name:
             arm_type_id = 7
             arm_name = arm_name.replace('mines', '').replace('mine', '').rstrip()
+
         else:
             arm_type_id = None
 
