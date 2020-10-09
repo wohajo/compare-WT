@@ -5,7 +5,6 @@ import requests
 from models import *
 from helpers import *
 from sqlalchemy import exc
-from random import randint
 from list_modifiers import *
 from bs4 import BeautifulSoup
 from planes_db_handlers import *
@@ -451,6 +450,7 @@ def add_plane_to_db(url, current, length):
     except exc.IntegrityError as er:
         print(er._sql_message)
         print('Error: object already in database! ' + url)
+        write_log(12, 'not_inserted_planes.log', url)
         print('-' * 50)
         db.session.rollback()
 

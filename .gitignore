@@ -1,12 +1,18 @@
+# python
+
 venv/
 .vscode/
 __pycache__/
 user-agent.txt
 tempCodeRunnerFile.py
+
+# logs
+
 scrape_data_planes.log
 processing_planes.log
 db_adding_planes.log
 inserted_planes.log
+not_inserted_planes.log
 planes.txt
 
 # db thingys

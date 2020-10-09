@@ -20,6 +20,10 @@ def create_database():
         print('Removing old insertion log...')
         os.remove('logs/inserted_planes.log')
         print('Removed!')
+    if os.path.exists('logs/not_inserted_planes.log'):
+        print('Removing old insertion log...')
+        os.remove('logs/not_inserted_planes.log')
+        print('Removed!')
     if os.path.exists('logs/db_adding_planes.log'):
         print('Removing old db_adding log...')
         os.remove('logs/db_adding_planes.log')
