@@ -8,7 +8,7 @@ $purple: red;
 $pink: blue;
 $brown: rgb(255, 255, 255);
 $beige-light: rgb(0, 7, 0);
-$beige-lighter: rgb(85, 81, 81);
+$beige-lighter: rgb(73, 67, 67);
 
 // Update Bulma's global variables
 $family-sans-serif: "Roboto", sans-serif;
@@ -22,6 +22,7 @@ $fullhd-enabled: false;
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
 $control-border-width: 2px;
+$navbar-dropdown-boxed-radius: 0;
 $input-border-color: transparent;
 $input-shadow: none;
 $table-color: $brown;
@@ -40,3 +41,4 @@ $table-background-color: $beige-light;
 @import "../node_modules/bulma/sass/form/_all.sass";
 @import "../node_modules/bulma/sass/layout/_all.sass";
 @import "../node_modules/bulma/sass/components/level.sass";
+@import "../node_modules/bulma/sass/elements/icon.sass";
