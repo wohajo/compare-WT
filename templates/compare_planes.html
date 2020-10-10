@@ -1,32 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
-<nav class="level">
+<nav class="level mt-4">
     <div class="level-item">    
         <form class="select-box-wrapper" method="POST">
             {{ comparsion_form_1.csrf_token }}
-            {{ comparsion_form_1.country(class="country-comparsion-chooser level-item is-primary select", id="country-comparsion-chooser-1") }}
-            {{ comparsion_form_1.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-1") }}
+            <div class="select">
+                {{ comparsion_form_1.country(class="country-comparsion-chooser level-item is-primary", id="country-comparsion-chooser-1") }}
+            </div>
+            <div class="select">
+                {{ comparsion_form_1.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-1") }}
+            </div>
         </form>
     </div>
     <div class="level-item">
         <form class="select-box-wrapper" method="POST">
             {{ comparsion_form_2.csrf_token }}
-            {{ comparsion_form_2.country(class="country-comparsion-chooser level-item select", id="country-comparsion-chooser-2") }}
-            {{ comparsion_form_2.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-2") }}
+            <div class="select">
+                {{ comparsion_form_1.country(class="country-comparsion-chooser level-item is-primary", id="country-comparsion-chooser-2") }}
+            </div>
+            <div class="select">
+                {{ comparsion_form_1.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-2") }}
+            </div>
         </form>
     </div>
     <div class="level-item">
         <form class="select-box-wrapper" method="POST">
             {{ comparsion_form_3.csrf_token }}
-            {{ comparsion_form_3.country(class="country-comparsion-chooser level-item select", id="country-comparsion-chooser-3") }}
-            {{ comparsion_form_3.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-3") }}
+            <div class="select">
+                {{ comparsion_form_1.country(class="country-comparsion-chooser level-item is-primary", id="country-comparsion-chooser-3") }}
+            </div>
+            <div class="select">
+                {{ comparsion_form_1.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-3") }}
+            </div>
         </form>
     </div>
     <div class="level-item">
         <form class="select-box-wrapper" method="POST">
             {{ comparsion_form_4.csrf_token }}
-            {{ comparsion_form_4.country(class="country-comparsion-chooser level-item select", id="country-comparsion-chooser-4") }}
-            {{ comparsion_form_4.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-4") }}
+            <div class="select">
+                {{ comparsion_form_1.country(class="country-comparsion-chooser level-item is-primary", id="country-comparsion-chooser-4") }}
+            </div>
+            <div class="select">
+                {{ comparsion_form_1.plane(class="plane-comparsion-chooser level-item select", id="plane-comparsion-chooser-4") }}
+            </div>
         </form>
     </div>
 

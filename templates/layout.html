@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<nav class="navbar is-spaced is-dark" role="navigation" aria-label="main navigation">
+<nav class="navbar is-spaced is-black" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
             COMPARE WAR THUNDER
@@ -39,6 +39,7 @@
             
                 <div class="navbar-dropdown">
                     <a href="{{ url_for('compare_planes') }}" class="navbar-item">
+                        <i class="fas fa-fighter-jet"></i>
                         Planes
                     </a>
                 </div>
@@ -63,6 +64,8 @@
         {% endblock content %}    
     </div>
     <script src="static/js/scripts.js">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js">
     </script>
 </body>
 

@@ -32,10 +32,10 @@ function checkIfNull(value) {
 
 function checkBool(value) {
     if (value == '0' || value == 0) {
-        return "<img src='static/images/check-no-icon-24.png' alt='no'>"
+        return "<span class='icon'><i class='fas fa-times has-text-danger'></i></span>"
     }
     else if (value == '1' || value == 1) {
-        return "<img src='static/images/check-yes-icon-24.png' alt='yes'>"
+        return "<span class='icon'><i class='fas fa-check-square has-text-success'></i></span>"
     }
     else {
         return "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>"
