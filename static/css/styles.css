@@ -7,30 +7,6 @@
     height: 14vh;
 }
 
-.take-off-weight-p::after {
-    content: ' t';
-}
-
-.burst-mass-p::after {
-    content: ' kg/s';
-}
-
-.km-h-p::after {
-    content: ' km/h';
-}
-
-.m-p::after {
-    content: ' m';
-}
-
-.s-p::after {
-    content: ' s';
-}
-
-.m-s-p::after {
-    content: ' m/s';
-}
-
 .sl-p::after {
     content: ' sl';
 }
@@ -50,6 +26,30 @@
 .sus-arm-p {
     min-height: 150px;
 } */
+
+.take-off-weight-p::after {
+    content: 't';
+}
+
+.burst-mass-p::after {
+    content: ' kg/s';
+}
+
+.m-p::after {
+    content: ' m';
+}
+
+.s-p::after {
+    content: ' s';
+}
+
+.m-s-p::after {
+    content: ' m/s';
+}
+
+.km-h-p::after {
+    content: ' km/h';
+}
 
 body {
     /* background-image: url("https://static.warthunder.com/upload/image/wallpapers/t2_2560x1440_logo_com_abd24d34d6f0a64cf031064cc24dd8e0.jpg"); */
@@ -99,10 +99,6 @@ td {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
-}
-
-.tooltip-info::after {
-    content: " (i)";
 }
 
 .tooltip-info .tooltip-text {

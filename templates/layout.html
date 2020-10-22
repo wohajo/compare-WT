@@ -17,7 +17,7 @@
 
 <nav class="navbar is-spaced is-black" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="index.html">
             COMPARE WAR THUNDER
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu-items">
@@ -28,10 +28,6 @@
     </div>
     <div id="navbar-menu-items" class="navbar-menu">
         <div class="navbar-start">
-            <a href="{{ url_for('index') }}" class="navbar-item">
-                Home
-            </a>
-    
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                     Compare
@@ -44,22 +40,21 @@
                     </a>
                 </div>
             </div>
-
+    </div>
+    
+        <div class="navbar-end">
             <a href="{{ url_for('contact') }}" class="navbar-item">
                 Contact
             </a>
             <a href="{{ url_for('about') }}" class="navbar-item">
                 About
             </a>
-    </div>
-    
-        <div class="navbar-end">
         </div>
     </div>
 </nav>
 
 <body>
-    <div class="container">
+    <div class="container is-widescreen">
         {% block content %}
         {% endblock content %}    
     </div>

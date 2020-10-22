@@ -26,7 +26,7 @@ function checkIfNull(value) {
     if (value != null) {
         return value
     } else {
-        return "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>"
+        return "<div class='tooltip-info'>N/A <i class='fa fa-question-circle' aria-hidden='true'></i><span class='tooltip-text'>Not avaliable</span></div>"
     }
 }
 
@@ -38,7 +38,15 @@ function checkBool(value) {
         return "<span class='icon'><i class='fas fa-check-square has-text-success'></i></span>"
     }
     else {
-        return "<div class='tooltip-info'>N/A<span class='tooltip-text'>Not avaliable</span></div>"
+        return "<div class='tooltip-info'>N/A <i class='fa fa-question-circle' aria-hidden='true'><span class='tooltip-text'>Not avaliable</span></div>"
+    }
+}
+
+function findDifferences() {
+    tiers = document.getElementsByClassName("crew-p")
+
+    for (tier in tiers) {
+        tier.innerHTML
     }
 }
 
@@ -308,6 +316,8 @@ function changePlaneSelection(planeChooser, number) {
             }
         })
     })
+
+    findDifferences()
 }
 
 function changeCountrySelection(countryChooser, planeChooser) {
