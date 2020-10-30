@@ -55,6 +55,7 @@ def plane(plane_id):
 
     plane_object = {}
     plane_object['img_link'] = plane.img_link
+    plane_object['wiki_link'] = plane.wiki_link
     plane_object['name'] = plane.name
     plane_object['tier'] = int_to_roman(plane.rank)
     plane_object['battle_rating_ab'] = plane.battle_rating_ab

@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// FIXME tooltip is making table too wide
+
 function checkIfNull(value) {
     if (value != null) {
         return value
@@ -80,9 +82,9 @@ function changePlaneSelection(planeChooser, number) {
             experts = checkIfNull(data.plane.experts)
             aces = checkIfNull(data.plane.aces)
             rewardRp = checkIfNull(data.plane.reward_rp)
-            rewardSlSb = checkIfNull(data.plane.reward_sl_sb)
-            rewardSlRb = checkIfNull(data.plane.reward_sl_rb)
-            rewardSlAb = checkIfNull(data.plane.reward_sl_ab)
+            rewardSlSb = checkIfNull(data.plane.reward_sl_sb) + "  <img src='https://wiki.warthunder.com/images/thumb/0/0f/Sl_icon.png/19px-Sl_icon.png'>"
+            rewardSlRb = checkIfNull(data.plane.reward_sl_rb) + "  <img src='https://wiki.warthunder.com/images/thumb/0/0f/Sl_icon.png/19px-Sl_icon.png'>"
+            rewardSlAb = checkIfNull(data.plane.reward_sl_ab) + "  <img src='https://wiki.warthunder.com/images/thumb/0/0f/Sl_icon.png/19px-Sl_icon.png'>"
 
             noEngines = checkIfNull(data.plane.no_engines)
             engineType = checkIfNull(data.plane.engine_type)
